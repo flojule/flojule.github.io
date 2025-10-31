@@ -5,9 +5,8 @@ import { glob } from 'astro/loaders';
 const work = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/work" }),
   schema: z.object({
-    company: z.string(),
-    position: z.string(),
-    description: z.string(),
+    title: z.string(),
+    subtitle: z.string(),
     startDate: z.coerce.date(),
     endDate: z.coerce.date().optional(),
     logo: z.string().optional(),
@@ -19,13 +18,12 @@ const work = defineCollection({
 const education = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/education" }),
   schema: z.object({
-    institution: z.string(),
-    course: z.string(),
-    description: z.string(),
+    title: z.string(),
+    subtitle: z.string(),
     startDate: z.coerce.date(),
     endDate: z.coerce.date().optional(),
     logo: z.string().optional(),
-    link: z.string().url(),
+    link: z.string().url().optional(),
   }),
 });
 
