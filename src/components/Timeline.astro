@@ -86,7 +86,7 @@ const entriesWithContent = await Promise.all(
                     <div class="flex items-center gap-4 mb-2">
                       {entry.data.logo && (
                         <div class="avatar">
-                          <div class="w-12 rounded">
+                          <div class="w-12 mask mask-squircle">
                             <img src={entry.data.logo} alt={entry.data.title} />
                           </div>
                         </div>
@@ -133,11 +133,11 @@ const entriesWithContent = await Promise.all(
                   <div class="list-row p-0 items-center after:hidden">
                     <div>
                       {entry.data.logo && (
-                        <img
-                          class="size-10 rounded-box"
-                          src={entry.data.logo}
-                          alt={entry.data.title}
-                        />
+                        <div class="avatar">
+                          <div class="w-10 mask mask-squircle">
+                            <img src={entry.data.logo} alt={entry.data.title} />
+                          </div>
+                        </div>
                       )}
                     </div>
 

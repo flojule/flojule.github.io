@@ -1,7 +1,7 @@
 ---
 title: "Startup Inc"
 subtitle: "Frontend Developer"
-logo: "https://avatar.iran.liara.run/public/job/lawyer/male"
+logo: "https://api.dicebear.com/9.x/shapes/svg?seed=Eden"
 startDate: "2019-01-15"
 endDate: "2021-05-30"
 link: "https://example.com"

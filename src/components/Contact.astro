@@ -1,44 +1,22 @@
 ---
-interface Props {
-  email?: string;
-  title?: string;
-  description?: string;
-}
-
-const {
-  email,
-  title = "Get in Touch",
-  description = "Want to chat? Just shoot me an email and I'll respond whenever I can. I'd love to hear from you!"
-} = Astro.props;
+import { MessageCircleCode } from "@lucide/astro";
 ---
 
-<section id="contact" class="py-20 px-4 bg-base-200">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-4xl font-bold mb-6">{title}</h2>
-    <p class="text-lg text-base-content/70 mb-8">
-      {description}
+<footer
+  class="footer footer-horizontal footer-center bg-base-200 text-primary-content py-10"
+>
+  <aside>
+    <MessageCircleCode class="inline-block size-20" />
+    <p class="max-w-xl m-auto text-lg">
+      Want to chat? shoot me a dm <a
+        href="https://x.com/leowg"
+        target="_blank"
+        class="link link-hover text-primary"
+        >with a direct question on X (twitter)</a
+      > and I'll respond whenever I can.
     </p>
-    {email && (
-      <a
-        href={`mailto:${email}`}
-        class="btn btn-primary btn-lg"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <rect width="20" height="16" x="2" y="4" rx="2"/>
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-        </svg>
-        Send Email
-      </a>
-    )}
-  </div>
-</section>
+    <p class="text-neutral-content">
+      Copyright © {new Date().getFullYear()} - All right reserved
+    </p>
+  </aside>
+</footer>
