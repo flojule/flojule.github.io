@@ -1,80 +1,88 @@
 ---
-import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
-import SkillBadge from './SkillBadge.astro';
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import SkillBadge from "./SkillBadge.astro";
 
-const projectEntries = await getCollection('projects');
+const projectEntries = await getCollection("projects");
 
 // Sort by start date, most recent first
-const sortedProjects = projectEntries.sort((a, b) =>
-  b.data.startDate.getTime() - a.data.startDate.getTime()
+const sortedProjects = projectEntries.sort(
+  (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
 );
 
 function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = { month: 'short', year: 'numeric' };
-  const start = startDate.toLocaleDateString('en-US', options);
-  const end = endDate ? endDate.toLocaleDateString('en-US', options) : 'Present';
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    year: "numeric",
+  };
+  const start = startDate.toLocaleDateString("en-US", options);
+  const end = endDate
+    ? endDate.toLocaleDateString("en-US", options)
+    : "Present";
   return `${start} - ${end}`;
 }
 ---
 
 <section id="projects" class="py-20 px-4 bg-base-200">
-  <div class="max-w-7xl mx-auto">
+  <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12">
       <h2 class="text-4xl font-bold mb-4">Check out my latest work</h2>
       <p class="text-lg text-base-content/70">
-        I've worked on a variety of projects, from simple websites to complex web applications. Here are a few of my favorites.
+        I've worked on a variety of projects, from simple websites to complex
+        web applications. Here are a few of my favorites.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {sortedProjects.map((project) => (
-        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-          <figure class="aspect-video">
-            <Image
-              src={project.data.image}
-              alt={project.data.title}
-              class="w-full h-full object-cover"
-              width={600}
-              height={400}
-            />
-          </figure>
-          <div class="card-body">
-            <h3 class="card-title">{project.data.title}</h3>
-            <time class="text-sm text-base-content/60">
-              {formatPeriod(project.data.startDate, project.data.endDate)}
-            </time>
-            <p class="text-base-content/80">{project.data.description}</p>
-            <div class="flex flex-wrap gap-2 mt-2">
-              {project.data.skills.map((skill) => (
-                <SkillBadge skill={skill} />
-              ))}
-            </div>
-            <div class="card-actions justify-end mt-4">
-              {project.data.demoLink && (
-                <a
-                  href={project.data.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn btn-sm btn-primary"
-                >
-                  Live Demo
-                </a>
-              )}
-              {project.data.sourceLink && (
-                <a
-                  href={project.data.sourceLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn btn-sm btn-outline btn-primary"
-                >
-                  Source Code
-                </a>
-              )}
+      {
+        sortedProjects.map((project) => (
+          <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+            <figure class="aspect-video">
+              <Image
+                src={project.data.image}
+                alt={project.data.title}
+                class="w-full h-full object-cover"
+                width={600}
+                height={400}
+              />
+            </figure>
+            <div class="card-body">
+              <h3 class="card-title">{project.data.title}</h3>
+              <time class="text-sm text-base-content/60">
+                {formatPeriod(project.data.startDate, project.data.endDate)}
+              </time>
+              <p class="text-base-content/80">{project.data.description}</p>
+              <div class="flex flex-wrap gap-2 mt-2">
+                {project.data.skills.map((skill) => (
+                  <SkillBadge skill={skill} />
+                ))}
+              </div>
+              <div class="card-actions justify-end mt-4">
+                {project.data.demoLink && (
+                  <a
+                    href={project.data.demoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-sm btn-primary"
+                  >
+                    Live Demo
+                  </a>
+                )}
+                {project.data.sourceLink && (
+                  <a
+                    href={project.data.sourceLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-sm btn-soft btn-secondary"
+                  >
+                    Source Code
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
