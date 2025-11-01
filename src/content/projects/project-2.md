@@ -1,10 +1,10 @@
 ---
-title: "Task Management App"
-description: "A collaborative task management application with real-time updates, drag-and-drop interface, and team collaboration features."
-image: "./placeholder-project.png"
-startDate: "2023-01-01"
-endDate: "2023-05-30"
-skills: ["React", "Firebase", "Material-UI", "Redux"]
-demoLink: "https://demo.example.com"
-sourceLink: "https://github.com/yourusername/taskapp"
+title: "Mary UI Laravel Starter Kit"
+description: "A modern, production-ready Laravel starter kit featuring Livewire Volt and Mary UI. Build beautiful web applications with a complete authentication system, user management, and developer-friendly tooling."
+image: "https://api.dicebear.com/9.x/glass/svg?seed=Alexander"
+startDate: "2025-03-01"
+endDate: "2025-04-30"
+skills: ["Laravel", "Livewire", "Mary UI", "DaisyUI"]
+sourceLink: "https://github.com/lauroguedes/mary-ui-starter-kit"
+demoLink: "https://github.com/lauroguedes/mary-ui-starter-kit"
 ---

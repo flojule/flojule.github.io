@@ -7,27 +7,30 @@ import Projects from "../components/Projects.astro";
 import Hackathons from "../components/Hackathons.astro";
 import Contact from "../components/Contact.astro";
 import { Briefcase, GraduationCap } from "@lucide/astro";
+import { getEntry, render } from "astro:content";
+
+// Load about content
+const aboutEntry = await getEntry("about", "about");
+const { Content: AboutContent } = await render(aboutEntry);
 
 // Configure your portfolio information here
 const portfolioData = {
-  name: "Your Name",
-  title: "Full Stack Developer & Designer",
+  name: "Bloomfolio",
+  title: "Astro Portfolio Template built with 🌼 DaisyUI",
   description:
-    "I'm a passionate developer who loves building amazing web experiences. I specialize in modern web technologies and always excited to learn new things.",
+    "A modern, responsive, and customizable portfolio template built with Astro and DaisyUI. Perfect for developers, designers, and creatives to showcase their work and skills.",
   avatarUrl:
     "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Avery&backgroundColor=763900,9e5622,ecad80,f2d3b1,b6e3f4,c0aede", // Add your avatar image to public folder
-  location: "San Francisco, CA",
+  location: "Brazil",
   email: "hello@example.com",
   socialLinks: {
-    github: "https://github.com/yourusername",
-    linkedin: "https://linkedin.com/in/yourusername",
-    twitter: "https://twitter.com/yourusername",
-    email: "hello@example.com",
-  },
-  about: {
-    title: "About Me",
-    description:
-      "I'm a full-stack developer with a passion for creating beautiful, functional, and user-friendly web applications. With experience in modern frameworks and technologies, I love turning ideas into reality through code. When I'm not coding, you can find me exploring new technologies, contributing to open source, or enjoying a good cup of coffee.",
+    github: "https://github.com/lauroguedes",
+    linkedin: "https://linkedin.com/in/lauroguedes",
+    twitter: "https://twitter.com/leowg",
+    bluesky: "https://bsky.app/profile/lauroguedes.bsky.social",
+    instagram: "https://instagram.com/lauroguedes.dev",
+    youTube: "https://youtube.com/leowgweb",
+    codetips: "https://codetips.cloud/u/lauroguedes",
   },
 };
 ---
@@ -49,8 +52,9 @@ const portfolioData = {
 
     <!-- About Section -->
     <About
-      title={portfolioData.about.title}
-      description={portfolioData.about.description}
+      title={aboutEntry.data.title}
+      photo={aboutEntry.data.photo}
+      Content={AboutContent}
     />
 
     <!-- Work Experience Section -->

@@ -69,10 +69,20 @@ const blog = defineCollection({
   }),
 });
 
+// About collection
+const about = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/about" }),
+  schema: z.object({
+    title: z.string(),
+    photo: z.string().optional(),
+  }),
+});
+
 export const collections = {
   work,
   education,
   projects,
   hackathons,
   blog,
+  about,
 };

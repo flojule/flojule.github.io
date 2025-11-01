@@ -1,10 +1,9 @@
 ---
-title: "E-Commerce Platform"
-description: "A full-featured e-commerce platform with shopping cart, payment integration, and admin dashboard. Built with Next.js and Stripe."
-image: "./placeholder-project.png"
-startDate: "2023-06-01"
-endDate: "2023-12-01"
-skills: ["Next.js", "React", "TypeScript", "Stripe", "Tailwind CSS", "PostgreSQL"]
-demoLink: "https://demo.example.com"
-sourceLink: "https://github.com/yourusername/ecommerce"
+title: "Screencial"
+description: "Personalize your social media posts and generate shareable screenshots."
+image: "https://api.dicebear.com/9.x/glass/svg?seed=Brooklynn"
+startDate: "2024-06-01"
+endDate: "2025-01-01"
+skills: ["PHP", "Livewire", "Laravel", "Alpine JS"]
+demoLink: "https://screencial.art"
 ---
