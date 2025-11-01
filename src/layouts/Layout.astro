@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import ThemeToggle from "../components/ThemeToggle.astro";
+import FabFlower from "../components/FabFlower.astro";
 
 interface Props {
   title?: string;
@@ -9,7 +10,7 @@ interface Props {
 
 const {
   title = "Bloomfolio Template",
-  description = "A modern portfolio template built with Astro and DaisyUI"
+  description = "A modern portfolio template built with Astro and DaisyUI",
 } = Astro.props;
 ---
 
@@ -40,6 +41,8 @@ const {
     </div>
 
     <slot />
+
+    <FabFlower />
 
     <!-- Smooth Scroll -->
     <style is:global>
