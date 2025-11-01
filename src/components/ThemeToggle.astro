@@ -16,13 +16,13 @@
   </svg>
 </label>
 
-<script>
+<script is:inline>
   // Set theme on page load based on localStorage or system preference
   function setTheme() {
     const theme = localStorage.getItem('theme') ||
                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', theme);
-    const toggle = document.querySelector('.theme-controller') as HTMLInputElement;
+    const toggle = document.querySelector('.theme-controller');
     if (toggle) {
       toggle.checked = theme === 'dark';
     }
@@ -30,7 +30,7 @@
 
   // Update theme when toggle is clicked
   document.addEventListener('change', (e) => {
-    const target = e.target as HTMLInputElement;
+    const target = e.target;
     if (target.classList.contains('theme-controller')) {
       const theme = target.checked ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', theme);
