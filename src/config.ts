@@ -5,7 +5,8 @@
  * Update these values to personalize your portfolio site.
  */
 
-import { FileUser, FileBadge, Newspaper, Rss } from "@lucide/astro";
+import { BookOpen, FileText, Flower2, CodeXml } from "@lucide/astro";
+import { Code } from "astro:components";
 
 /**
  * Social media links configuration
@@ -94,7 +95,7 @@ export interface SiteConfig {
  * Update these values to customize your portfolio
  */
 export const siteConfig: SiteConfig = {
-  name: "Bloomfolio",
+  name: "🌻 Bloomfolio",
   title: "Astro Portfolio Template built with 🌼 DaisyUI",
   description:
     "A modern, responsive, and customizable portfolio template built with Astro and DaisyUI. Perfect for developers, designers, and creatives to showcase their work and skills.",
@@ -114,10 +115,26 @@ export const siteConfig: SiteConfig = {
   extraLinks: {
     enable: true,
     links: [
-      { link: "/cv", icon: FileUser, label: "CV" },
-      { link: "/certifications", icon: FileBadge, label: "Certifications" },
-      { link: "/articles", icon: Newspaper, label: "Articles" },
-      { link: "/rss.xml", icon: Rss, label: "RSS Feed" },
+      {
+        link: "/blog/guides/bloomfolio-complete-guide",
+        icon: Flower2,
+        label: "Bloomfolio Guide",
+      },
+      {
+        link: "/blog/guides/content-collections-guide",
+        icon: BookOpen,
+        label: "Content Guide",
+      },
+      {
+        link: "/blog/guides/markdown-guide",
+        icon: FileText,
+        label: "Markdown Guide",
+      },
+      {
+        link: "https://github.com/lauroguedes/bloomfolio",
+        icon: CodeXml,
+        label: "GitHub Repo",
+      },
     ],
   },
   sections: {
