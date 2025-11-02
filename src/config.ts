@@ -43,6 +43,25 @@ export interface ExtraLinks {
 }
 
 /**
+ * Sections visibility configuration
+ * Control which sections appear on the index page
+ */
+export interface SectionsConfig {
+  /** Show/hide About section */
+  about: boolean;
+  /** Show/hide Projects section */
+  projects: boolean;
+  /** Show/hide Work Experience section */
+  work: boolean;
+  /** Show/hide Education section */
+  education: boolean;
+  /** Show/hide Hackathons section */
+  hackathons: boolean;
+  /** Show/hide Contact section */
+  contact: boolean;
+}
+
+/**
  * Main site configuration interface
  */
 export interface SiteConfig {
@@ -64,6 +83,8 @@ export interface SiteConfig {
   enableThemeSelector: boolean;
   /** Extra links configuration for FAB component */
   extraLinks: ExtraLinks;
+  /** Sections visibility configuration (Hero is always visible) */
+  sections: SectionsConfig;
 }
 
 /**
@@ -96,5 +117,13 @@ export const siteConfig: SiteConfig = {
       { link: "/articles", icon: Newspaper, label: "Articles" },
       { link: "/rss.xml", icon: Rss, label: "RSS Feed" },
     ],
+  },
+  sections: {
+    about: true,
+    projects: true,
+    work: true,
+    education: true,
+    hackathons: true,
+    contact: true,
   },
 };
