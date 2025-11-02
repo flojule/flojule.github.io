@@ -1,5 +1,12 @@
 ---
-import { Link, FileUser, FileBadge, Newspaper, Rss } from "@lucide/astro";
+import { Link } from "@lucide/astro";
+import type { ExtraLinks } from "../config";
+
+interface Props {
+  extraLinks: ExtraLinks;
+}
+
+const { extraLinks } = Astro.props;
 ---
 
 <div class="fab fab-flower">
@@ -16,24 +23,16 @@ import { Link, FileUser, FileBadge, Newspaper, Rss } from "@lucide/astro";
   </div>
 
   <!-- buttons that show up when FAB is open -->
-  <div class="tooltip tooltip-left" data-tip="CV">
-    <button class="btn btn-lg btn-circle">
-      <FileUser class="size-5" />
-    </button>
-  </div>
-  <div class="tooltip tooltip-left" data-tip="Certifications">
-    <button class="btn btn-lg btn-circle">
-      <FileBadge class="size-5" />
-    </button>
-  </div>
-  <div class="tooltip" data-tip="Articles">
-    <button class="btn btn-lg btn-circle">
-      <Newspaper class="size-5" />
-    </button>
-  </div>
-  <div class="tooltip" data-tip="RSS Feed">
-    <button class="btn btn-lg btn-circle">
-      <Rss class="size-5" />
-    </button>
-  </div>
+  {
+    extraLinks.links.map((link) => {
+      const IconComponent = link.icon;
+      return (
+        <div class="tooltip tooltip-left" data-tip={link.label}>
+          <a href={link.link} class="btn btn-lg btn-circle">
+            <IconComponent class="size-5" />
+          </a>
+        </div>
+      );
+    })
+  }
 </div>

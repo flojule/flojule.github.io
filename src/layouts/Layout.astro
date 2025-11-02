@@ -1,9 +1,10 @@
 ---
 import "../styles/global.css";
-// import ThemeToggle from "../components/ThemeToggle.astro"; // Keep for future use
+import ThemeToggle from "../components/ThemeToggle.astro";
 import ThemeSelector from "../components/ThemeSelector.astro";
 import FabFlower from "../components/FabFlower.astro";
 import { ClientRouter } from "astro:transitions";
+import { siteConfig } from "../config";
 
 interface Props {
   title?: string;
@@ -61,14 +62,14 @@ const pageTransition = {
     <meta name="twitter:description" content={description} />
   </head>
   <body class="min-h-screen">
-    <!-- Theme Selector - Fixed Position -->
+    <!-- Theme Controls - Fixed Position -->
     <div class="fixed top-4 right-4 z-50">
-      <ThemeSelector />
+      {siteConfig.enableThemeSelector ? <ThemeSelector /> : <ThemeToggle />}
     </div>
 
     <slot />
 
-    <FabFlower />
+    {siteConfig.extraLinks.enable && <FabFlower extraLinks={siteConfig.extraLinks} />}
 
     <!-- Smooth Scroll -->
     <style is:global>

@@ -8,46 +8,27 @@ import Hackathons from "../components/Hackathons.astro";
 import Contact from "../components/Contact.astro";
 import { Briefcase, GraduationCap } from "@lucide/astro";
 import { getEntry, render } from "astro:content";
+import { siteConfig } from "../config";
+import bloomfolioLogo from "../assets/bloomfolio.png";
 
 // Load about content
 const aboutEntry = await getEntry("about", "about");
 const { Content: AboutContent } = await render(aboutEntry);
-
-// Configure your portfolio information here
-const portfolioData = {
-  name: "Bloomfolio",
-  title: "Astro Portfolio Template built with 🌼 DaisyUI",
-  description:
-    "A modern, responsive, and customizable portfolio template built with Astro and DaisyUI. Perfect for developers, designers, and creatives to showcase their work and skills.",
-  avatarUrl:
-    "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Avery&backgroundColor=763900,9e5622,ecad80,f2d3b1,b6e3f4,c0aede", // Add your avatar image to public folder
-  location: "Brazil",
-  email: "hello@example.com",
-  socialLinks: {
-    github: "https://github.com/lauroguedes",
-    linkedin: "https://linkedin.com/in/lauroguedes",
-    twitter: "https://twitter.com/leowg",
-    bluesky: "https://bsky.app/profile/lauroguedes.bsky.social",
-    instagram: "https://instagram.com/lauroguedes.dev",
-    youTube: "https://youtube.com/leowgweb",
-    codetips: "https://codetips.cloud/u/lauroguedes",
-  },
-};
 ---
 
 <Layout
-  title={`${portfolioData.name} - Portfolio`}
-  description={portfolioData.description}
+  title={`${siteConfig.name} - Portfolio`}
+  description={siteConfig.description}
 >
   <main>
     <!-- Hero Section -->
     <Hero
-      name={portfolioData.name}
-      title={portfolioData.title}
-      description={portfolioData.description}
-      avatarUrl={portfolioData.avatarUrl}
-      location={portfolioData.location}
-      socialLinks={portfolioData.socialLinks}
+      name={siteConfig.name}
+      title={siteConfig.title}
+      description={siteConfig.description}
+      avatar={bloomfolioLogo}
+      location={siteConfig.location}
+      socialLinks={siteConfig.socialLinks}
     />
 
     <!-- About Section -->
