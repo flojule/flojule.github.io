@@ -36,6 +36,8 @@ const pageTransition = {
   forwards: blurFadeAnimation,
   backwards: blurFadeAnimation,
 };
+
+const origin = Astro.url.origin;
 ---
 
 <!doctype html>
@@ -55,11 +57,14 @@ const pageTransition = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={origin} />
+    <meta property="og:image" content={`${origin}/images/og_home.png`} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${origin}/images/og_home.png`} />
   </head>
   <body class="min-h-screen">
     <!-- Theme Controls - Fixed Position -->
@@ -69,7 +74,11 @@ const pageTransition = {
 
     <slot />
 
-    {siteConfig.extraLinks.enable && <FabFlower extraLinks={siteConfig.extraLinks} />}
+    {
+      siteConfig.extraLinks.enable && (
+        <FabFlower extraLinks={siteConfig.extraLinks} />
+      )
+    }
 
     <!-- Smooth Scroll -->
     <style is:global>

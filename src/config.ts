@@ -100,7 +100,7 @@ export const siteConfig: SiteConfig = {
   description:
     "A modern, responsive, and customizable portfolio template built with Astro and DaisyUI. Perfect for developers, designers, and creatives to showcase their work and skills.",
   avatar: "../assets/bloomfolio.png",
-  location: "Brazil",
+  location: "🇧🇷 Brazil",
   email: "hello@example.com",
   socialLinks: {
     github: "https://github.com/lauroguedes",
