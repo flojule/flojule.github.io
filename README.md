@@ -336,9 +336,9 @@ Bloomfolio works with any static hosting platform that supports Node.js builds:
 
 ## 📚 Documentation
 
-- **[Complete Guide](/blog/guides/bloomfolio-complete-guide)** - Comprehensive setup and customization guide
-- **[Content Collections Guide](/blog/guides/content-collections-guide)** - Learn about Astro Content Collections
-- **[Markdown Guide](/blog/guides/markdown-guide)** - Master Markdown and MDX syntax
+- **[Complete Guide](https://bloomfolio-astro.vercel.app/blog/guides/bloomfolio-complete-guide)** - Comprehensive setup and customization guide
+- **[Content Collections Guide](https://bloomfolio-astro.vercel.app/blog/guides/content-collections-guide)** - Learn about Astro Content Collections
+- **[Markdown Guide](https://bloomfolio-astro.vercel.app/blog/guides/markdown-guide)** - Master Markdown and MDX syntax
 - **[Astro Docs](https://docs.astro.build)** - Official Astro documentation
 - **[Tailwind CSS Docs](https://tailwindcss.com/docs)** - Tailwind CSS documentation
 - **[DaisyUI Docs](https://daisyui.com/docs)** - DaisyUI component documentation
@@ -366,7 +366,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 💬 Support
 
-- 📖 [Documentation](/blog/guides/bloomfolio-complete-guide)
+- 📖 [Documentation](https://bloomfolio-astro.vercel.app/blog/guides/bloomfolio-complete-guide)
 - 🐛 [Report Issues](https://github.com/lauroguedes/bloomfolio/issues)
 - 💬 [Discussions](https://github.com/lauroguedes/bloomfolio/discussions)
 
