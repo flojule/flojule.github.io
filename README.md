@@ -2,7 +2,7 @@
 
 <div align="center">
 
-A modern, customizable portfolio template built with Astro 5, Tailwind CSS 4, and DaisyUI 5.
+A modern, customizable portfolio template built with **Astro 5** and **DaisyUI 5**. A beautiful, fast, and highly customizable portfolio template for developers, designers, and creatives.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Astro](https://img.shields.io/badge/Astro-5.x-FF5D01?logo=astro&logoColor=white)](https://astro.build)
@@ -15,8 +15,6 @@ A modern, customizable portfolio template built with Astro 5, Tailwind CSS 4, an
 <img width="1920" height="1080" alt="img1" src="https://github.com/user-attachments/assets/b882118c-2070-4b12-85f4-8491ea9517ee" />
 
 </div>
-
-> A beautiful, fast, and highly customizable portfolio template for developers, designers, and creatives.
 
 ## ✨ Features
 
