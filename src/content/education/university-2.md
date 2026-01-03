@@ -1,10 +1,10 @@
 ---
-title: "University of AI"
-subtitle: "Bachelor of Information Systems"
-logo: "https://api.dicebear.com/9.x/icons/svg?seed=Sophia"
+title: "University of Michigan - Ann Arbor"
+subtitle: "Master of Science in Aerospace Engineering"
+logo: "https://media.licdn.com/dms/image/v2/C4E0BAQFGfERBPGurCg/company-logo_100_100/company-logo_100_100/0/1631307390795?e=1769040000&v=beta&t=WnN0yP3AHBChtQPFAeHD0MP09i4d5mHf-QHWse6T_oU"
 startDate: "2015-09-01"
-endDate: "2019-05-30"
-link: "https://university.edu"
+endDate: "2016-12-15"
+link: "https://umich.edu"
 ---
 
-Focused on software engineering, algorithms, and data structures. Graduated with honors and participated in various coding competitions.
+Focused on computational methods (COmputational Fluid Dynamic, Finite Element Analysis), Composites. I worked with Prof. Henry Sodano on self healing polymers.
