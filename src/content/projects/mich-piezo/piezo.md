@@ -5,6 +5,5 @@ image: "https://pubs.acs.org/cms/10.1021/acsami.8b13643/asset/images/medium/am-2
 startDate: "2015-09-01"
 endDate: "2015-12-15"
 skills: ["Composites", "Piezoelectric", "Labview"]
-sourceLink: "https://github.com/flojule/search-a-star"
 demoLink: "https://pubs.acs.org/doi/abs/10.1021/acsami.8b13643"
 ---
