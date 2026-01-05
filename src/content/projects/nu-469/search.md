@@ -1,7 +1,7 @@
 ---
 title: "Search and navigation for a two-wheel robot"
 description: "Implementation of an offline and online path planning algorithm (A*), and a controller for a two-wheel robot."
-image: "https://api.dicebear.com/9.x/glass/svg?seed=Brooklynn"
+image: "./search.png"
 startDate: "2025-09-15"
 endDate: "2025-10-15"
 skills: ["Search", "Navigation", "A-star", "Python"]
