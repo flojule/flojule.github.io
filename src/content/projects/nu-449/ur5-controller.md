@@ -4,7 +4,7 @@ description: "I wrote software to simulate the control of a UR5 using a PID cont
 image: "./ur5.gif"
 startDate: "2025-11-19"
 endDate: "2025-12-15"
-skills: ["Python", "Robotic arm manipulation", "Controls"]
+skills: ["Python", "Robotic manipulation", "Controls"]
 sourceLink: "https://github.com/flojule/UR5"
 
 ---
