@@ -7,5 +7,3 @@ endDate: "2021-12-31"
 skills: ["Composites Structure", "Mechanical Systems", "Design", "Build", "Integration", "Testing", "Flight Testing"]
 demoLink: "https://www.youtube.com/watch?v=5RpqYuce6Ao"
 ---
-
-## Overview
