@@ -95,8 +95,8 @@ export interface SiteConfig {
  * Update these values to customize your portfolio
  */
 export const siteConfig: SiteConfig = {
-  name: "🌻 Florian Jule",
-  title: "Engineer Portfolio",
+  name: "Florian Jule",
+  title: "Product design",
   description:
     "Welcome to my portfolio! I'm Florian Jule, an engineer passionate about technology and innovation. Explore my projects, experience, and get in touch!",
   avatar: "../assets/floto.jpeg",
@@ -137,9 +137,9 @@ export const siteConfig: SiteConfig = {
     about: true,
     projects: true,
     blog: false,
-    work: true,
+    work: false,
     education: true,
-    hackathons: true,
+    hackathons: false,
     contact: true,
   },
 };
