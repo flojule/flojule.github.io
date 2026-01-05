@@ -1,11 +1,11 @@
 ---
-title: "Mary UI Laravel Starter Kit"
-description: "A contemporary, production-ready Laravel starter kit with integrated Livewire Volt and Mary UI components. Designed to expedite web application development with pre-built authentication, user administration, and developer-friendly tooling."
-image: "https://api.dicebear.com/9.x/glass/svg?seed=Alexander"
-startDate: "2024-12-07"
-skills: ["Laravel", "Livewire", "Mary UI", "DaisyUI", "Tailwind CSS", "Pest"]
-sourceLink: "https://github.com/lauroguedes/mary-ui-starter-kit"
-demoLink: "https://github.com/lauroguedes/mary-ui-starter-kit"
+title: "Joby S4-2.0"
+description: "Joby's pre-production eVTOL"
+image: "/images/projects/joby-s4-2-0.JPEG"
+startDate: "2017-10-01"
+skills: ["Composites", "Testing", "Catia", "FEA"]
+sourceLink: "https://www.jobyaviation.com/news/joby-aviation-raises-590-million-in-series-c-financing-to-launch-air-taxi-service/"
+demoLink: "https://www.youtube.com/watch?v=5RpqYuce6Ao"
 ---
 
 ## Project Overview

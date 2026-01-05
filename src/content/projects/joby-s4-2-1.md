@@ -1,9 +1,9 @@
 ---
-title: "Code Tips Platform"
-description: "A centralized platform for storing and sharing code snippets, enabling developers to create, discover, and manage code examples across 100+ programming languages."
-image: "https://api.dicebear.com/9.x/glass/svg?seed=Jocelyn"
-startDate: "2025-06-01"
-skills: ["Laravel", "Inertia JS", "Vue 3", "TypeScript", "Monaco Editor", "Tailwind CSS"]
+title: "Joby S4 2.1"
+description: "Joby's production eVTOL."
+image: "/images/projects/joby-s4-2-1.JPEG"
+startDate: "2018-10-01"
+skills: ["Composites", "Testing", "Catia", "FEA", "Team management", "FAA"]
 demoLink: "https://codetips.cloud"
 ---
 
