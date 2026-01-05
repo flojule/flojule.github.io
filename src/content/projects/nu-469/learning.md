@@ -4,8 +4,8 @@ description: "Locally Weighted Linear Regression trained to learn the motion mod
 image: "https://api.dicebear.com/9.x/glass/svg?seed=Brooklynn"
 startDate: "2025-09-15"
 endDate: "2025-10-15"
-skills: ["Kalman filter", "Python"]
-sourceLink: "https://github.com/flojule/UKF"
+skills: ["Python", "Machine Learning", "LWLR"]
+sourceLink: "https://github.com/flojule/LWLR"
 ---
 
 ## Overview
