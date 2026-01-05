@@ -1,7 +1,7 @@
 ---
-title: "Regression to learn motion model of a two-wheel robot."
+title: "Machine learing for a two-wheel robot navigation."
 description: "Locally Weighted Linear Regression trained to learn the motion model of a two-wheel robot."
-image: "https://api.dicebear.com/9.x/glass/svg?seed=Brooklynn"
+image: "./lwlr.png"
 startDate: "2025-09-15"
 endDate: "2025-10-15"
 skills: ["Python", "Machine Learning", "LWLR"]
