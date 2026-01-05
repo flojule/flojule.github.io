@@ -1,11 +1,11 @@
 ---
-title: "Screencial"
-description: "A web application enabling users to generate personalized, shareable screenshots for social media with customizable templates and design elements."
+title: "Kalman filter for robot state estimation"
+description: "I developed from scratch an UKF (unscented Kalman filter), using a basic motion model fused with collected sensor data of landmarks to estimate the position of a two-wheel robot."
 image: "https://api.dicebear.com/9.x/glass/svg?seed=Brooklynn"
-startDate: "2023-07-01"
-endDate: "2024-06-31"
-skills: ["Laravel", "Livewire", "Stripe", "Tailwind CSS"]
-demoLink: "https://screencial.art"
+startDate: "2025-09-15"
+endDate: "2025-10-15"
+skills: ["Kalman filter", "Python"]
+demoLink: ""
 ---
 
 ## Overview
