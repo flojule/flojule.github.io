@@ -95,21 +95,17 @@ export interface SiteConfig {
  * Update these values to customize your portfolio
  */
 export const siteConfig: SiteConfig = {
-  name: "🌻 Bloomfolio",
-  title: "Astro Portfolio Template built with 🌼 DaisyUI",
+  name: "🌻 Florian Jule",
+  title: "Engineer Portfolio",
   description:
-    "A modern, responsive, and customizable portfolio template built with Astro and DaisyUI. Perfect for developers, designers, and creatives to showcase their work and skills.",
-  avatar: "../assets/bloomfolio.png",
-  location: "🇧🇷 Brazil",
-  email: "hello@example.com",
+    "Welcome to my portfolio! I'm Florian Jule, an engineer passionate about technology and innovation. Explore my projects, experience, and get in touch!",
+  avatar: "../assets/floto.jpeg",
+  location: "Berkeley, California",
+  email: "florian.jule+ghp@gadz.org",
   socialLinks: {
-    github: "https://github.com/lauroguedes",
-    linkedin: "https://linkedin.com/in/lauroguedes",
-    twitter: "https://twitter.com/leowg",
-    bluesky: "https://bsky.app/profile/lauroguedes.bsky.social",
-    instagram: "https://instagram.com/lauroguedes.dev",
-    youTube: "https://youtube.com/leowgweb",
-    codetips: "https://codetips.cloud/u/lauroguedes",
+    github: "https://github.com/flojule",
+    linkedin: "https://linkedin.com/in/flojule",
+    youTube: "https://youtube.com/flojule",
   },
   enableThemeSelector: true,
   extraLinks: {
@@ -140,7 +136,7 @@ export const siteConfig: SiteConfig = {
   sections: {
     about: true,
     projects: true,
-    blog: true,
+    blog: false,
     work: true,
     education: true,
     hackathons: true,
