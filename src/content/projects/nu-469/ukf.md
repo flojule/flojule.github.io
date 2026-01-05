@@ -4,7 +4,7 @@ description: "UKF (unscented Kalman filter), that fuses a simple motion model wi
 image: "./ukf.png"
 startDate: "2025-09-15"
 endDate: "2025-10-15"
-skills: ["Kalman filter", "Python"]
+skills: ["Python", "Kalman filter"]
 sourceLink: "https://github.com/flojule/UKF"
 ---
 
