@@ -1,7 +1,7 @@
 ---
 title: "Joby S4-1.0"
 description: "Joby's first full scale eVTOL prototype."
-image: "/images/projects/joby-s4-1-0.JPEG"
+image: "./joby-s4-1-0.JPEG"
 startDate: "2017-02-06"
 endDate: "2017-12-31"
 skills: ["Composites", "Testing", "Catia"]
