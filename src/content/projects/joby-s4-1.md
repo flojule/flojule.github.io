@@ -1,16 +1,16 @@
 ---
-title: "Joby S4 1.0"
+title: "Joby S4-1.0"
 description: "Joby's first full scale eVTOL prototype."
-image: "https://api.dicebear.com/9.x/glass/svg?seed=Brooklynn"
+image: "/images/projects/joby-s4-1-0.JPEG"
 startDate: "2017-02-06"
 endDate: "2017-12-31"
 skills: ["Composites", "Testing", "Catia"]
-demoLink: "https://evtol.news/joby-aviation-s4-10-technology-demonstrator"
+sourceLink: "https://evtol.news/joby-aviation-s4-10-technology-demonstrator"
 ---
 
 ## Overview
 
-Screencial is a web-based platform designed to help users create stunning, professional-looking screenshots for social media posts. With an intuitive interface and powerful customization options, it enables content creators, marketers, and developers to generate eye-catching visuals that enhance their online presence.
+Focused on composites manufacturing and structural testing for the first Joby S4 full scale prototype. 
 
 ## Key Features
 
