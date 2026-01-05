@@ -1,7 +1,7 @@
 ---
 title: "Joby S4-2.0"
 description: "Joby's pre-production eVTOL"
-image: "/images/projects/joby-s4-2-0.JPEG"
+image: "public/images/projects/joby-s4-2-0.JPEG"
 startDate: "2017-10-01"
 skills: ["Composites", "Testing", "Catia", "FEA"]
 sourceLink: "https://www.jobyaviation.com/news/joby-aviation-raises-590-million-in-series-c-financing-to-launch-air-taxi-service/"
