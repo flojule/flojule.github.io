@@ -4,7 +4,7 @@ description: "Implementation of an offline and online path planning algorithm (A
 image: "https://api.dicebear.com/9.x/glass/svg?seed=Brooklynn"
 startDate: "2025-09-15"
 endDate: "2025-10-15"
-skills: ["Search", "Navigation", "A-star,"Python"]
+skills: ["Search", "Navigation", "A-star", "Python"]
 sourceLink: "https://github.com/flojule/search-a-star"
 ---
 
