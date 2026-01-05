@@ -1,10 +1,10 @@
 ---
 title: "Joby S4 2.1"
 description: "Joby's production eVTOL."
-image: "/images/projects/joby-s4-2-1.JPEG"
+image: "public/images/projects/joby-s4-2-1.JPEG"
 startDate: "2018-10-01"
 skills: ["Composites", "Testing", "Catia", "FEA", "Team management", "FAA"]
-demoLink: "https://codetips.cloud"
+demoLink: "https://www.youtube.com/watch?v=ljOfV50Wfrc"
 ---
 
 ## About Code Tips
