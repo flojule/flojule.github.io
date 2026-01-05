@@ -3,7 +3,8 @@ title: "Joby S4-2.0"
 description: "Joby pre-production eVTOL"
 image: "./joby-s4-2-0.JPEG"
 startDate: "2017-10-01"
-skills: ["Composites", "Testing", "Catia", "FEA"]
+endDate: "2021-12-31"
+skills: ["Composites Structure", "Mechanical Systems", "Design", "Build", "Integration", "Testing", "Flight Testing"]
 demoLink: "https://www.youtube.com/watch?v=5RpqYuce6Ao"
 ---
 
