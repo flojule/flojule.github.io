@@ -1,5 +1,5 @@
 ---
-title: "Joby S4-1.0"
+title: "Joby S4-1.0 (first full scale eVTOL)"
 description: "Mechanical engineer, I worked on manufacturing and structure testing on Joby first full scale eVTOL prototype."
 image: "./joby-s4-1.JPEG"
 startDate: "2017-02-06"

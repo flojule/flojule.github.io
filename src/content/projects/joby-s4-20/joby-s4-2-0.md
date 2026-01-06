@@ -1,5 +1,5 @@
 ---
-title: "Joby S4-2.0"
+title: "Joby S4-2.0 (pre-production aircraft)"
 description: "Tilt nacelle lead engineer on Joby pre-production eVTOL. Responsible for design. build, testing and integration. I supported the aircraft through the flight test campaign."
 image: "./joby-s4-2-0.JPEG"
 startDate: "2017-10-01"
