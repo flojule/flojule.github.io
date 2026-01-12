@@ -100,9 +100,14 @@ export const siteConfig: SiteConfig = {
   title: "Product design, system integration and testing",
   description:[
     "I am Florian Jule, an engineer focused on building reliable, human-centered robotic systems.",
+    " ",
     "I spent 8 years at Joby Aviation as a mechanical engineer, leading teams that developed mechanisms and composites structures for the Joby S4 and later designing mechanical systems for flight research and special projects.",
-    "I am currently pursuing an M.S. in Robotics at Northwestern University, shifting toward system design for human augmentation. Explore my projects and experience—and feel free to reach out.",
-    "In my free time, I love mountain biking and ski mountaineering."
+    " ",
+    "I am currently pursuing an M.S. in Robotics at Northwestern University, shifting toward system design for human augmentation.",
+    " ",
+    "In my free time, I love mountain biking and ski mountaineering.",
+    " ",
+    "Scroll down to explore my projects and experience, and feel free to reach out!",
   ],
   avatar: "../assets/floto.jpeg",
   location: "Berkeley, California",
