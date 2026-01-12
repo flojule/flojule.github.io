@@ -19,6 +19,7 @@ export interface SocialLinks {
   instagram?: string;
   youTube?: string;
   codetips?: string;
+  resume?: string;
 }
 
 /**
@@ -109,10 +110,11 @@ export const siteConfig: SiteConfig = {
     github: "https://github.com/flojule",
     linkedin: "https://linkedin.com/in/flojule",
     youTube: "https://youtube.com/@flojule",
+    resume: `${import.meta.env.BASE_URL}resume.pdf`
   },
   enableThemeSelector: true,
   extraLinks: {
-    enable: true,
+    enable: false,
     links: [
       {
         link: "/blog/guides/bloomfolio-complete-guide",
