@@ -37,9 +37,9 @@ const { name, title, description, avatar, location, socialLinks } = Astro.props;
       </h1>
       <p class="text-xl text-base-content/80 mb-2">{title}</p>
       {location && <p class="text-base-content/60 mb-4">{location}</p>}
-      <div class="text-lg leading-relaxed mb-6 space-y-4">
+      <p class="text-lg leading-relaxed mb-6 space-y-4">
         {description.map((text) => <p>{text}</p>)}
-      </div>
+      </p>
       {
         socialLinks && (
           <div class="flex gap-4">
