@@ -17,6 +17,10 @@ The robot performs all pick-and-place actions using MoveIt 2 through the custom 
 
 This project was done in a group with 4 members: Saif Ahmad, Aravind Ramaswami, Rob Zhu, and myself.
 
+## Video demonstration
+
+[Watch the demo video](./omniplace.mp4)
+
 ## Block diagram
 
 ![OmniPlace block diagram](./omniplace.png)
