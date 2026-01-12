@@ -1,6 +1,6 @@
 ---
-title: "Joby S4-2.1 (production vehicle)"
-description: "Tail and effectors team lead for Joby production eVTOL. Team of 5 engineers. I led the design for FAA certification and coordinated efforts with manufacturing, structural integrity, structural testing, and flight testing teams."
+title: "Joby S4-2.1 (production aircraft)"
+description: "Tail and effectors team lead for Joby production eVTOL. Team of 5 engineers. I led the design for FAA certification and coordinated efforts with manufacturing, structural integrity, structural testing, and flight testing teams. Holder of U.S. patent for the inboard nacelle tilt mechanism."
 image: "./joby-s4-2-1.JPEG"
 startDate: "2018-10-01"
 endDate: "2023-10-01"
@@ -9,3 +9,5 @@ demoLink: "https://www.youtube.com/watch?v=ljOfV50Wfrc"
 ---
 
 ## Overview
+
+<!-- https://patents.google.com/patent/WO2025006314A2/en -->
