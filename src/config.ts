@@ -105,7 +105,14 @@ export const siteConfig: SiteConfig = {
     " ",
     "I am currently pursuing an M.S. in Robotics at Northwestern University, shifting toward system design for human augmentation.",
     " ",
-    "In my free time, I love [bmxing](/flip.JPEG), [mountain](/utah.JPEG) [biking](/tailwhip.JPEG) and [ski](/cham.JPEG) [mountaineering](/sierra.JPEG).",
+    "In my free time, I love \
+    <a href='/flip.JPEG' target='_blank' rel='noopener'>bmxing</a>, \
+    <a href='/utah.JPEG' target='_blank' rel='noopener'>mountain</a> \
+    <a href='/tailwhip.JPEG' target='_blank' rel='noopener'>biking</a> \
+    and \
+    <a href='/cham.JPEG' target='_blank' rel='noopener'>ski mountaineering</a> \
+    <a href='/sierra.JPEG' target='_blank' rel='noopener'>mountaineering</a> \
+    .",
     " ",
     "Scroll down to explore my projects and experience, and feel free to reach out!",
   ],
