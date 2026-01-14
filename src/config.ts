@@ -105,7 +105,7 @@ export const siteConfig: SiteConfig = {
     " ",
     "I am currently pursuing an M.S. in Robotics at Northwestern University, shifting toward system design for human augmentation.",
     " ",
-    "In my free time, I love mountain biking and ski mountaineering.",
+    "In my free time, I love [bmxing](/flip.JPEG), [mountain](/utah.JPEG) [biking](/tailwhip.JPEG) and [ski](/cham.JPEG) [mountaineering](/sierra.JPEG).",
     " ",
     "Scroll down to explore my projects and experience, and feel free to reach out!",
   ],
