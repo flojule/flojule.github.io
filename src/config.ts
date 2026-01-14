@@ -99,19 +99,17 @@ export const siteConfig: SiteConfig = {
   name: "Florian Jule",
   title: "Product design, system integration and testing",
   description:[
-    "I am Florian Jule, an engineer focused on building reliable, human-centered robotic systems.",
-    "I spent 8 years at Joby Aviation as a mechanical engineer, leading teams that developed mechanisms and composites structures for the Joby S4 and later designing mechanical systems for flight research and special projects.",
-    " ",
+    "I am Florian Jule, an engineer focused on building human-centered robotic systems.",
+    "I spent 8 years at Joby Aviation as a mechanical engineer, leading teams that developed mechanisms and composites structures for the Joby S4 and other novel aircraft.",
     "I am currently pursuing an M.S. in Robotics at Northwestern University, shifting toward system design for human augmentation.",
     "In my free time, I love \
-    <a href='/flip.JPEG' target='_blank' rel='noopener'>bmxing</a>, \
-    <a href='/utah.JPEG' target='_blank' rel='noopener'>mountain</a> \
-    <a href='/tailwhip.JPEG' target='_blank' rel='noopener'>biking</a> \
+    <a href='/flip.JPEG' target='_blank' rel='noopener'>BMXing</a>, \
+    <a href='/utah.JPEG' target='_blank' rel='noopener'>Mountain</a> \
+    <a href='/tailwhip.JPEG' target='_blank' rel='noopener'>Biking</a> \
     and \
-    <a href='/cham.JPEG' target='_blank' rel='noopener'>ski</a> \
-    <a href='/sierra.JPEG' target='_blank' rel='noopener'>mountaineering</a>\
-    .",
-    "Scroll down to explore my projects and experience, and feel free to reach out!",
+    <a href='/cham.JPEG' target='_blank' rel='noopener'>Ski</a> \
+    <a href='/sierra.JPEG' target='_blank' rel='noopener'>Mountaineering</a>.",
+    "Scroll down to explore my projects, and feel free to reach out!",
   ],
   avatar: "../assets/floto.jpeg",
   location: "Berkeley, California",
