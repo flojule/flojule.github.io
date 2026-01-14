@@ -1,4 +1,4 @@
----
+<!-- ---
 import { MessageCircleCode, Pickaxe } from "@lucide/astro";
 ---
 
@@ -15,6 +15,43 @@ import { MessageCircleCode, Pickaxe } from "@lucide/astro";
     </p>
     <p class="text-base-content/60">
       Copyright © {new Date().getFullYear()} - Florian Jule
+    </p>
+  </aside>
+</footer> -->
+---
+import { MessageCircleCode } from "@lucide/astro";
+---
+
+<footer class="relative footer footer-horizontal footer-center bg-base-200 py-16 overflow-hidden">
+  <!-- background image -->
+  <img
+    src="/telluride.JPEG"
+    alt=""
+    class="absolute inset-0 w-full h-full object-cover
+           opacity-30 pointer-events-none select-none"
+    loading="lazy"
+  />
+
+  <!-- dark overlay for contrast -->
+  <div class="absolute inset-0 bg-base-200/80"></div>
+
+  <!-- content -->
+  <aside class="relative z-10">
+    <MessageCircleCode class="inline-block size-20" />
+    <p class="max-w-xl m-auto text-lg">
+      Want to chat? shoot me a dm{" "}
+      <a
+        href="https://linkedin.com/in/flojule"
+        target="_blank"
+        rel="noopener"
+        class="link link-hover text-primary"
+      >
+        on LinkedIn
+      </a>
+      .
+    </p>
+    <p class="text-base-content/60">
+      Copyright © {new Date().getFullYear()} – Florian Jule
     </p>
   </aside>
 </footer>
