@@ -1,9 +1,26 @@
 ---
 title: "Joby S4-2.0 (pre-production aircraft)"
-description: "Tilt nacelle lead engineer on Joby pre-production eVTOL. Responsible for design. build, testing and integration. I supported the aircraft through the flight test campaign."
+description: "Tail and wing tip nacelle lead engineer on Joby's pre-production eVTOL. Team of ~100–300, ~4 year program. Goal: demonstrate system-level architecture for certification. Responsible for the full development cycle: conceptual design, design, build, test, integration, and flight test."
 image: "./joby-s4-2-0.JPEG"
 startDate: "2017-10-01"
 endDate: "2021-12-31"
-skills: ["Composites Structure", "Mechanical Systems", "Design", "Build", "Integration", "Testing", "Flight Testing"]
+skills: ["Composites Structure", "Mechanical Systems", "Conceptual Design", "Design", "Build", "Integration", "Testing", "Flight Testing"]
 demoLink: "https://www.youtube.com/watch?v=5RpqYuce6Ao"
 ---
+
+## Overview
+
+Team of ~100–300 engineers over ~4 years.
+
+**Goal:** demonstrate system-level architecture for certification.
+
+I was responsible for the tail and wing tip nacelles across the full development cycle:
+
+- **Conceptual design** — contributed to aircraft architecture decisions
+- **Design** — detailed design of nacelle structure and mechanisms
+- **Build** — hands-on composite and mechanical assembly
+- **Test** — ground structural and functional testing
+- **Integration** — aircraft-level integration
+- **Flight test** — flight test support campaign
+
+![Joby S4-2.0](./2.0.png)

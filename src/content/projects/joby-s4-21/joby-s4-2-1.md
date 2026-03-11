@@ -1,13 +1,40 @@
 ---
 title: "Joby S4-2.1 (production aircraft)"
-description: "Tail and effectors team lead for Joby production eVTOL. Team of 5 engineers. I led the design for FAA certification and coordinated efforts with manufacturing, structural integrity, structural testing, and flight testing teams. Holder of U.S. patent for the inboard nacelle tilt mechanism."
+description: "Tail and effectors IPT lead for Joby's production eVTOL, 5 direct reports. Team of ~300–2000+. Goal: design and certify an eVTOL with 4-passenger payload. Led FAA certification of tail (clean sheet) and effectors (nacelles, control surfaces, propellers). Holder of U.S. patent for the inboard nacelle tilt mechanism."
 image: "./joby-s4-2-1.JPEG"
 startDate: "2018-10-01"
 endDate: "2023-10-01"
-skills: ["Composites Structure", "Mechanical Systems", "Team management", "FAA Certification"]
+skills: ["Composites Structure", "Mechanical Systems", "Team Management", "FAA Certification"]
 demoLink: "https://www.youtube.com/watch?v=ljOfV50Wfrc"
 ---
 
 ## Overview
+
+Team of ~300 to 2,000+ engineers across a multi-year program.
+
+**Goal:** design and certify an eVTOL aircraft with a 4-passenger payload.
+
+I led the Tail and Effectors Integrated Product Team with 5 direct reports.
+
+### Tail
+
+Clean sheet design to meet FAA requirements:
+
+- Hand layup, AFP, and machined parts
+- Met mass target
+- Delivered production drawings
+- Passed structural testing for FAA certification credit
+
+![Tail structure](./tail.png)
+
+### Effectors
+
+- Nacelles (tilt mechanisms)
+- Control surfaces
+- Propellers
+
+![Nacelle pylon](./pylon.png)
+
+![Tilt linkage](./linkage.png)
 
 <!-- https://patents.google.com/patent/WO2025006314A2/en -->

@@ -1,8 +1,17 @@
 ---
 title: "Joby special projects"
-description: "Joby special projects in the flight research division. I worked on several novel aircraft designs, build, and testing (ground and flight). I was responsible for designing, building and testing an electro-mechanical retractable landing gear, as well as for mechanical systems on a different aircraft prototype"
-image: "https://companieslogo.com/img/orig/JOBY-c9c4af5c.png?t=1746503125"
+description: "Mechanical engineer on several novel aircraft designs in a small team within Joby's flight research division. Responsibilities spanned retractable landing gear, mechanical systems, structure testing, and logistics."
+image: "./joby-sp.png"
 startDate: "2023-10-01"
 endDate: "2025-02-06"
-skills: ["Mechanical Systems", "Testing", "Integration", "Prototyping"]
+skills: ["Mechanical Systems", "Structure Testing", "Integration", "Prototyping", "Logistics"]
 ---
+
+## Overview
+
+Small team working on several novel aircraft designs within Joby's flight research division.
+
+- **Retractable landing gear** — designed, built, and tested an electro-mechanical retractable landing gear system
+- **Mechanical systems** — mechanical systems design and integration on a separate aircraft prototype
+- **Structure testing** — structural test planning and execution
+- **Logistics** — coordination and logistics support across programs
