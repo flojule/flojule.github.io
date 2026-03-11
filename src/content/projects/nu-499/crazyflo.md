@@ -22,17 +22,23 @@ The package covers the full workflow:
 
 ## Video demonstration
 
-<video controls playsinline style="width:100%;border-radius:0.5rem;">
+<div style="text-align:center">
+<video controls playsinline style="width:100%;max-width:60%;border-radius:0.5rem;">
   <source src="https://github.com/user-attachments/assets/08495a9e-1ff6-4af9-ac21-35a55d5e8173" type="video/mp4" />
 </video>
+</div>
 
 ## Block diagram
 
+<div style="text-align:center">
+
 ![crazyflo block diagram](./cf_block.png)
+
+</div>
 
 ## Prospective
 
-- **Online OCP via MCP** — the trajectory solver currently runs offline; the next step is to turn it into an online Model Predictive Control (to solve a finite-horizon OCP repeatedly) so the drones can replan in flight.
+- **Online OCP via MPC** — the trajectory solver currently runs offline; the next step is to turn it into an online Model Predictive Control (to solve a finite-horizon OCP repeatedly) so the drones can replan in flight.
 - **Online path planning** — the payload reference path is currently specified from known obstacle positions; replacing this with an online A\* or RRT search would allow the system to adapt to new environments autonomously.
 - **Obstacle detection from video** — obstacle geometry is currently provided manually; feeding a camera stream into a perception pipeline would let the planner discover and update obstacle data in real time.
 - **Localization** — accurate localization is the hardest scaling challenge. The current setup relies on a Lighthouse base station for precise positioning; operating without fixed infrastructure would require a robust onboard or distributed localization solution before this approach can transfer to real-world environments.
