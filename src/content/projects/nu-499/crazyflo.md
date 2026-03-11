@@ -31,9 +31,7 @@ The package covers the full workflow:
 ## Block diagram
 
 <div style="text-align:center">
-
-![crazyflo block diagram](./cf_block.png)
-
+<img src="./cf_block.png" alt="crazyflo block diagram" style="max-width:60%;border-radius:0.5rem;" />
 </div>
 
 ## Prospective
