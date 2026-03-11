@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import ProjectCard from "./ProjectCard.astro";
 
-const projectEntries = await getCollection("projects");
+const projectEntries = await getCollection("projects", ({ data }) => !data.draft);
 
 // Sort by start date, most recent first
 const sortedProjects = projectEntries.sort(
