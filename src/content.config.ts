@@ -39,6 +39,7 @@ const projects = defineCollection({
     skills: z.array(z.string()),
     demoLink: z.string().url().optional(),
     sourceLink: z.string().url().optional(),
+    draft: z.boolean().optional().default(false),
   }),
 });
 
