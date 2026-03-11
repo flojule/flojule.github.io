@@ -99,9 +99,8 @@ export const siteConfig: SiteConfig = {
   name: "Florian Jule",
   title: "Product design, system integration and testing",
   description:[
-    "I am Florian Jule, an engineer focused on building human-centered robotic systems.",
-    "I spent 8 years at Joby Aviation as a mechanical engineer, leading teams that developed mechanisms and composites structures for the Joby S4 and other novel aircraft.",
-    "I am currently pursuing an M.S. in Robotics at Northwestern University, shifting toward system design for human augmentation.",
+    "Engineer with 8 years at Joby Aviation, where I led teams designing and certifying mechanisms and composite structures for the Joby S4 eVTOL — from first prototype to designs for FAA certification.",
+    "I am currently pursuing an M.S. in Robotics at Northwestern University, building on that foundation to design robotic systems for human augmentation.",
     "In my free time, I love \
     <a href='/flip.JPEG' target='_blank' rel='noopener'>BMXing</a>, \
     <a href='/utah.JPEG' target='_blank' rel='noopener'>Mountain</a> \
@@ -113,7 +112,7 @@ export const siteConfig: SiteConfig = {
   ],
   avatar: "../assets/floto.jpeg",
   location: "Berkeley, California",
-  email: "florian.jule+ghp@gadz.org",
+  email: "floriangejuice+gh@gmail.com",
   socialLinks: {
     github: "https://github.com/flojule",
     linkedin: "https://linkedin.com/in/flojule",
