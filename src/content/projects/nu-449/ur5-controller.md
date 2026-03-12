@@ -6,6 +6,7 @@ startDate: "2025-11-19"
 endDate: "2025-12-15"
 skills: ["Python", "Robotic Manipulation", "Control Theory", "CoppeliaSim"]
 sourceLink: "https://github.com/flojule/UR5"
+draft: true
 ---
 
 ## Overview
