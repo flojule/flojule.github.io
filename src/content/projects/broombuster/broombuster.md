@@ -1,6 +1,6 @@
 ---
 title: "BroomBuster — Street Sweeping Tracker"
-description: "Tired of getting parking tickets? BroomBuster is an interactive Python tool that shows where your car is parked on a live map and tells you when street sweeping applies to that block. Supports the Bay Area and Chicago."
+description: "Tired of getting parking tickets? BroomBuster is an interactive Python tool that shows where your car is parked on a live map and tells you when street sweeping applies to that block. Supports multiple cities across the Bay Area and Chicago."
 image: "./oakland.png"
 startDate: "2025-06-06"
 endDate: "2026-03-11"
@@ -12,6 +12,7 @@ sourceLink: "https://github.com/flojule/BroomBuster"
 
 BroomBuster tells you whether your parked car is at risk of a street-sweeping ticket.
 It pulls your car's live GPS location from a [Traccar](https://www.traccar.org/) server (or accepts manual coordinates), reverse-geocodes the address, and overlays sweeping schedules on an interactive OpenStreetMap-backed Plotly map.
+Supports multiple cities across the Bay Area (Oakland, San Francisco, Berkeley, Alameda) and Chicago, IL.
 
 ## Features
 
@@ -21,21 +22,11 @@ It pulls your car's live GPS location from a [Traccar](https://www.traccar.org/)
   - 🟠 Orange — sweeping tomorrow
   - 🔵 Blue — no sweeping soon
 - **Car marker** — coloured dot matches the urgency of the block where your car is parked; hover to see the address.
-- **Summary panel** — shows the address, date, and next sweeping times for both sides of the street, with an arrow marking your side.
-- **Overview inset** — zoomed-out mini-map so you always know where the main view is.
+- **Summary panel** (bottom-left) — shows the address, date, and next sweeping times for both address sides, with an arrow marking your side.
+- **Overview inset** (lower-right) — zoomed-out mini-map so you always know where the main view is.
 - **Multi-city / regional loading** — load an entire region (e.g. all Bay Area cities) in one run, or switch to single-city mode for faster iteration.
 - **Email notification** — opt-in alert when sweeping is same-day or next-day.
 - **Credentials via environment variables** — no passwords in source code.
-
-## Supported cities
-
-| City | Data source | Status |
-|---|---|---|
-| Oakland, CA | Bundled shapefile | ✅ Ready |
-| San Francisco, CA | Auto-download from DataSF on first run | ✅ Ready |
-| Chicago (Edgewater), IL | Zones auto-download; schedule fetched live from Socrata API | ✅ Ready |
-| Berkeley, CA | Manual download from Berkeley Open Data | ⚠️ Data file required |
-| Alameda, CA | No public GIS layer — requires manual digitisation | ⚠️ Data file required |
 
 ## How it works
 
