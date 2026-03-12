@@ -8,6 +8,8 @@ skills: ["Python", "ROS 2", "Optimal Control", "CasADi", "Drones"]
 sourceLink: "https://github.com/flojule/crazyflo"
 ---
 
+import cfBlock from './cf_block.png';
+
 ## Overview
 
 Three Crazyflie 2.1 drones are each attached to the same payload by a cable and fly in coordinated formation. An OCP is solved offline using CasADi to find trajectories that simultaneously satisfy velocity, acceleration, jerk, cable tension, and obstacle constraints for all three drones. The solution is converted into 7th-degree polynomial segments compatible with the Crazyflie firmware, uploaded, and executed in a button-gated sequence (takeoff → align → fly → land).
@@ -31,7 +33,7 @@ The package covers the full workflow:
 ## Block diagram
 
 <div style="text-align:center">
-<img src="./cf_block.png" alt="crazyflo block diagram" style="max-width:60%;border-radius:0.5rem;" />
+<img src={cfBlock.src} alt="crazyflo block diagram" style="max-width:60%;border-radius:0.5rem;" />
 </div>
 
 ## Prospective
