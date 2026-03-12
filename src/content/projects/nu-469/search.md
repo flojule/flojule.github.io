@@ -6,6 +6,7 @@ startDate: "2025-10-15"
 endDate: "2025-11-15"
 skills: ["Python", "A*", "Path Planning", "Motion Control"]
 sourceLink: "https://github.com/flojule/search-a-star"
+draft: true
 ---
 
 ## Overview

@@ -1,0 +1,73 @@
+---
+title: "Mobile robot algorithms: localization, planning & learning"
+description: "Three interconnected projects from a mobile robotics course: UKF-based localization fusing odometry and landmark measurements, A* path planning with motion control, and a data-driven motion model learned with Locally Weighted Linear Regression."
+image: "./ukf.png"
+startDate: "2025-09-15"
+endDate: "2025-12-15"
+skills: ["Python", "Kalman Filter", "Localization", "A*", "Path Planning", "Motion Control", "Machine Learning", "Regression", "Sensor Fusion"]
+sourceLink: "https://github.com/flojule/UKF"
+---
+
+import ukfImg from './ukf.png';
+import searchImg from './search.png';
+import lwlrImg from './lwlr.png';
+
+## UKF-based mobile robot localization
+
+Implemented an Unscented Kalman Filter to localize a wheeled robot in an environment with known landmarks. Robot odometry drives the prediction step via a unicycle motion model, while range and bearing measurements to landmarks correct the state estimate. Validated on the [UTIAS MRCLAM](http://asrl.utias.utoronto.ca/datasets/mrclam/) single-robot dataset.
+
+The filter operates in two steps each timestep:
+
+- **Predict**: the current pose is propagated forward using a unicycle motion model and sigma points, accounting for process noise in wheel velocities.
+- **Correct**: visible landmark measurements (range + bearing) are used to pull the estimate toward ground truth, weighted by sensor noise.
+
+Dead reckoning accumulates orientation error and diverges shortly. The UKF tracks ground truth throughout the run.
+
+| Metric | UKF | Dead Reckoning |
+|---|---|---|
+| Avg. position error | 0.107 m | diverges |
+| Avg. bearing error | 0.049 rad | diverges |
+
+<div style="text-align:center">
+<img src={ukfImg.src} alt="UKF localization result" style="max-width:70%;border-radius:0.5rem;" />
+</div>
+
+[[Source]](https://github.com/flojule/UKF)
+
+---
+
+## A* path planning and motion control
+
+A* path planner for a wheeled robot navigating a landmark-based environment, with offline (full map) and online (partial knowledge) variants, plus a proportional controller that drives the robot along the planned paths. Validated on the UTIAS MRCLAM dataset.
+
+### Path Planning (A*)
+
+Paths are planned on a grid using A* with a Chebyshev distance heuristic (admissible for 8-directional movement). Two tie-breaking criteria improve path quality: fewest direction changes and octile distance. Two grid resolutions are compared — coarse (1 m/cell) and fine (0.1 m/cell, with landmarks inflated by the robot footprint).
+
+Online planning starts with no map knowledge. At each timestep the robot reveals its neighbors and A* replans from scratch — coarse grids yield faster, cleaner trajectories due to fewer waypoints and direction changes.
+
+### Motion Controller
+
+A proportional controller tracks the waypoints by independently commanding linear velocity $v = K_v \cdot d$ and angular velocity $\omega = K_\omega \cdot \Delta\theta$. Linear velocity is scaled by $\cos(\Delta\theta)$ to avoid moving away from the target while turning. A collision avoidance layer reorients the robot when the next cell is occupied.
+
+<div style="text-align:center">
+<img src={searchImg.src} alt="A* path planning result" style="max-width:70%;border-radius:0.5rem;" />
+</div>
+
+[[Source]](https://github.com/flojule/search-a-star)
+
+---
+
+## Learning a robot motion model with LWLR
+
+Instead of relying on an analytical unicycle model, this project learns the robot's motion model directly from data. Given a control input $(v, \omega)$ and the previous pose, Locally Weighted Linear Regression (LWLR) predicts the resulting pose change by fitting a local linear model weighted by similarity to the query point.
+
+LWLR assigns each training sample a weight based on its distance to the query in control space, then solves a weighted least-squares problem. This non-parametric approach adapts to non-linearities in the true motion model without requiring an explicit parameterization.
+
+The learned model is evaluated against the analytical unicycle model on held-out odometry sequences — the data-driven model captures systematic errors (wheel slip, asymmetry) that the closed-form model cannot represent.
+
+<div style="text-align:center">
+<img src={lwlrImg.src} alt="LWLR learned motion model" style="max-width:70%;border-radius:0.5rem;" />
+</div>
+
+[[Source]](https://github.com/flojule/LWLR)
