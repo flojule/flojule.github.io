@@ -6,6 +6,7 @@ startDate: "2025-11-15"
 endDate: "2025-12-15"
 skills: ["Python", "Machine Learning", "Regression"]
 sourceLink: "https://github.com/flojule/LWLR"
+draft: true
 ---
 
 ## Overview
