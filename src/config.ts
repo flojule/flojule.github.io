@@ -99,7 +99,7 @@ export const siteConfig: SiteConfig = {
   name: "Florian Jule",
   title: "Product design, system integration and testing",
   description:[
-    "Engineer with 8 years at Joby Aviation, where I led teams designing and certifying mechanisms and composite structures for the Joby S4 eVTOL — from first prototype to designs for FAA certification.",
+    "Engineer with 8 years at Joby Aviation, where I led teams designing mechanisms and composite structures for the Joby S4 eVTOL — from first prototype to designs for FAA certification.",
     "I am currently pursuing an M.S. in Robotics at Northwestern University, building on that foundation to design robotic systems for human augmentation.",
     "In my free time, I love \
     <a href='/flip.JPEG' target='_blank' rel='noopener'>BMXing</a>, \
