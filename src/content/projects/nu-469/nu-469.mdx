@@ -8,10 +8,6 @@ skills: ["Python", "Kalman Filter", "Localization", "A*", "Path Planning", "Moti
 sourceLink: "https://github.com/flojule/UKF"
 ---
 
-import ukfImg from './ukf.png';
-import searchImg from './search.png';
-import lwlrImg from './lwlr.png';
-
 ## UKF-based mobile robot localization
 
 Implemented an Unscented Kalman Filter to localize a wheeled robot in an environment with known landmarks. Robot odometry drives the prediction step via a unicycle motion model, while range and bearing measurements to landmarks correct the state estimate. Validated on the [UTIAS MRCLAM](http://asrl.utias.utoronto.ca/datasets/mrclam/) single-robot dataset.
@@ -29,7 +25,9 @@ Dead reckoning accumulates orientation error and diverges shortly. The UKF track
 | Avg. bearing error | 0.049 rad | diverges |
 
 <div style="text-align:center">
-<img src={ukfImg.src} alt="UKF localization result" style="max-width:70%;border-radius:0.5rem;" />
+
+![UKF localization result](./ukf.png)
+
 </div>
 
 [[Source]](https://github.com/flojule/UKF)
@@ -51,7 +49,9 @@ Online planning starts with no map knowledge. At each timestep the robot reveals
 A proportional controller tracks the waypoints by independently commanding linear velocity $v = K_v \cdot d$ and angular velocity $\omega = K_\omega \cdot \Delta\theta$. Linear velocity is scaled by $\cos(\Delta\theta)$ to avoid moving away from the target while turning. A collision avoidance layer reorients the robot when the next cell is occupied.
 
 <div style="text-align:center">
-<img src={searchImg.src} alt="A* path planning result" style="max-width:70%;border-radius:0.5rem;" />
+
+![A* path planning result](./search.png)
+
 </div>
 
 [[Source]](https://github.com/flojule/search-a-star)
@@ -67,7 +67,9 @@ LWLR assigns each training sample a weight based on its distance to the query in
 The learned model is evaluated against the analytical unicycle model on held-out odometry sequences — the data-driven model captures systematic errors (wheel slip, asymmetry) that the closed-form model cannot represent.
 
 <div style="text-align:center">
-<img src={lwlrImg.src} alt="LWLR learned motion model" style="max-width:70%;border-radius:0.5rem;" />
+
+![LWLR learned motion model](./lwlr.png)
+
 </div>
 
 [[Source]](https://github.com/flojule/LWLR)
