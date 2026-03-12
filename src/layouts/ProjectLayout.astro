@@ -10,6 +10,7 @@ interface Props {
   startDate: Date;
   endDate?: Date;
   image: any;
+  video?: string;
   skills: string[];
   demoLink?: string;
   sourceLink?: string;
@@ -21,6 +22,7 @@ const {
   startDate,
   endDate,
   image,
+  video,
   skills,
   demoLink,
   sourceLink,
@@ -79,10 +81,18 @@ function calculateDuration(startDate: Date, endDate?: Date) {
       </a>
     </div>
 
-    <!-- Featured Image -->
-    <!-- TODO: Future Enhancement - Support multiple images/project gallery -->
+    <!-- Featured Media -->
     {
-      image && (
+      video ? (
+        <figure class="mb-8 rounded-2xl overflow-hidden">
+          <video
+            src={video}
+            controls
+            playsinline
+            class="w-full aspect-video object-cover"
+          />
+        </figure>
+      ) : image && (
         <figure class="mb-8 rounded-2xl overflow-hidden">
           <Image
             src={image}
