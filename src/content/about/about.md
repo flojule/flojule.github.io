@@ -7,4 +7,4 @@ I worked at Joby Aviation for 8 years as a mechanical engineer. There, I led a t
 
 Prior to Joby, I earned a B.S. in Mechanical and Industrial engineering from Arts et Metiers ParisTech (France) and a M.S. in Aerospace engineering from the University of Michigan.
 
-I have a passion for product design, system integration and testing. My current focus is on human augmentation in medicine and rehabilitation.
+I have a passion for product design, system integration and testing. My current focus is on human augmentation.
