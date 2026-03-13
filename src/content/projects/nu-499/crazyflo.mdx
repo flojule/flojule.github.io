@@ -6,6 +6,7 @@ startDate: "2026-01-01"
 endDate: "2026-03-31"
 skills: ["Python", "ROS 2", "Optimal Control", "CasADi", "Drones"]
 sourceLink: "https://github.com/flojule/crazyflo"
+video: "/videos/projects/nu-499/crazyflo.mp4"
 ---
 
 import cfBlock from './cf_block.png';
@@ -22,19 +23,17 @@ The package covers the full workflow:
 4. Upload and execute the trajectories on real or simulated drones using Crazyswarm2.
 5. Compare planned vs. executed trajectories using rosbag2 data.
 
-## Video demonstration
-
-<div style="text-align:center">
-<video controls playsinline style="width:100%;max-width:60%;border-radius:0.5rem;">
-  <source src="https://github.com/user-attachments/assets/08495a9e-1ff6-4af9-ac21-35a55d5e8173" type="video/mp4" />
-</video>
-</div>
-
 ## Block diagram
 
 <div style="text-align:center">
 <img src={cfBlock.src} alt="crazyflo block diagram" style="max-width:60%;border-radius:0.5rem;" />
 </div>
+
+## Conclusions
+
+- The OCP approach successfully generates feasible trajectories for multiple drones carrying a shared payload, demonstrating the potential of optimal control for cooperative multi-agent systems.
+- Obstacle avoidance is effectively handled by incorporating constraints into the OCP, allowing the drones to navigate complex environments while maintaining payload stability. It is crucial to carefully tune the cost function and constraints to balance trajectory optimality with robustness to disturbances and model inaccuracies.
+- The Crazyflie platform provides a flexible testbed with ROS 2 for multi-drone coordination, but accurate localization remains a significant challenge. The current reliance on external tracking systems limits real-world applicability.
 
 ## Prospective
 
@@ -42,4 +41,8 @@ The package covers the full workflow:
 - **Online path planning** — the payload reference path is currently specified from known obstacle positions; replacing this with an online A\* or RRT search would allow the system to adapt to new environments autonomously.
 - **Obstacle detection from video** — obstacle geometry is currently provided manually; feeding a camera stream into a perception pipeline would let the planner discover and update obstacle data in real time.
 - **Localization** — accurate localization is the hardest scaling challenge. The current setup relies on a Lighthouse base station for precise positioning; operating without fixed infrastructure would require a robust onboard or distributed localization solution before this approach can transfer to real-world environments.
+- **Decentralized Control** — centralized OCP solvers can compute coordinated trajectories for multiple agents, but scalability and real-time performance are concerns. Future work should explore decentralized or hierarchical control architectures to enable real-time coordination.
 
+<div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+  <img src="crazyflo.JPEG" alt="Crazyflie drones carrying a payload" style={{ maxWidth: '80%', borderRadius: '0.5rem' }} />
+</div>
