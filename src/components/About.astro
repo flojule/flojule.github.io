@@ -50,16 +50,17 @@ function formatGraduation(entry: EducationEntry) {
       <article class="order-2 lg:order-1 lg:row-span-2 card bg-base-200 shadow-sm border border-base-300">
         <div class="card-body">
           <div class="space-y-3">
-            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary/80">
-              {sectionTitle}
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+              <h2 class="text-2xl sm:text-3xl font-bold">Hi, I'm {name}</h2>
+              {location && (
+                <p class="text-sm uppercase tracking-[0.15em] text-base-content/60 sm:text-right">
+                  {location}
+                </p>
+              )}
+            </div>
+            <p class="font-serif text-lg leading-snug text-base-content/85 sm:text-xl">
+              {headline}
             </p>
-            <h2 class="text-2xl sm:text-3xl font-bold">Hi, I'm {name}</h2>
-            <p class="text-base sm:text-lg text-base-content/80">{headline}</p>
-            {location && (
-              <p class="text-sm uppercase tracking-[0.15em] text-base-content/60">
-                {location}
-              </p>
-            )}
 
             <div class="space-y-3 text-base leading-relaxed text-base-content/80 [&_a]:text-sky-600 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-sky-700">
               {description.map((line) => (
