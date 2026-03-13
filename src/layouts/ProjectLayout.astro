@@ -14,6 +14,7 @@ interface Props {
   video?: string;
   skills: string[];
   demoLink?: string;
+  demoLabel?: string;
   sourceLink?: string;
 }
 
@@ -26,6 +27,7 @@ const {
   video,
   skills,
   demoLink,
+  demoLabel = "Live Demo",
   sourceLink,
 } = Astro.props;
 
@@ -138,7 +140,7 @@ function formatPeriod(startDate: Date, endDate?: Date) {
                   class="inline-flex items-center gap-2 font-medium text-base-content/70 hover:text-primary transition-colors"
                 >
                   <ExternalLink class="size-4" />
-                  Live Demo
+                  {demoLabel}
                 </a>
               </>
             )
