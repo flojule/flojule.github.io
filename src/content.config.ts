@@ -23,6 +23,7 @@ const projects = defineCollection({
     endDate: z.coerce.date().optional(),
     skills: z.array(z.string()),
     demoLink: z.string().url().optional(),
+    demoLabel: z.string().optional(),
     sourceLink: z.string().url().optional(),
     video: z.string().optional(),
     draft: z.boolean().optional().default(false),

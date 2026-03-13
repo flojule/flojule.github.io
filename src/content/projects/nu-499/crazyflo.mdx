@@ -103,8 +103,12 @@ The solver treats the three drones and shared payload as one coupled trajectory 
     + J_{\mathrm{form}}
     + J_{\mathrm{obs}} \\
   \text{s.t.} \quad
-  & \text{dynamics},\ \text{boundary conditions},\ \text{speed/acceleration/jerk limits}, \\
-  & \text{unit cable directions},\ \text{tension bounds},\ \text{drone separation}.
+  & \text{dynamics}, \\
+  & \text{boundary conditions}, \\
+  & \text{speed / acceleration / jerk limits}, \\
+  & \text{rigid drone-payload distances}, \\
+  & \text{tension bounds}, \\
+  & \text{drone separation}.
   \end{aligned}
   $$
 </div>
@@ -120,7 +124,7 @@ The solver treats the three drones and shared payload as one coupled trajectory 
 
 - Dynamics and start/end conditions.
 - Velocity, acceleration, and jerk limits.
-- Unit cable directions and tension bounds.
+- Rigid drone-payload distances and tension bounds.
 - Drones remain above the payload.
 - Minimum separation between drones.
 

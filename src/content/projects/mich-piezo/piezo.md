@@ -6,6 +6,7 @@ startDate: "2016-09-01"
 endDate: "2016-12-15"
 skills: ["Composites", "Piezoelectric", "Additive Manufacturing", "LabVIEW"]
 demoLink: "https://pubs.acs.org/doi/abs/10.1021/acsami.8b13643"
+demoLabel: "Publication"
 ---
 
 ## Overview

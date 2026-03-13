@@ -9,6 +9,9 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const hasDemoLink = Boolean(project.data.demoLink);
+const hasSourceLink = Boolean(project.data.sourceLink);
+const actionCount = Number(hasDemoLink) + Number(hasSourceLink);
 
 function getVideoMimeType(videoPath: string) {
   const extension = videoPath.split(".").pop()?.toLowerCase();
@@ -65,48 +68,58 @@ function formatPeriod(startDate: Date, endDate?: Date) {
     <h3 class="card-title text-lg sm:text-xl hover:text-primary transition-colors">
       <a href={`/projects/${project.id}`}>{project.data.title}</a>
     </h3>
-    <time class="text-sm text-base-content/60">
-      {formatPeriod(project.data.startDate, project.data.endDate)}
-    </time>
+    <div class="flex items-center justify-between gap-3">
+      <time class="text-sm text-base-content/60">
+        {formatPeriod(project.data.startDate, project.data.endDate)}
+      </time>
+      {
+        actionCount > 0 && (
+          <div class="flex items-center gap-3 text-xs text-base-content/65">
+            {
+              project.data.demoLink && (
+                <a
+                  href={project.data.demoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open external link"
+                  title="Open external link"
+                  class="inline-flex items-center gap-1 rounded-md border border-base-content/10 bg-base-200/50 px-2 py-1 font-medium transition-colors hover:border-primary/20 hover:text-primary"
+                >
+                  <ExternalLink class="size-3.5" />
+                  <span>Link</span>
+                </a>
+              )
+            }
+            {
+              project.data.sourceLink && (
+                <a
+                  href={project.data.sourceLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open GitHub repository"
+                  title="Open GitHub repository"
+                  class="inline-flex items-center gap-1 rounded-md border border-base-content/10 bg-base-200/50 px-2 py-1 font-medium transition-colors hover:border-primary/20 hover:text-primary"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 32 32"
+                    fill="currentColor"
+                  >
+                    <path d="M16,2.345c7.735,0,14,6.265,14,14-.002,6.015-3.839,11.359-9.537,13.282-.7,.14-.963-.298-.963-.665,0-.473,.018-1.978,.018-3.85,0-1.312-.437-2.152-.945-2.59,3.115-.35,6.388-1.54,6.388-6.912,0-1.54-.543-2.783-1.435-3.762,.14-.35,.63-1.785-.14-3.71,0,0-1.173-.385-3.85,1.435-1.12-.315-2.31-.472-3.5-.472s-2.38,.157-3.5,.472c-2.677-1.802-3.85-1.435-3.85-1.435-.77,1.925-.28,3.36-.14,3.71-.892,.98-1.435,2.24-1.435,3.762,0,5.355,3.255,6.563,6.37,6.913-.403,.35-.77,.963-.893,1.872-.805,.368-2.818,.963-4.077-1.155-.263-.42-1.05-1.452-2.152-1.435-1.173,.018-.472,.665,.017,.927,.595,.332,1.277,1.575,1.435,1.978,.28,.787,1.19,2.293,4.707,1.645,0,1.173,.018,2.275,.018,2.607,0,.368-.263,.787-.963,.665-5.719-1.904-9.576-7.255-9.573-13.283,0-7.735,6.265-14,14-14Z" />
+                  </svg>
+                  <span>GitHub</span>
+                </a>
+              )
+            }
+          </div>
+        )
+      }
+    </div>
     <p class="text-sm sm:text-base text-base-content/80">{project.data.description}</p>
     <div class="flex flex-wrap gap-2 pt-1">
       {project.data.skills.map((skill) => <SkillBadge skill={skill} />)}
-    </div>
-    <div class="card-actions justify-end pt-2 gap-2">
-      {
-        project.data.demoLink && (
-          <a
-            href={project.data.demoLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-xs sm:btn-sm btn-soft gap-1"
-          >
-            <ExternalLink class="size-4" />
-            Link
-          </a>
-        )
-      }
-      {
-        project.data.sourceLink && (
-          <a
-            href={project.data.sourceLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-xs sm:btn-sm btn-soft gap-1"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 32 32"
-              fill="currentColor"
-            >
-              <path d="M16,2.345c7.735,0,14,6.265,14,14-.002,6.015-3.839,11.359-9.537,13.282-.7,.14-.963-.298-.963-.665,0-.473,.018-1.978,.018-3.85,0-1.312-.437-2.152-.945-2.59,3.115-.35,6.388-1.54,6.388-6.912,0-1.54-.543-2.783-1.435-3.762,.14-.35,.63-1.785-.14-3.71,0,0-1.173-.385-3.85,1.435-1.12-.315-2.31-.472-3.5-.472s-2.38,.157-3.5,.472c-2.677-1.802-3.85-1.435-3.85-1.435-.77,1.925-.28,3.36-.14,3.71-.892,.98-1.435,2.24-1.435,3.762,0,5.355,3.255,6.563,6.37,6.913-.403,.35-.77,.963-.893,1.872-.805,.368-2.818,.963-4.077-1.155-.263-.42-1.05-1.452-2.152-1.435-1.173,.018-.472,.665,.017,.927,.595,.332,1.277,1.575,1.435,1.978,.28,.787,1.19,2.293,4.707,1.645,0,1.173,.018,2.275,.018,2.607,0,.368-.263,.787-.963,.665-5.719-1.904-9.576-7.255-9.573-13.283,0-7.735,6.265-14,14-14Z" />
-            </svg>
-            Source
-          </a>
-        )
-      }
     </div>
   </div>
 </article>

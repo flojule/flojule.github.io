@@ -11,4 +11,29 @@
   --color-secondary-content: #fff7f8;
   --color-accent: #5f132b;
   --color-accent-content: #fff7f8;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.safe-top-inset {
+  padding-top: var(--safe-area-top);
+}
+
+.safe-bottom-inset {
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.footer-safe-height {
+  height: calc(8rem + var(--safe-area-bottom));
+}
+
+@media (min-width: 640px) {
+  .footer-safe-height {
+    height: calc(11rem + var(--safe-area-bottom));
+  }
 }
