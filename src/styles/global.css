@@ -15,9 +15,15 @@
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+html,
 body {
   min-height: 100vh;
   min-height: 100svh;
+  background-color: var(--color-base-100);
+}
+
+html {
+  overscroll-behavior-y: none;
 }
 
 .safe-top-inset {
