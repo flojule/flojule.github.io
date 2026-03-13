@@ -9,7 +9,6 @@ sourceLink: "https://github.com/flojule/crazyflo"
 video: "/videos/projects/nu-499/crazyflo.mp4"
 ---
 
-import cfBlock from './cf_block.png';
 import cfPhoto from './crazyflo.JPEG';
 
 ## Overview
@@ -18,25 +17,148 @@ Three Crazyflie 2.1 drones are each attached to the same payload by a cable and 
 
 The package covers the full workflow:
 
-1. Define a payload reference path (ellipse, figure-8, straight line, random walk, or obstacle course).
-2. Solve the OCP with CasADi to obtain per-drone trajectories that respect velocity, acceleration, jerk, cable tension, and obstacle constraints.
-3. Convert the solution into 7th-degree polynomial segments compatible with the Crazyflie firmware.
-4. Upload and execute the trajectories on real or simulated drones using Crazyswarm2.
-5. Compare planned vs. executed trajectories using rosbag2 data.
+<div class="my-3 rounded-2xl border border-base-300 bg-base-200/50 p-2 sm:p-2.5">
+  <div class="mx-auto flex max-w-lg flex-col gap-1">
+    <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-1.5">
+      <p class="text-xs font-semibold text-primary/80">1. Input: <span class="text-base-content font-semibold">Payload reference path</span></p>
+      <p class="mt-0 text-sm leading-snug text-base-content/70">
+        Ellipse, figure-8, straight line, random walk, or obstacle course.
+      </p>
+    </div>
 
-## Block diagram
+    <div class="flex items-center justify-center text-base-content/40">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 5v14" />
+        <path d="m7 14 5 5 5-5" />
+      </svg>
+    </div>
 
-<div style="text-align:center">
-<img src={cfBlock.src} alt="crazyflo block diagram" style="max-width:60%;border-radius:0.5rem;" />
+    <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-1.5">
+      <p class="text-xs font-semibold text-primary/80">2. Planning: <span class="text-base-content font-semibold">CasADi OCP solve</span></p>
+      <p class="mt-0 text-sm leading-snug text-base-content/70">
+        Jointly optimizes all drone trajectories under dynamics, cable tension, and obstacle constraints.
+      </p>
+    </div>
+
+    <div class="flex items-center justify-center text-base-content/40">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 5v14" />
+        <path d="m7 14 5 5 5-5" />
+      </svg>
+    </div>
+
+    <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-1.5">
+      <p class="text-xs font-semibold text-primary/80">3. Conversion: <span class="text-base-content font-semibold">Polynomial trajectory export</span></p>
+      <p class="mt-0 text-sm leading-snug text-base-content/70">
+        Converts the solution into 7th-degree polynomial segments for Crazyflie firmware.
+      </p>
+    </div>
+
+    <div class="flex items-center justify-center text-base-content/40">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 5v14" />
+        <path d="m7 14 5 5 5-5" />
+      </svg>
+    </div>
+
+    <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-1.5">
+      <p class="text-xs font-semibold text-primary/80">4. Execution: <span class="text-base-content font-semibold">Crazyswarm2 deployment</span></p>
+      <p class="mt-0 text-sm leading-snug text-base-content/70">
+        Uploads and executes the trajectories on real or simulated Crazyflie drones.
+      </p>
+    </div>
+
+    <div class="flex items-center justify-center text-base-content/40">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 5v14" />
+        <path d="m7 14 5 5 5-5" />
+      </svg>
+    </div>
+
+    <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-1.5">
+      <p class="text-xs font-semibold text-primary/80">5. Analysis: <span class="text-base-content font-semibold">Rosbag2 comparison</span></p>
+      <p class="mt-0 text-sm leading-snug text-base-content/70">
+        Compares planned and executed trajectories to evaluate tracking performance.
+      </p>
+    </div>
+  </div>
+</div>
+
+## OCP solver
+
+The solver treats the three drones and shared payload as one coupled trajectory optimization problem. At each solve, it:
+
+- takes a payload reference path and obstacle definition as input,
+- optimizes the full state and input trajectory for all drones at once,
+- enforces dynamic feasibility through bounds on velocity, acceleration, jerk, and cable tension,
+- adds obstacle avoidance through a soft barrier cost,
+- outputs smooth trajectories that are then converted into Crazyflie polynomial segments for execution.
+
+<div class="my-4 rounded-2xl border border-base-300 bg-base-200/40 p-3 text-sm text-base-content/75">
+  $$
+  \begin{aligned}
+  \min \quad
+  & J = J_{\mathrm{track}}
+    + J_{\mathrm{rest}}
+    + J_{\mathrm{form}}
+    + J_{\mathrm{obs}} \\
+  \text{s.t.} \quad
+  & \text{dynamics},\ \text{boundary conditions},\ \text{speed/acceleration/jerk limits}, \\
+  & \text{unit cable directions},\ \text{tension bounds},\ \text{drone separation}.
+  \end{aligned}
+  $$
+</div>
+
+**Cost function**
+
+- $J_{\mathrm{track}}$: waypoint tracking and low payload speed at those waypoints.
+- $J_{\mathrm{rest}}$: low final payload velocity and acceleration.
+- $J_{\mathrm{form}}$: desired final cable geometry / drone formation.
+- $J_{\mathrm{obs}}$: soft obstacle barrier for payload and drones.
+
+**Constraints**
+
+- Dynamics and start/end conditions.
+- Velocity, acceleration, and jerk limits.
+- Unit cable directions and tension bounds.
+- Drones remain above the payload.
+- Minimum separation between drones.
+
+All listed constraints are **hard constraints** and must always be satisfied. The waypoint-tracking and obstacle-avoidance terms are handled softly through the objective, which lets the solver trade tracking quality against feasibility when needed.
+
+<div class="my-6 grid gap-4 lg:grid-cols-2 lg:items-start">
+  <figure class="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-3">
+    <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
+      <p class="font-semibold">Trajectory animation</p>
+    </div>
+    <img
+      src="/images/projects/nu-499/animation.gif"
+      alt="Animation of the planned cooperative payload transport trajectory"
+      class="w-full rounded-xl"
+      loading="lazy"
+    />
+  </figure>
+
+  <figure class="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-3">
+    <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
+      <p class="font-semibold">State trajectories</p>
+    </div>
+    <img
+      src="/images/projects/nu-499/cf_plot.png"
+      alt="State and trajectory plot for the Crazyflie payload transport system"
+      class="w-full rounded-xl"
+      loading="lazy"
+    />
+  </figure>
 </div>
 
 ## Conclusions
 
 - The OCP approach successfully generates feasible trajectories for multiple drones carrying a shared payload, demonstrating the potential of optimal control for cooperative multi-agent systems.
-- Obstacle avoidance is effectively handled by incorporating constraints into the OCP, allowing the drones to navigate complex environments while maintaining payload stability. It is crucial to carefully tune the cost function and constraints to balance trajectory optimality with robustness to disturbances and model inaccuracies.
+- Obstacle avoidance is handled effectively through a soft barrier term in the objective, allowing the drones to navigate complex environments while maintaining payload stability. It is crucial to tune those penalties against the hard feasibility constraints to balance trajectory optimality with robustness to disturbances and model inaccuracies.
 - The Crazyflie platform provides a flexible testbed with ROS 2 for multi-drone coordination, but accurate localization remains a significant challenge. The current reliance on external tracking systems limits real-world applicability.
 
-## Prospective
+## Future work
 
 - **Online OCP via MPC** — the trajectory solver currently runs offline; the next step is to turn it into an online Model Predictive Control (to solve a finite-horizon OCP repeatedly) so the drones can replan in flight.
 - **Online path planning** — the payload reference path is currently specified from known obstacle positions; replacing this with an online A\* or RRT search would allow the system to adapt to new environments autonomously.

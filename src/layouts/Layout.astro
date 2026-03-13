@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "katex/dist/katex.min.css";
 import { ClientRouter } from "astro:transitions";
 import { siteConfig } from "../config";
 
@@ -9,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = "Florian's portfolio",
-  description = "A portfolio built with Astro and DaisyUI",
+  title = siteConfig.name,
+  description = siteConfig.description[0],
 } = Astro.props;
 
 // Custom blur-fade animation configuration
@@ -35,6 +36,7 @@ const pageTransition = {
 };
 
 const origin = Astro.url.origin;
+const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
@@ -65,14 +67,40 @@ const origin = Astro.url.origin;
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Top Banner / Navbar -->
-    <header class="sticky top-0 z-50 w-full bg-base-200/80 backdrop-blur border-b border-base-content/10">
+    <header class="sticky top-0 z-50 w-full bg-base-200/60 backdrop-blur border-b border-base-content/10">
       <div class="max-w-6xl mx-auto px-4 py-2 md:h-12 md:py-0 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-        <a
-          href="/"
-          class="text-sm md:text-base font-bold tracking-tight text-base-content hover:text-primary transition-colors"
-        >
-          {siteConfig.name}
-        </a>
+        <div class="flex items-center gap-3">
+          <a
+            href="/"
+            class="text-sm md:text-base font-bold tracking-tight text-base-content hover:text-primary transition-colors"
+          >
+            {siteConfig.name}
+          </a>
+          {
+            !isHomePage && (
+              <a
+                href="/"
+                aria-label="Back to Home"
+                class="ml-4 inline-flex size-7 items-center justify-center rounded-full bg-base-100/55 text-base-content/70 shadow-sm ring-1 ring-base-content/10 transition-colors hover:bg-base-100/80 hover:text-primary md:ml-6 lg:ml-8"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+              </a>
+            )
+          }
+        </div>
         <nav class="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1 text-xs sm:text-sm font-medium">
           <a href="/about" class="text-base-content/70 hover:text-primary transition-colors">About me</a>
           {siteConfig.socialLinks.github && (
@@ -114,8 +142,7 @@ const origin = Astro.url.origin;
       <slot />
     </div>
 
-    <footer aria-hidden="true" class="relative mt-auto -mt-2 h-32 sm:h-44 overflow-hidden">
-      <div class="absolute inset-0 bg-base-100"></div>
+    <footer aria-hidden="true" class="relative mt-auto -mt-2 h-32 sm:h-44 overflow-hidden bg-transparent">
       <img
         src="/telluride_no_bg.webp"
         alt=""
@@ -123,7 +150,6 @@ const origin = Astro.url.origin;
         decoding="async"
         class="absolute inset-0 h-full w-full object-cover object-top opacity-100"
       />
-      <div class="absolute inset-0 bg-base-100/28"></div>
     </footer>
 
     <div

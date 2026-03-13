@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { House, ArrowLeft } from "@lucide/astro";
+import { siteConfig } from "../config";
 
 interface Props {
   error?: unknown;
@@ -23,7 +24,7 @@ if (error instanceof Error) {
 ---
 
 <Layout
-  title="500 - Server Error | Bloomfolio"
+  title={`${siteConfig.name} - 500`}
   description="An error occurred while processing your request."
 >
   <div class="min-h-screen flex items-center justify-center px-4 py-20">
