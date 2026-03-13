@@ -9,7 +9,7 @@ skills: ["Composites Manufacturing", "Mechanical Testing"]
 
 ## Overview
 
-Team of ~50–100 engineers over ~1 year.
+Team of ~50–100.
 
 **Goal:** demonstrate a full-scale eVTOL aircraft.
 
