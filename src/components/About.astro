@@ -1,42 +1,274 @@
 ---
-import { Plus } from "@lucide/astro";
+import { Image } from "astro:assets";
 
-interface Props {
+interface EducationEntry {
   title: string;
-  photo?: string;
-  Content: any;
+  subtitle: string;
+  startDate: Date;
+  endDate?: Date;
+  link?: string;
 }
 
-const { title, photo, Content } = Astro.props;
+interface Props {
+  sectionTitle: string;
+  name: string;
+  headline: string;
+  location?: string;
+  description: string[];
+  photo?: string | { src: string };
+  education: EducationEntry[];
+}
+
+const {
+  sectionTitle,
+  name,
+  headline,
+  location,
+  description,
+  photo,
+  education,
+} = Astro.props;
+
+const photoSrc = typeof photo === "string" ? photo : photo?.src;
+
+function formatGraduation(entry: EducationEntry) {
+  if (entry.title === "Northwestern University") {
+    return "Expected Summer 2026";
+  }
+
+  if (entry.endDate) {
+    return `${entry.endDate.getFullYear()}`;
+  }
+
+  return `${entry.startDate.getFullYear()}`;
+}
 ---
 
-<section id="about" class="py-20 px-4">
-  <div class="max-w-4xl mx-auto">
-    <div class="card card-side bg-base-200 shadow-sm">
-      {
-        photo && (
-          <figure class="shrink-0 w-48">
-            <img src={photo} alt={title} />
-          </figure>
-        )
-      }
-      <div class="card-body">
-        <h2 class="card-title text-2xl">{title}</h2>
-        <p class="text-lg">
-          <Content />
-        </p>
-        <div class="card-actions justify-end">
-          <div class="tooltip" data-tip="More about me">
-            <a
-              href="https://linkedin.com/in/flojule"
-              target="_blank"
-              class="btn btn-primary"
-            >
-              <Plus class="size-5" />
-            </a>
+<section id="about" class="pt-3 pb-16 px-4" data-about-lightbox-root>
+  <div class="max-w-6xl mx-auto lg:pl-32">
+    <div class="grid gap-5 md:gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,1fr)]">
+      <article class="order-2 lg:order-1 lg:row-span-2 card bg-base-200 shadow-sm border border-base-300">
+        <div class="card-body">
+          <div class="space-y-3">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary/80">
+              {sectionTitle}
+            </p>
+            <h2 class="text-2xl sm:text-3xl font-bold">Hi, I'm {name}</h2>
+            <p class="text-base sm:text-lg text-base-content/80">{headline}</p>
+            {location && (
+              <p class="text-sm uppercase tracking-[0.15em] text-base-content/60">
+                {location}
+              </p>
+            )}
+
+            <div class="space-y-3 text-base leading-relaxed text-base-content/80 [&_a]:text-sky-600 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-sky-700">
+              {description.map((line) => (
+                line.trim()
+                  ? <p set:html={line} />
+                  : <p>&nbsp;</p>
+              ))}
+            </div>
           </div>
         </div>
+      </article>
+
+      {
+        photoSrc && (
+          <div class="order-1 lg:order-2 lg:col-start-2 card bg-base-100 shadow-sm border border-base-300">
+            <div class="card-body items-center">
+              <div class="avatar">
+                <div class="w-40 rounded-2xl ring-primary ring-offset-base-100 ring-2 ring-offset-2">
+                  {
+                    typeof photo === "string" ? (
+                      <img src={photoSrc} alt={name} loading="lazy" decoding="async" />
+                    ) : (
+                      <Image
+                        src={photo}
+                        alt={name}
+                        width={320}
+                        height={320}
+                        sizes="(min-width: 1024px) 320px, 160px"
+                      />
+                    )
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      <aside class="order-3 lg:order-3 lg:col-start-2 card bg-base-100 shadow-sm border border-base-300">
+        <div class="card-body">
+          <h3 class="card-title text-2xl">Education</h3>
+          <ul class="space-y-4">
+            {education.map((entry) => (
+              <li class="border-b border-base-300 pb-4 last:border-b-0 last:pb-0">
+                <div class="space-y-1">
+                  <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                    {
+                      entry.link ? (
+                        <a
+                          href={entry.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="font-semibold hover:text-primary transition-colors"
+                        >
+                          {entry.title}
+                        </a>
+                      ) : (
+                        <p class="font-semibold">{entry.title}</p>
+                      )
+                    }
+                    <p class="text-sm font-mono whitespace-nowrap text-base-content/60">
+                      {formatGraduation(entry)}
+                    </p>
+                  </div>
+                  <p class="text-sm text-secondary font-medium">
+                    {entry.subtitle}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 p-4"
+    data-photo-lightbox-overlay
+    role="dialog"
+    aria-modal="true"
+    aria-label="Photo viewer"
+  >
+    <button
+      type="button"
+      class="absolute inset-0 h-full w-full cursor-default"
+      aria-label="Close photo viewer"
+      data-photo-lightbox-close
+    ></button>
+    <div class="relative z-10 flex w-full max-w-6xl items-center justify-center gap-3">
+      <button
+        type="button"
+        class="absolute right-0 top-0 btn btn-circle btn-xs border-base-100/30 bg-base-100/10 text-base-100 hover:bg-base-100/20 sm:btn-sm"
+        aria-label="Close photo viewer"
+        data-photo-lightbox-close
+      >
+        ×
+      </button>
+      <button
+        type="button"
+        class="btn btn-circle btn-sm shrink-0 border-base-100/30 bg-base-100/10 text-base-100 hover:bg-base-100/20"
+        aria-label="Previous photo"
+        data-photo-lightbox-prev
+      >
+        &#8249;
+      </button>
+      <div class="flex min-w-0 flex-1 items-center justify-center">
+        <img
+          src=""
+          alt=""
+          class="max-h-[85vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
+          data-photo-lightbox-image
+        />
       </div>
+      <button
+        type="button"
+        class="btn btn-circle btn-sm shrink-0 border-base-100/30 bg-base-100/10 text-base-100 hover:bg-base-100/20"
+        aria-label="Next photo"
+        data-photo-lightbox-next
+      >
+        &#8250;
+      </button>
     </div>
   </div>
 </section>
+
+<script>
+  const root = document.querySelector("[data-about-lightbox-root]");
+
+  if (root) {
+    const overlay = root.querySelector("[data-photo-lightbox-overlay]");
+    const image = root.querySelector("[data-photo-lightbox-image]");
+    const triggers = Array.from(root.querySelectorAll("a[data-photo-lightbox='true']"));
+    const closeButtons = root.querySelectorAll("[data-photo-lightbox-close]");
+    const previousButton = root.querySelector("[data-photo-lightbox-prev]");
+    const nextButton = root.querySelector("[data-photo-lightbox-next]");
+
+    if (
+      overlay instanceof HTMLElement &&
+      image instanceof HTMLImageElement &&
+      previousButton instanceof HTMLButtonElement &&
+      nextButton instanceof HTMLButtonElement &&
+      triggers.length
+    ) {
+      let lastActiveElement = null;
+      let currentIndex = 0;
+
+      const renderPhoto = (index) => {
+        const trigger = triggers[index];
+
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+
+        image.src = trigger.getAttribute("href") || "";
+        image.alt = trigger.textContent?.trim() || "Photo";
+        currentIndex = index;
+      };
+
+      const closeLightbox = () => {
+        overlay.classList.add("hidden");
+        overlay.classList.remove("flex");
+        image.removeAttribute("src");
+        image.removeAttribute("alt");
+
+        if (lastActiveElement instanceof HTMLElement) {
+          lastActiveElement.focus();
+        }
+      };
+
+      const movePhoto = (direction) => {
+        const nextIndex = (currentIndex + direction + triggers.length) % triggers.length;
+        renderPhoto(nextIndex);
+      };
+
+      const openLightbox = (index, trigger) => {
+        lastActiveElement = trigger;
+        renderPhoto(index);
+        overlay.classList.remove("hidden");
+        overlay.classList.add("flex");
+      };
+
+      triggers.forEach((trigger, index) => {
+        trigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          openLightbox(index, trigger);
+        });
+      });
+
+      closeButtons.forEach((button) => {
+        button.addEventListener("click", closeLightbox);
+      });
+
+      previousButton.addEventListener("click", () => movePhoto(-1));
+      nextButton.addEventListener("click", () => movePhoto(1));
+
+      document.addEventListener("keydown", (event) => {
+        if (!overlay.classList.contains("hidden")) {
+          if (event.key === "Escape") {
+            closeLightbox();
+          } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+            event.preventDefault();
+            movePhoto(-1);
+          } else if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+            event.preventDefault();
+            movePhoto(1);
+          }
+        }
+      });
+    }
+  }
+</script>

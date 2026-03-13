@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import SkillBadge from "./SkillBadge.astro";
-import { ExternalLink, Eye } from "@lucide/astro";
+import { ExternalLink } from "@lucide/astro";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -9,6 +9,13 @@ interface Props {
 }
 
 const { project } = Astro.props;
+
+function getVideoMimeType(videoPath: string) {
+  const extension = videoPath.split(".").pop()?.toLowerCase();
+  if (extension === "webm") return "video/webm";
+  if (extension === "ogg" || extension === "ogv") return "video/ogg";
+  return "video/mp4";
+}
 
 function formatPeriod(startDate: Date, endDate?: Date) {
   const options: Intl.DateTimeFormatOptions = {
@@ -23,18 +30,25 @@ function formatPeriod(startDate: Date, endDate?: Date) {
 }
 ---
 
-<article class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+<article class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
   <a href={`/projects/${project.id}`}>
     <figure class="aspect-video">
       {project.data.video ? (
         <video
-          src={project.data.video}
           autoplay
           muted
           loop
           playsinline
+          preload="metadata"
+          poster={project.data.image.src}
           class="w-full h-full object-cover"
-        />
+        >
+          <source
+            src={project.data.video}
+            type={getVideoMimeType(project.data.video)}
+          />
+          Your browser does not support this video format.
+        </video>
       ) : (
         <Image
           src={project.data.image}
@@ -42,29 +56,30 @@ function formatPeriod(startDate: Date, endDate?: Date) {
           class="w-full h-full object-cover"
           width={600}
           height={400}
+          sizes="(min-width: 1024px) 22rem, (min-width: 768px) calc(50vw - 2rem), 100vw"
         />
       )}
     </figure>
   </a>
-  <div class="card-body">
-    <h3 class="card-title hover:text-primary transition-colors">
+  <div class="card-body gap-3 p-5 sm:p-6">
+    <h3 class="card-title text-lg sm:text-xl hover:text-primary transition-colors">
       <a href={`/projects/${project.id}`}>{project.data.title}</a>
     </h3>
     <time class="text-sm text-base-content/60">
       {formatPeriod(project.data.startDate, project.data.endDate)}
     </time>
-    <p class="text-base-content/80">{project.data.description}</p>
-    <div class="flex flex-wrap gap-2 mt-2">
+    <p class="text-sm sm:text-base text-base-content/80">{project.data.description}</p>
+    <div class="flex flex-wrap gap-2 pt-1">
       {project.data.skills.map((skill) => <SkillBadge skill={skill} />)}
     </div>
-    <div class="card-actions justify-end mt-4 gap-2">
+    <div class="card-actions justify-end pt-2 gap-2">
       {
         project.data.demoLink && (
           <a
             href={project.data.demoLink}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm btn-soft gap-1"
+            class="btn btn-xs sm:btn-sm btn-soft gap-1"
           >
             <ExternalLink class="size-4" />
             Link
@@ -77,7 +92,7 @@ function formatPeriod(startDate: Date, endDate?: Date) {
             href={project.data.sourceLink}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm btn-soft gap-1"
+            class="btn btn-xs sm:btn-sm btn-soft gap-1"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,11 +107,6 @@ function formatPeriod(startDate: Date, endDate?: Date) {
           </a>
         )
       }
-      <div class="tooltip" data-tip="View project details">
-        <a href={`/projects/${project.id}`} class="btn btn-sm btn-primary">
-          <Eye class="size-4" />
-        </a>
-      </div>
     </div>
   </div>
 </article>

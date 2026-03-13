@@ -2,3 +2,13 @@
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark, synthwave, retro, valentine, dim;
 };
+
+:root,
+[data-theme] {
+  --color-primary: #7b1e3a;
+  --color-primary-content: #fff7f8;
+  --color-secondary: #9a3552;
+  --color-secondary-content: #fff7f8;
+  --color-accent: #5f132b;
+  --color-accent-content: #fff7f8;
+}

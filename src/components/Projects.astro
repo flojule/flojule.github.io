@@ -10,10 +10,9 @@ const sortedProjects = projectEntries.sort(
 );
 ---
 
-<section id="projects" class="py-20 px-4 bg-base-200">
+<section id="projects" class="pt-3 pb-16 px-4 bg-base-200">
   <div class="max-w-6xl mx-auto">
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
       {sortedProjects.map((project) => (
         <ProjectCard project={project} />
       ))}

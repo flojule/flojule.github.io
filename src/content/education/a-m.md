@@ -6,5 +6,3 @@ startDate: "2013-09-01"
 endDate: "2015-05-30"
 link: "https://artsetmetiers.fr/en"
 ---
-
-Focused on mechanical and industrial engineering.
