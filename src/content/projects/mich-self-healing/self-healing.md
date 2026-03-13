@@ -6,6 +6,7 @@ startDate: "2016-01-01"
 endDate: "2016-05-01"
 skills: ["Composites", "Mechanical Testing", "Polymer Chemistry"]
 demoLink: "https://www.sciencedirect.com/science/article/abs/pii/S0032386117302550"
+demoLabel: "Publication"
 ---
 
 ## Overview
