@@ -40,7 +40,7 @@ const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
-<html lang="en" transition:animate={pageTransition}>
+<html lang="en" class="bg-base-100" transition:animate={pageTransition}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -68,11 +68,11 @@ const isHomePage = Astro.url.pathname === "/";
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
     <!-- Top Banner / Navbar -->
     <header class="safe-top-inset sticky top-0 z-50 w-full border-b border-base-content/10 bg-base-200/60 backdrop-blur">
-      <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 md:h-12 md:flex-row md:items-center md:justify-between md:py-0">
+      <div class="mx-auto flex max-w-6xl flex-col gap-1.5 px-4 py-2 md:h-12 md:flex-row md:items-center md:justify-between md:py-0">
         <div class="flex items-center gap-3">
           <a
             href="/"
-            class="inline-flex min-h-11 items-center text-base font-bold tracking-tight text-base-content transition-colors hover:text-primary md:min-h-0"
+            class="inline-flex min-h-9 items-center text-sm font-bold tracking-tight text-base-content transition-colors hover:text-primary md:min-h-0 md:text-base"
           >
             {siteConfig.name}
           </a>
@@ -81,7 +81,7 @@ const isHomePage = Astro.url.pathname === "/";
               <a
                 href="/"
                 aria-label="Back to Home"
-                class="ml-2 inline-flex size-9 items-center justify-center rounded-full bg-base-100/55 text-base-content/70 shadow-sm ring-1 ring-base-content/10 transition-colors hover:bg-base-100/80 hover:text-primary md:ml-6 md:size-7 lg:ml-8"
+                class="ml-2 inline-flex size-8 items-center justify-center rounded-full bg-base-100/55 text-base-content/70 shadow-sm ring-1 ring-base-content/10 transition-colors hover:bg-base-100/80 hover:text-primary md:ml-6 md:size-7 lg:ml-8"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,14 +101,14 @@ const isHomePage = Astro.url.pathname === "/";
             )
           }
         </div>
-        <nav class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium sm:gap-x-3 md:gap-x-4">
-          <a href="/about" class="inline-flex min-h-11 items-center rounded-full px-2 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0">About me</a>
+        <nav class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[13px] font-medium sm:gap-x-3 sm:text-sm md:gap-x-4">
+          <a href="/about" class="inline-flex min-h-9 items-center rounded-full px-1.5 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0">About me</a>
           {siteConfig.socialLinks.github && (
             <a
               href={siteConfig.socialLinks.github}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex min-h-11 items-center rounded-full px-2 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0"
+              class="inline-flex min-h-9 items-center rounded-full px-1.5 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0"
             >
               GitHub
             </a>
@@ -118,7 +118,7 @@ const isHomePage = Astro.url.pathname === "/";
               href={siteConfig.socialLinks.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex min-h-11 items-center rounded-full px-2 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0"
+              class="inline-flex min-h-9 items-center rounded-full px-1.5 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0"
             >
               LinkedIn
             </a>
@@ -129,7 +129,7 @@ const isHomePage = Astro.url.pathname === "/";
               data-resume-overlay-open
               data-resume-src={siteConfig.socialLinks.resume}
               aria-haspopup="dialog"
-              class="inline-flex min-h-11 items-center rounded-full px-2 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0"
+              class="inline-flex min-h-9 items-center rounded-full px-1.5 text-base-content/70 transition-colors hover:text-primary md:min-h-0 md:px-0"
             >
               Resume
             </button>
@@ -142,7 +142,7 @@ const isHomePage = Astro.url.pathname === "/";
       <slot />
     </div>
 
-    <footer aria-hidden="true" class="safe-bottom-inset footer-safe-height relative mt-auto -mt-2 overflow-hidden bg-transparent">
+    <footer aria-hidden="true" class="safe-bottom-inset footer-safe-height relative mt-auto -mt-2 overflow-hidden bg-base-200">
       <img
         src="/telluride_no_bg.webp"
         alt=""
