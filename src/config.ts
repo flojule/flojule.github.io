@@ -11,7 +11,7 @@ export interface SiteConfig {
   socialLinks: SocialLinks;
 }
 export const siteConfig: SiteConfig = {
-  name: "Florian Jule",
+  name: "Florian Julé",
   title: "Product design, system integration and testing",
   description: [
     "Engineer with 8 years at Joby Aviation, where I led teams designing mechanisms and composite structures for the Joby S4 eVTOL — from first prototype to designs for FAA certification.",
