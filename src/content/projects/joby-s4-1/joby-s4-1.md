@@ -1,6 +1,6 @@
 ---
 title: "Joby S4-1.0 (first full scale eVTOL)"
-description: "Mechanical engineer on Joby's first full-scale eVTOL demonstrator. I worked in manufacturing and structural testing."
+description: "Mechanical engineer on Joby's first full-scale eVTOL demonstrator. Supported airframe manufacturing and structural testing."
 image: "./joby-s4-1.JPEG"
 startDate: "2017-02-06"
 endDate: "2017-12-31"
@@ -13,9 +13,10 @@ Team of ~50–100.
 
 **Goal:** demonstrate a full-scale eVTOL aircraft.
 
-I worked on the manufacturing and structural testing of the airframe:
+I contributed to:
 
-- Composites manufacturing of primary structure components
-- Mechanical testing of structural assemblies
+- Composites manufacturing of primary structure components (tail assembly)
+- Mechanical testing of structural assemblies (static testing of landing gear, wing assembly)
+- Integration of systems and wiring into the airframe
 
 ![Joby S4-1.0](./1.0.png)
