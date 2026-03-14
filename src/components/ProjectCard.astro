@@ -20,6 +20,17 @@ function getVideoMimeType(videoPath: string) {
   return "video/mp4";
 }
 
+function getVideoSources(videoPath: string) {
+  const extension = videoPath.split(".").pop()?.toLowerCase();
+
+  if (extension === "mp4") {
+    const webmPath = videoPath.replace(/\.mp4$/i, ".webm");
+    return [webmPath, videoPath];
+  }
+
+  return [videoPath];
+}
+
 function formatPeriod(startDate: Date, endDate?: Date) {
   const options: Intl.DateTimeFormatOptions = {
     month: "short",
@@ -33,7 +44,7 @@ function formatPeriod(startDate: Date, endDate?: Date) {
 }
 ---
 
-<article class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
+<article class="surface-card card overflow-hidden border border-base-300 shadow-lg transition-shadow hover:shadow-xl">
   <a href={`/projects/${project.id}`}>
     <figure class="aspect-video">
       {project.data.video ? (
@@ -46,10 +57,9 @@ function formatPeriod(startDate: Date, endDate?: Date) {
           poster={project.data.image.src}
           class="w-full h-full object-cover"
         >
-          <source
-            src={project.data.video}
-            type={getVideoMimeType(project.data.video)}
-          />
+          {getVideoSources(project.data.video).map((source) => (
+            <source src={source} type={getVideoMimeType(source)} />
+          ))}
           Your browser does not support this video format.
         </video>
       ) : (
