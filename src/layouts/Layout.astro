@@ -73,17 +73,9 @@ const isHomePage = Astro.url.pathname === "/";
         <div class="flex shrink-0 items-center gap-2">
           <a
             href="/"
-            class="inline-flex items-center gap-2 text-base font-bold tracking-tight text-base-content transition-colors hover:text-primary"
+            class="inline-flex items-center text-base font-bold tracking-tight text-base-content transition-colors hover:text-primary"
           >
-            <img
-              src="/kiwi.svg"
-              alt=""
-              width="20"
-              height="20"
-              class="size-5 shrink-0"
-              decoding="async"
-            />
-            <span>{siteConfig.name}</span>
+            {siteConfig.name}
           </a>
           <a
             href="/"
@@ -175,29 +167,8 @@ const isHomePage = Astro.url.pathname === "/";
         aria-label="Close PDF viewer"
         data-pdf-overlay-close
       ></button>
-      <div class="relative z-10 flex h-[min(92vh,calc(100vh-3rem))] w-full max-w-5xl items-center justify-center">
-        <button
-          type="button"
-          class="absolute right-0 top-0 btn btn-circle btn-xs border-base-100/30 bg-base-100/10 text-lg leading-none text-base-100 hover:bg-base-100/20 sm:btn-sm sm:text-xl"
-          aria-label="Close PDF viewer"
-          data-pdf-overlay-close
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="size-4.5"
-            aria-hidden="true"
-          >
-            <path d="M18 6 6 18"></path>
-            <path d="m6 6 12 12"></path>
-          </svg>
-        </button>
-        <div class="surface-card h-full w-full border border-base-300 bg-base-100 shadow-2xl">
+      <div class="relative z-10 h-[min(92vh,calc(100vh-3rem))] w-full max-w-5xl">
+        <div class="surface-card relative h-full w-full border border-base-300 bg-base-100 shadow-2xl">
           <object
             type="application/pdf"
             class="h-full w-full"
