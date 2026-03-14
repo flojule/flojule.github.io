@@ -1,5 +1,6 @@
 ---
 import Layout from "./Layout.astro";
+import "katex/dist/katex.min.css";
 import { Image } from "astro:assets";
 import SkillBadge from "../components/SkillBadge.astro";
 import { ExternalLink } from "@lucide/astro";
@@ -40,6 +41,17 @@ function getVideoMimeType(videoPath: string) {
   return "video/mp4";
 }
 
+function getVideoSources(videoPath: string) {
+  const extension = videoPath.split(".").pop()?.toLowerCase();
+
+  if (extension === "mp4") {
+    const webmPath = videoPath.replace(/\.mp4$/i, ".webm");
+    return [webmPath, videoPath];
+  }
+
+  return [videoPath];
+}
+
 function formatPeriod(startDate: Date, endDate?: Date) {
   const options: Intl.DateTimeFormatOptions = {
     month: "short",
@@ -70,7 +82,9 @@ function formatPeriod(startDate: Date, endDate?: Date) {
             poster={image?.src}
             class="w-full aspect-video object-cover"
           >
-            <source src={video} type={getVideoMimeType(video)} />
+            {getVideoSources(video).map((source) => (
+              <source src={source} type={getVideoMimeType(source)} />
+            ))}
             Your browser does not support this video format.
           </video>
         </figure>
@@ -266,6 +280,11 @@ function formatPeriod(startDate: Date, endDate?: Date) {
   .prose-content img {
     border-radius: 0.5rem;
     margin: 1.5rem 0;
+  }
+
+  /* For MDX figures that manage their own spacing/alignment. */
+  .prose-content img[data-figure-img] {
+    margin: 0;
   }
 
   .prose-content strong {

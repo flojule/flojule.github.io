@@ -8,6 +8,10 @@ skills: ["Composites Structure", "Mechanical Systems", "Team Management", "FAA C
 ---
 
 import YouTube from '../../../components/YouTube.astro';
+import { Image } from "astro:assets";
+import tailImg from "./tail.png";
+import pylonImg from "./pylon.png";
+import linkageImg from "./linkage.png";
 
 ## Overview
 
@@ -26,18 +30,53 @@ Clean sheet design to meet FAA requirements:
 - Delivered production drawings
 - Passed structural testing for FAA certification credit
 
-![Tail structure](./tail.png)
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <Image
+    src={tailImg}
+    alt="Tail structure"
+    class="block h-auto max-w-full rounded-lg"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    First conforming tail and structural test for FAA credit
+  </figcaption>
+</figure>
 
 ### Effectors
 
-- Nacelles (tilt mechanisms)
+- Outboard Nacelles, single pivot tilt mechanism
+- Inboard Nacelles, linkage tilt mechanisms, <a href="/WO2025006314A2.pdf" class="link link-primary" data-pdf-overlay-open data-pdf-src="/WO2025006314A2.pdf" data-pdf-label="patent">US patent</a>
 - Control surfaces
 - Propellers
 
-![Nacelle pylon](./pylon.png)
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <Image
+    src={pylonImg}
+    alt="Nacelle pylon"
+    class="block h-auto max-w-full rounded-lg"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    Wing-tip pylon and actuator going through endurance testing
+  </figcaption>
+</figure>
 
-![Tilt linkage](./linkage.png)
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <Image
+    src={linkageImg}
+    alt="Tilt linkage"
+    class="block h-auto max-w-full rounded-lg"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    Inboard tilt linkage on the aircraft
+  </figcaption>
+</figure>
 
 <YouTube url="https://youtu.be/eogSxX_yXcU?si=lMBKgpAfpNbGTlt4" />
-
-{/* https://patents.google.com/patent/WO2025006314A2/en */}

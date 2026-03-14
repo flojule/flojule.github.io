@@ -11,6 +11,7 @@
   --color-secondary-content: #fff7f8;
   --color-accent: #5f132b;
   --color-accent-content: #fff7f8;
+  --surface-radius: 0.625rem;
   --safe-area-top: env(safe-area-inset-top, 0px);
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -20,7 +21,7 @@ body {
   min-height: 100vh;
   min-height: 100svh;
   background-color: var(--color-base-100);
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
 }
 
 .safe-top-inset {
@@ -33,6 +34,17 @@ body {
 
 .footer-safe-height {
   height: calc(8rem + var(--safe-area-bottom));
+}
+
+.surface-card {
+  --radius-box: var(--surface-radius);
+  border-radius: var(--surface-radius);
+  background-color: var(--color-base-100);
+  overflow: hidden;
+}
+
+.surface-radius {
+  border-radius: var(--surface-radius);
 }
 
 @media (min-width: 640px) {
