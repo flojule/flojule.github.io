@@ -167,7 +167,7 @@ const isHomePage = Astro.url.pathname === "/";
         aria-label="Close PDF viewer"
         data-pdf-overlay-close
       ></button>
-      <div class="relative z-10 h-[min(92vh,calc(100vh-3rem))] w-full max-w-5xl">
+      <div class="pdf-overlay-frame relative z-10">
         <div class="surface-card relative h-full w-full border border-base-300 bg-base-100 shadow-2xl">
           <object
             type="application/pdf"
@@ -326,6 +326,16 @@ const isHomePage = Astro.url.pathname === "/";
           opacity: 0;
           filter: blur(10px);
         }
+      }
+
+      .pdf-overlay-frame {
+        /* Keep the viewer between letter (8.5:11) and square (1:1).
+           This prevents a too-tall frame on narrow screens (hard to close). */
+        --pdf-overlay-max-h: min(92vh, calc(100vh - 3rem));
+        --pdf-overlay-max-w: min(calc(100vw - 2rem), var(--pdf-overlay-max-h));
+
+        width: min(100%, var(--pdf-overlay-max-w));
+        height: min(var(--pdf-overlay-max-h), calc(var(--pdf-overlay-max-w) * 1.2941176));
       }
     </style>
   </body>
