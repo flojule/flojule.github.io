@@ -1,6 +1,6 @@
 ---
 title: "Joby S4-1.0 (first full scale eVTOL)"
-description: "Mechanical engineer on Joby's first full-scale eVTOL demonstrator. Team of ~50–100. I worked in manufacturing and structural testing."
+description: "Mechanical engineer on Joby's first full-scale eVTOL demonstrator. I worked in manufacturing and structural testing."
 image: "./joby-s4-1.JPEG"
 startDate: "2017-02-06"
 endDate: "2017-12-31"
