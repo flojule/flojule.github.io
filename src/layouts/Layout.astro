@@ -1,17 +1,18 @@
 ---
 import "../styles/global.css";
-import "katex/dist/katex.min.css";
 import { ClientRouter } from "astro:transitions";
 import { siteConfig } from "../config";
 
 interface Props {
   title?: string;
   description?: string;
+  contentClass?: string;
 }
 
 const {
   title = siteConfig.name,
   description = siteConfig.description[0],
+  contentClass = "",
 } = Astro.props;
 
 // Custom blur-fade animation configuration
@@ -57,13 +58,13 @@ const isHomePage = Astro.url.pathname === "/";
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={origin} />
-    <meta property="og:image" content={`${origin}/kiwi.svg`} />
+    <meta property="og:image" content={`${origin}/images/flo_1_0.JPEG`} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${origin}/kiwi.svg`} />
+    <meta name="twitter:image" content={`${origin}/images/flo_1_0.JPEG`} />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
     <!-- Top Banner / Navbar -->
@@ -72,36 +73,44 @@ const isHomePage = Astro.url.pathname === "/";
         <div class="flex shrink-0 items-center gap-2">
           <a
             href="/"
-            class="inline-flex items-center text-base font-bold tracking-tight text-base-content transition-colors hover:text-primary"
+            class="inline-flex items-center gap-2 text-base font-bold tracking-tight text-base-content transition-colors hover:text-primary"
           >
-            {siteConfig.name}
+            <img
+              src="/kiwi.svg"
+              alt=""
+              width="20"
+              height="20"
+              class="size-5 shrink-0"
+              decoding="async"
+            />
+            <span>{siteConfig.name}</span>
           </a>
-          {
-            !isHomePage && (
-              <a
-                href="/"
-                aria-label="Back to Home"
-                class="ml-1 inline-flex size-7 items-center justify-center rounded-full bg-base-100/55 text-base-content/70 shadow-sm ring-1 ring-base-content/10 transition-colors hover:bg-base-100/80 hover:text-primary md:ml-6 lg:ml-8"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="m15 18-6-6 6-6"></path>
-                </svg>
-              </a>
-            )
-          }
+          <a
+            href="/"
+            aria-label="Back to Home"
+            aria-hidden={isHomePage ? "true" : "false"}
+            tabindex={isHomePage ? "-1" : undefined}
+            class:list={[
+              "ml-1 hidden size-7 items-center justify-center rounded-full bg-base-100 p-0 text-base-content/70 shadow-sm ring-1 ring-base-content/10 transition-colors hover:bg-base-100 hover:text-primary min-[500px]:inline-flex md:ml-6 lg:ml-8",
+              isHomePage && "pointer-events-none invisible",
+            ]}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="size-4.5"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6"></path>
+            </svg>
+          </a>
         </div>
-        <nav class="ml-auto flex shrink-0 flex-nowrap items-center justify-end gap-3 whitespace-nowrap text-sm font-medium leading-none">
+        <nav class="ml-auto flex shrink-0 flex-nowrap items-center justify-end gap-2 whitespace-nowrap text-[13px] font-medium leading-none sm:gap-3 sm:text-sm">
           <a href="/about" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">About me</a>
           {siteConfig.socialLinks.github && (
             <a
@@ -126,10 +135,11 @@ const isHomePage = Astro.url.pathname === "/";
           {siteConfig.socialLinks.resume && (
             <button
               type="button"
-              data-resume-overlay-open
-              data-resume-src={siteConfig.socialLinks.resume}
+              data-pdf-overlay-open
+              data-pdf-src={siteConfig.socialLinks.resume}
+              data-pdf-label="resume"
               aria-haspopup="dialog"
-              class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary"
+              class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
             >
               Resume
             </button>
@@ -138,7 +148,7 @@ const isHomePage = Astro.url.pathname === "/";
       </div>
     </header>
 
-    <div class="flex-1">
+    <div class:list={["flex-1", contentClass]}>
       <slot />
     </div>
 
@@ -154,45 +164,44 @@ const isHomePage = Astro.url.pathname === "/";
 
     <div
       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4"
-      data-resume-overlay
+      data-pdf-overlay
       role="dialog"
       aria-modal="true"
-      aria-label="Resume viewer"
+      aria-label="PDF viewer"
     >
       <button
         type="button"
         class="absolute inset-0 h-full w-full cursor-default"
-        aria-label="Close resume viewer"
-        data-resume-overlay-close
+        aria-label="Close PDF viewer"
+        data-pdf-overlay-close
       ></button>
-      <div class="relative z-10 flex h-[85vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-2xl">
-        <div class="flex items-center justify-between border-b border-base-300 px-4 py-3">
-          <p class="text-sm font-semibold tracking-wide text-base-content/70">Resume</p>
-          <div class="flex items-center gap-2">
-            <a
-              href={siteConfig.socialLinks.resume}
-              download
-              class="btn btn-sm btn-ghost"
-              data-resume-download
-            >
-              Download
-            </a>
-            <button
-              type="button"
-              class="btn btn-circle btn-sm btn-ghost"
-              aria-label="Close resume viewer"
-              data-resume-overlay-close
-            >
-              ×
-            </button>
-          </div>
-        </div>
-        <div class="h-full w-full bg-base-100">
+      <div class="relative z-10 flex h-[min(92vh,calc(100vh-3rem))] w-full max-w-5xl items-center justify-center">
+        <button
+          type="button"
+          class="absolute right-0 top-0 btn btn-circle btn-xs border-base-100/30 bg-base-100/10 text-lg leading-none text-base-100 hover:bg-base-100/20 sm:btn-sm sm:text-xl"
+          aria-label="Close PDF viewer"
+          data-pdf-overlay-close
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-4.5"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+        <div class="surface-card h-full w-full border border-base-300 bg-base-100 shadow-2xl">
           <object
-            data={`${siteConfig.socialLinks.resume}#view=FitH`}
             type="application/pdf"
             class="h-full w-full"
-            data-resume-object
+            data-pdf-overlay-object
           >
             <div class="flex h-full flex-col items-center justify-center gap-3 px-6 text-center text-sm text-base-content/70">
               <p>Inline preview is not available in this browser.</p>
@@ -201,8 +210,9 @@ const isHomePage = Astro.url.pathname === "/";
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link link-primary"
+                data-pdf-overlay-fallback-link
               >
-                Open resume in a new tab
+                Open PDF in a new tab
               </a>
             </div>
           </object>
@@ -212,51 +222,95 @@ const isHomePage = Astro.url.pathname === "/";
 
     <!-- Smooth Scroll -->
     <script>
-      const initResumeOverlay = () => {
-        const resumeOpenButton = document.querySelector("[data-resume-overlay-open]");
-        const resumeOverlay = document.querySelector("[data-resume-overlay]");
-        const resumeCloseButtons = document.querySelectorAll("[data-resume-overlay-close]");
+      const baseUrl = import.meta.env.BASE_URL ?? "/";
+
+      const normalizePdfSrc = (src) => {
+        if (!src) return null;
+
+        // Absolute URLs (http:, https:, etc.) should be used as-is.
+        if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(src)) return src;
+
+        // Root-relative URLs already include any deployment prefix if present.
+        if (src.startsWith("/")) return src;
+
+        const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+        return `${base}${src}`;
+      };
+
+      const initPdfOverlay = () => {
+        const overlay = document.querySelector("[data-pdf-overlay]");
+        const objectEl = document.querySelector("[data-pdf-overlay-object]");
+        const fallbackLink = document.querySelector("[data-pdf-overlay-fallback-link]");
+        const closeButtons = document.querySelectorAll("[data-pdf-overlay-close]");
+        const triggers = document.querySelectorAll("[data-pdf-overlay-open]");
 
         if (
-          !(resumeOpenButton instanceof HTMLButtonElement) ||
-          !(resumeOverlay instanceof HTMLElement) ||
-          resumeOpenButton.dataset.resumeOverlayReady === "true"
+          !(overlay instanceof HTMLElement) ||
+          !(objectEl instanceof HTMLObjectElement) ||
+          !(fallbackLink instanceof HTMLAnchorElement)
         ) {
           return;
         }
 
-        resumeOpenButton.dataset.resumeOverlayReady = "true";
+        let lastTrigger = null;
 
-        let lastResumeTrigger = null;
+        const closeOverlay = () => {
+          overlay.classList.add("hidden");
+          overlay.classList.remove("flex");
 
-        const closeResumeOverlay = () => {
-          resumeOverlay.classList.add("hidden");
-          resumeOverlay.classList.remove("flex");
-
-          if (lastResumeTrigger instanceof HTMLElement) {
-            lastResumeTrigger.focus();
+          if (lastTrigger instanceof HTMLElement) {
+            lastTrigger.focus();
           }
         };
 
-        resumeOpenButton.addEventListener("click", () => {
-          lastResumeTrigger = resumeOpenButton;
-          resumeOverlay.classList.remove("hidden");
-          resumeOverlay.classList.add("flex");
+        const openOverlay = (trigger, event) => {
+          // Let users open in a new tab/window using modifiers.
+          if (event instanceof MouseEvent) {
+            if (event.button !== 0) return;
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          }
+
+          const rawSrc =
+            trigger.getAttribute("data-pdf-src") ||
+            (trigger instanceof HTMLAnchorElement ? trigger.getAttribute("href") : null) ||
+            "";
+          const label = trigger.getAttribute("data-pdf-label") || "PDF";
+          const href = normalizePdfSrc(rawSrc);
+
+          if (!href) return;
+
+          event?.preventDefault?.();
+          lastTrigger = trigger;
+
+          objectEl.setAttribute("data", `${href}#view=FitH`);
+          fallbackLink.href = href;
+          fallbackLink.textContent = `Open ${label} in a new tab`;
+
+          overlay.classList.remove("hidden");
+          overlay.classList.add("flex");
+        };
+
+        triggers.forEach((trigger) => {
+          if (!(trigger instanceof HTMLElement)) return;
+          if (trigger.dataset.pdfOverlayReady === "true") return;
+          trigger.dataset.pdfOverlayReady = "true";
+
+          trigger.addEventListener("click", (event) => openOverlay(trigger, event));
         });
 
-        resumeCloseButtons.forEach((button) => {
-          button.addEventListener("click", closeResumeOverlay);
+        closeButtons.forEach((button) => {
+          button.addEventListener("click", closeOverlay);
         });
 
         document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && !resumeOverlay.classList.contains("hidden")) {
-            closeResumeOverlay();
+          if (event.key === "Escape" && !overlay.classList.contains("hidden")) {
+            closeOverlay();
           }
         });
       };
 
-      initResumeOverlay();
-      document.addEventListener("astro:page-load", initResumeOverlay);
+      initPdfOverlay();
+      document.addEventListener("astro:page-load", initPdfOverlay);
     </script>
     <style is:global>
       html {

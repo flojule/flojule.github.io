@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import About from "../components/About.astro";
 import { getCollection } from "astro:content";
 import { siteConfig } from "../config";
-import fLogo from "../assets/floto.png";
 
 const educationEntries = (await getCollection("education"))
   .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime())
@@ -13,15 +12,15 @@ const educationEntries = (await getCollection("education"))
 <Layout
   title={`${siteConfig.name} - About Me`}
   description={siteConfig.description[0]}
+  contentClass="bg-base-200"
 >
-  <main>
+  <main class="bg-base-200">
     <About
-      sectionTitle="About Me"
       name={siteConfig.name}
       headline={siteConfig.title}
       location={siteConfig.location}
       description={siteConfig.description}
-      photo={fLogo}
+      photo="/images/nyse.JPEG"
       education={educationEntries}
     />
   </main>
