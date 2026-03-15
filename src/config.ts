@@ -29,6 +29,6 @@ export const siteConfig: SiteConfig = {
   socialLinks: {
     github: "https://github.com/flojule",
     linkedin: "https://linkedin.com/in/flojule",
-    resume: `${import.meta.env.BASE_URL}JuleFlorian_Resume.pdf`,
+    resume: `${import.meta.env.BASE_URL}florian_jule_resume.pdf#toolbar=0&navpanes=0`,
   },
 };
