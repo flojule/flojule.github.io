@@ -280,8 +280,34 @@ const isHomePage = Astro.url.pathname === "/";
         });
       };
 
+      const initVideos = () => {
+        document.querySelectorAll("video[autoplay]").forEach((video) => {
+          if (video instanceof HTMLVideoElement) {
+            video.play().catch(() => {});
+          }
+        });
+      };
+
+      const initExternalLinks = () => {
+        document.querySelectorAll("a[href]").forEach((a) => {
+          if (!(a instanceof HTMLAnchorElement)) return;
+          const href = a.getAttribute("href") ?? "";
+          const isExternal =
+            href.startsWith("http://") ||
+            href.startsWith("https://") ||
+            href.startsWith("//");
+          if (isExternal && a.target !== "_blank") {
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+          }
+        });
+      };
+
       initPdfOverlay();
+      initExternalLinks();
       document.addEventListener("astro:page-load", initPdfOverlay);
+      document.addEventListener("astro:page-load", initVideos);
+      document.addEventListener("astro:page-load", initExternalLinks);
     </script>
     <style is:global>
       html {
