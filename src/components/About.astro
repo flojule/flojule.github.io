@@ -75,7 +75,12 @@ function formatGraduation(entry: EducationEntry) {
         photoSrc && (
           <div class="surface-card order-1 lg:order-2 lg:col-start-2 card border border-base-300 shadow-lg">
             <div class="card-body items-center">
-              <div class="w-40 overflow-hidden surface-radius">
+              <a
+                href={photoSrc}
+                data-photo-lightbox-solo
+                aria-label={`View photo of ${name}`}
+                class="w-40 overflow-hidden surface-radius block cursor-zoom-in"
+              >
                 {
                   typeof photo === "string" ? (
                     <img
@@ -96,7 +101,7 @@ function formatGraduation(entry: EducationEntry) {
                     />
                   )
                 }
-              </div>
+              </a>
             </div>
           </div>
         )
@@ -241,6 +246,7 @@ function formatGraduation(entry: EducationEntry) {
     const overlay = root.querySelector("[data-photo-lightbox-overlay]");
     const image = root.querySelector("[data-photo-lightbox-image]");
     const triggers = Array.from(root.querySelectorAll("a[data-photo-lightbox='true']"));
+    const soloTrigger = root.querySelector("a[data-photo-lightbox-solo]");
     const closeButtons = root.querySelectorAll("[data-photo-lightbox-close]");
     const previousButton = root.querySelector("[data-photo-lightbox-prev]");
     const nextButton = root.querySelector("[data-photo-lightbox-next]");
@@ -249,11 +255,11 @@ function formatGraduation(entry: EducationEntry) {
       overlay instanceof HTMLElement &&
       image instanceof HTMLImageElement &&
       previousButton instanceof HTMLButtonElement &&
-      nextButton instanceof HTMLButtonElement &&
-      triggers.length
+      nextButton instanceof HTMLButtonElement
     ) {
       let lastActiveElement = null;
       let currentIndex = 0;
+      let soloMode = false;
 
       const renderPhoto = (index) => {
         const trigger = triggers[index];
@@ -272,6 +278,10 @@ function formatGraduation(entry: EducationEntry) {
         overlay.classList.remove("flex");
         image.removeAttribute("src");
         image.removeAttribute("alt");
+        soloMode = false;
+        previousButton.classList.remove("invisible");
+        nextButton.classList.remove("invisible");
+        document.body.classList.remove("overflow-hidden");
 
         if (lastActiveElement instanceof HTMLElement) {
           lastActiveElement.focus();
@@ -279,6 +289,7 @@ function formatGraduation(entry: EducationEntry) {
       };
 
       const movePhoto = (direction) => {
+        if (soloMode) return;
         const nextIndex = (currentIndex + direction + triggers.length) % triggers.length;
         renderPhoto(nextIndex);
       };
@@ -288,6 +299,19 @@ function formatGraduation(entry: EducationEntry) {
         renderPhoto(index);
         overlay.classList.remove("hidden");
         overlay.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+      };
+
+      const openSoloLightbox = (src: string, alt: string, trigger: HTMLElement) => {
+        lastActiveElement = trigger;
+        soloMode = true;
+        image.src = src;
+        image.alt = alt;
+        previousButton.classList.add("invisible");
+        nextButton.classList.add("invisible");
+        overlay.classList.remove("hidden");
+        overlay.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
       };
 
       triggers.forEach((trigger, index) => {
@@ -296,6 +320,17 @@ function formatGraduation(entry: EducationEntry) {
           openLightbox(index, trigger);
         });
       });
+
+      if (soloTrigger instanceof HTMLAnchorElement) {
+        soloTrigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          openSoloLightbox(
+            soloTrigger.getAttribute("href") || "",
+            soloTrigger.getAttribute("aria-label") || "Photo",
+            soloTrigger,
+          );
+        });
+      }
 
       closeButtons.forEach((button) => {
         button.addEventListener("click", closeLightbox);
@@ -308,10 +343,10 @@ function formatGraduation(entry: EducationEntry) {
         if (!overlay.classList.contains("hidden")) {
           if (event.key === "Escape") {
             closeLightbox();
-          } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          } else if (!soloMode && (event.key === "ArrowLeft" || event.key === "ArrowUp")) {
             event.preventDefault();
             movePhoto(-1);
-          } else if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          } else if (!soloMode && (event.key === "ArrowRight" || event.key === "ArrowDown")) {
             event.preventDefault();
             movePhoto(1);
           }

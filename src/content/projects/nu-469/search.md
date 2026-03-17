@@ -1,7 +1,7 @@
 ---
 title: "A* path planning and motion control for a wheeled robot"
 description: "A* path planner for a wheeled robot navigating a landmark-based environment, with offline (full map) and online (partial knowledge) variants, plus a proportional controller that drives the robot along the planned paths. Validated on the UTIAS MRCLAM dataset."
-image: "./search.png"
+image: "./search.webp"
 startDate: "2025-10-15"
 endDate: "2025-11-15"
 skills: ["Python", "A*", "Path Planning", "Motion Control"]
