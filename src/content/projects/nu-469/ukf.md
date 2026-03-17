@@ -1,7 +1,7 @@
 ---
 title: "UKF-based mobile robot localization"
 description: "Implemented an Unscented Kalman Filter to localize a wheeled robot in an environment with known landmarks. Wheel odometry drives the prediction step via a unicycle motion model, while range and bearing measurements to landmarks correct the state estimate. Validated on the UTIAS MRCLAM dataset — achieving 0.107 m average position error where dead reckoning diverges."
-image: "./ukf.png"
+image: "./ukf.webp"
 startDate: "2025-09-15"
 endDate: "2025-10-15"
 skills: ["Python", "Kalman Filter", "Localization", "Sensor Fusion"]
