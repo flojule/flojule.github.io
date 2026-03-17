@@ -1,7 +1,7 @@
 ---
 title: "Joby special projects"
 description: "Staff mechanical engineer on several novel aircraft designs in a small team within Joby's flight research division. Responsibilities spanned retractable landing gear, mechanical systems, structure testing, and logistics."
-image: "./joby-sp.png"
+image: "./joby-sp.webp"
 startDate: "2023-10-01"
 endDate: "2025-02-06"
 skills: ["Mechanical Systems", "Structure Testing", "Integration", "Prototyping", "Logistics"]
