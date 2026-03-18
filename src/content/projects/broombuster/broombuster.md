@@ -1,6 +1,6 @@
 ---
 title: "Street sweeping tracker"
-description: "Tired of getting parking tickets because you forgot it's street sweeping day? BroomBuster is an interactive Python tool that shows where your car is parked on a live map and tells you when street sweeping applies to that block. Supports multiple cities across the Bay Area and Chicago."
+description: "Know before the grim sweeper comes. BroomBuster is an interactive Python tool that shows where your car is parked on a live map and tells you when street sweeping applies to that block. Supports multiple cities across the Bay Area and Chicago."
 image: "./oakland.webp"
 startDate: "2025-06-06"
 endDate: "2026-03-11"

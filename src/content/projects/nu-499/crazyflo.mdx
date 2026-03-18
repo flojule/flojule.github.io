@@ -144,7 +144,8 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
       class="w-full rounded-xl"
       aria-label="Animation of the planned cooperative payload transport trajectory"
     >
-      <source src="/videos/projects/nu-499/animation.webm" type="video/webm" />
+      <source src="/videos/projects/nu-499/animation.webm" type='video/webm; codecs="vp9"' />
+      <source src="/videos/projects/nu-499/animation.mp4" type="video/mp4" />
       <img
         src="/images/projects/nu-499/animation.gif"
         alt="Animation of the planned cooperative payload transport trajectory"
@@ -156,7 +157,7 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
 
   <figure class="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-3">
     <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
-      <p class="font-semibold">State trajectories</p>
+      <p class="font-semibold">States</p>
     </div>
     <img
       src="/images/projects/nu-499/cf_plot.webp"
@@ -164,6 +165,28 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
       class="w-full rounded-xl"
       loading="lazy"
     />
+  </figure>
+</div>
+
+<div class="my-6 grid gap-4 lg:grid-cols-2 lg:items-start">
+  <figure class="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-3">
+    <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
+      <p class="font-semibold">with transient trail</p>
+    </div>
+    <video autoplay muted loop playsinline preload="metadata" class="w-full rounded-xl" aria-label="Transient path animation">
+      <source src="/videos/projects/nu-499/crazyflo_path_transient.webm" type='video/webm; codecs="vp9"' />
+      <source src="/videos/projects/nu-499/crazyflo_path_transient.mp4" type="video/mp4" />
+    </video>
+  </figure>
+
+  <figure class="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-3">
+    <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
+      <p class="font-semibold">with persistent trail</p>
+    </div>
+    <video autoplay muted loop playsinline preload="metadata" class="w-full rounded-xl" aria-label="Persistent path animation">
+      <source src="/videos/projects/nu-499/crazyflo_path_persistent.webm" type='video/webm; codecs="vp9"' />
+      <source src="/videos/projects/nu-499/crazyflo_path_persistent.mp4" type="video/mp4" />
+    </video>
   </figure>
 </div>
 
