@@ -49,7 +49,7 @@ $$
 $$
 
 $$
-\hat{\Sigma}_k = A_k \Sigma_{k-1} A^T_k + Q
+\hat{\Sigma}_k = A_k \Sigma_{k-1} A_k^T + Q
 $$
 
 where $A$ is the Jacobian of the motion model with respect to the state.
@@ -59,7 +59,7 @@ where $A$ is the Jacobian of the motion model with respect to the state.
 The LIDAR produces a point cloud that is processed through a perception pipeline — clustering, circle regression, and classification — to detect cylindrical landmarks and publish their relative positions on the map. These detections are what feed the measurement model. The Kalman gain $K$ then weights how much to trust the sensor versus the prediction:
 
 $$
-K = \hat{\Sigma}_k H^T (H \hat{\Sigma}_k H^T + R)^{-1}
+K = \hat{\Sigma}_k H_k^T (H_k \hat{\Sigma}_k H_k^T + R)^{-1}
 $$
 
 $$
