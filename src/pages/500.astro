@@ -51,7 +51,7 @@ if (error instanceof Error) {
           <House class="size-5" />
           Go Home
         </a>
-        <button onclick="history.back()" class="btn btn-outline gap-2">
+        <button type="button" data-go-back class="btn btn-outline gap-2">
           <ArrowLeft class="size-5" />
           Go Back
         </button>
@@ -76,4 +76,10 @@ if (error instanceof Error) {
       </div>
     </div>
   </div>
+
+<script>
+  document.querySelector("[data-go-back]")?.addEventListener("click", () => {
+    history.back();
+  });
+</script>
 </Layout>
