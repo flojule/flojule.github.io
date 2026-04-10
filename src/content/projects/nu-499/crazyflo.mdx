@@ -20,63 +20,63 @@ The package covers the full workflow:
 <div class="my-3 rounded-2xl border border-base-300 bg-base-200/50 p-2 sm:p-2.5">
   <div class="mx-auto flex max-w-lg flex-col gap-1">
     <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-2">
-      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">1. Input — </span>Payload reference path</p>
+      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">1. Input: </span>Payload reference path</p>
       <p class="mt-1 text-sm leading-snug text-base-content/70">
         Ellipse, figure-8, straight line, random walk, or obstacle course.
       </p>
     </div>
 
-    <div class="flex items-center justify-center text-base-content/40">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <div class="flex items-center justify-center text-base-content">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 5v14" />
         <path d="m7 14 5 5 5-5" />
       </svg>
     </div>
 
     <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-2">
-      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">2. Planning — </span>CasADi OCP solve</p>
+      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">2. Planning: </span>CasADi OCP solve</p>
       <p class="mt-1 text-sm leading-snug text-base-content/70">
         Jointly optimizes all drone trajectories under dynamics, cable tension, and obstacle constraints.
       </p>
     </div>
 
-    <div class="flex items-center justify-center text-base-content/40">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <div class="flex items-center justify-center text-base-content">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 5v14" />
         <path d="m7 14 5 5 5-5" />
       </svg>
     </div>
 
     <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-2">
-      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">3. Conversion — </span>Polynomial trajectory export</p>
+      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">3. Conversion: </span>Polynomial trajectory export</p>
       <p class="mt-1 text-sm leading-snug text-base-content/70">
         Converts the solution into 7th-degree polynomial segments for Crazyflie firmware.
       </p>
     </div>
 
-    <div class="flex items-center justify-center text-base-content/40">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <div class="flex items-center justify-center text-base-content">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 5v14" />
         <path d="m7 14 5 5 5-5" />
       </svg>
     </div>
 
     <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-2">
-      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">4. Execution — </span>Crazyswarm2 deployment</p>
+      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">4. Execution: </span>Crazyswarm2 deployment</p>
       <p class="mt-1 text-sm leading-snug text-base-content/70">
         Uploads and executes the trajectories on real or simulated Crazyflie drones.
       </p>
     </div>
 
-    <div class="flex items-center justify-center text-base-content/40">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <div class="flex items-center justify-center text-base-content">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 5v14" />
         <path d="m7 14 5 5 5-5" />
       </svg>
     </div>
 
     <div class="rounded-xl border border-base-300 bg-base-100 px-3 py-2">
-      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">5. Analysis — </span>Rosbag2 comparison</p>
+      <p class="text-lg font-bold leading-tight text-base-content"><span class="text-base-content/50 font-medium">5. Analysis: </span>Rosbag2 comparison</p>
       <p class="mt-1 text-sm leading-snug text-base-content/70">
         Compares planned and executed trajectories to evaluate tracking performance.
       </p>
@@ -100,8 +100,8 @@ The solver treats the three drones and shared payload as one coupled trajectory 
   \min \quad
   & J = J_{\mathrm{track}}
     + J_{\mathrm{rest}}
-    + J_{\mathrm{form}}
-    + J_{\mathrm{obs}} \\
+    + J_{\mathrm{formation}}
+    + J_{\mathrm{obstacles}} \\
   \text{s.t.} \quad
   & \text{dynamics}, \\
   & \text{boundary conditions}, \\
@@ -117,8 +117,8 @@ The solver treats the three drones and shared payload as one coupled trajectory 
 
 - $J_{\mathrm{track}}$: waypoint tracking and low payload speed at those waypoints.
 - $J_{\mathrm{rest}}$: low final payload velocity and acceleration.
-- $J_{\mathrm{form}}$: desired final cable geometry / drone formation.
-- $J_{\mathrm{obs}}$: soft obstacle barrier for payload and drones.
+- $J_{\mathrm{formation}}$: desired final cable geometry / drone formation.
+- $J_{\mathrm{obstacles}}$: soft obstacle barrier for payload and drones.
 
 **Constraints**
 
@@ -171,7 +171,7 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
 <div class="my-6 grid gap-4 lg:grid-cols-2 lg:items-start">
   <figure class="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-3">
     <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
-      <p class="font-semibold">with transient trail</p>
+      <p class="font-semibold">transient trail</p>
     </div>
     <video autoplay muted loop playsinline preload="metadata" class="w-full rounded-xl" aria-label="Transient path animation">
       <source src="/videos/projects/nu-499/crazyflo_path_transient.webm" type='video/webm; codecs="vp9"' />
@@ -181,7 +181,7 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
 
   <figure class="flex h-full flex-col rounded-2xl border border-base-300 bg-base-100 p-3">
     <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
-      <p class="font-semibold">with persistent trail</p>
+      <p class="font-semibold">persistent trail</p>
     </div>
     <video autoplay muted loop playsinline preload="metadata" class="w-full rounded-xl" aria-label="Persistent path animation">
       <source src="/videos/projects/nu-499/crazyflo_path_persistent.webm" type='video/webm; codecs="vp9"' />
