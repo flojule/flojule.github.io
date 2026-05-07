@@ -10,6 +10,7 @@ const education = defineCollection({
     endDate: z.coerce.date().optional(),
     logo: z.string().optional(),
     link: z.string().url().optional(),
+    graduationLabel: z.string().optional(),
   }),
 });
 

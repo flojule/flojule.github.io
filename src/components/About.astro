@@ -7,6 +7,7 @@ interface EducationEntry {
   startDate: Date;
   endDate?: Date;
   link?: string;
+  graduationLabel?: string;
 }
 
 interface Props {
@@ -30,8 +31,8 @@ const {
 const photoSrc = typeof photo === "string" ? photo : photo?.src;
 
 function formatGraduation(entry: EducationEntry) {
-  if (entry.title === "Northwestern University") {
-    return "Expected Summer 2026";
+  if (entry.graduationLabel) {
+    return entry.graduationLabel;
   }
 
   if (entry.endDate) {
@@ -60,7 +61,7 @@ function formatGraduation(entry: EducationEntry) {
               {headline}
             </p>
 
-            <div class="space-y-3 text-base leading-relaxed text-base-content/80 [&_a]:text-sky-600 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-sky-700">
+            <div class="space-y-3 text-base leading-relaxed text-base-content/80 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors hover:[&_a]:text-primary/80">
               {description.map((line) => (
                 line.trim()
                   ? <p set:html={line} />

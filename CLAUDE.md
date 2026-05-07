@@ -1,148 +1,90 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code (claude.ai/code) when working in this repository.
 
-## Project Overview
+## Project overview
 
-Bloomfolio is an Astro-based portfolio template using Tailwind CSS 4.x and DaisyUI for styling. The project follows Astro's standard project structure with file-based routing.
+Personal portfolio for Florian Julé, deployed to GitHub Pages at <https://flojule.github.io>. Astro 5 static site with Tailwind CSS 4 + DaisyUI for styling, MDX for project pages, and KaTeX for math rendering.
 
-## Development Commands
+## Development commands
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server (localhost:4321)
-npm run dev
-
-# Build for production (outputs to ./dist/)
-npm run build
-
-# Preview production build locally
-npm run preview
-
-# Run Astro CLI commands
+npm run dev      # localhost:4321
+npm run build    # outputs to ./dist
+npm run preview  # serve the production build locally
 npm run astro -- <command>
-
-# Type checking
-npm run astro check
+npm run astro check   # type check (will prompt to install @astrojs/check on first run)
 ```
 
 ## Architecture
 
-### Framework & Build Setup
+### Stack
 
-- **Astro 5.x**: Static site generator with component islands architecture
-- **Tailwind CSS 4.x**: Integrated via Vite plugin (`@tailwindcss/vite`)
-- **DaisyUI**: Loaded as Tailwind plugin in `src/styles/global.css`
-- **TypeScript**: Strict mode enabled via `astro/tsconfigs/strict`
+- **Astro 5.x**: static site generator, component islands.
+- **Tailwind CSS 4.x**: integrated via the `@tailwindcss/vite` plugin.
+- **DaisyUI 5.x**: loaded as a Tailwind plugin from `src/styles/global.css`.
+- **MDX**: project pages with `remark-math` + `rehype-katex` for inline LaTeX.
+- **TypeScript**: strict mode (`astro/tsconfigs/strict`).
 
-### Styling System
-
-The styling architecture uses Tailwind CSS 4.x with the new CSS-first configuration:
-
-1. Global styles are defined in `src/styles/global.css` using `@import "tailwindcss"` and `@plugin "daisyui"`
-2. The Tailwind Vite plugin is configured in `astro.config.mjs`
-3. DaisyUI components are available project-wide through the plugin system
-4. Component-scoped styles can be added in `<style>` tags within `.astro` files
-
-### Project Structure
+### Project structure
 
 ```
 src/
-├── assets/          # Static assets (images, SVGs)
-├── components/      # Reusable Astro components
-├── layouts/         # Layout templates (wraps page content)
-├── pages/           # File-based routing (each file = route)
-└── styles/          # Global CSS (Tailwind + DaisyUI imports)
+├── components/   # Reusable Astro components
+├── content/      # Content collections (markdown / mdx)
+│   ├── education/
+│   └── projects/
+├── layouts/      # Layout.astro, ProjectLayout.astro
+├── pages/        # File-based routing
+├── styles/       # global.css (Tailwind + DaisyUI)
+├── config.ts        # Site config (name, title, description, social links)
+└── content.config.ts  # Content collection schemas
+public/
+├── images/, videos/, gallery/   # Static media served by URL
+├── *.svg, *.pdf                  # Favicon, resume, patent
 ```
 
-### Component Architecture
+### Content collections
 
-- **Layouts** (`src/layouts/`): Base HTML structure, imports global CSS, defines `<slot />` for page content
-- **Pages** (`src/pages/`): Map directly to routes, import layouts and components
-- **Components** (`src/components/`): Reusable UI elements with isolated scopes
+Schemas live in [src/content.config.ts](src/content.config.ts):
 
-### Key Patterns
+- **`education`** (md only): title, subtitle, startDate, endDate?, logo?, link?
+- **`projects`** (md + mdx): title, description, image, startDate, endDate?, skills, demoLink?, demoLabel?, sourceLink?, video?, draft?
 
-1. **Layout Usage**: Pages should import and wrap content in `Layout.astro`:
-   ```astro
-   ---
-   import Layout from "../layouts/Layout.astro";
-   ---
-   <Layout>
-     <!-- Page content -->
-   </Layout>
-   ```
+Drafts are filtered out everywhere via `getCollection("projects", ({ data }) => !data.draft)`.
 
-2. **Global CSS Import**: Only import `global.css` in the main layout to avoid duplicate Tailwind imports
+Project pages may be `.md` (simple body) or `.mdx` (custom components, math, video). Images are co-located with content and imported via Astro's image pipeline (`./image.webp`). The `video` field is a URL string pointing into `/public/videos/...`.
 
-3. **Styling Priority**: Use Tailwind utility classes first, then DaisyUI components, and component-scoped `<style>` tags for custom styling only when necessary
+### Styling
 
-4. **TypeScript**: Astro's strict TypeScript config is enabled - expect type checking on component props and imports
+- Use Tailwind utilities first, then DaisyUI components, and component-scoped `<style>` only for custom styling that doesn't fit either.
+- DaisyUI semantic tokens (`primary`, `base-content`, `base-200`, etc.) are preferred over raw color classes for theme consistency.
+- Layout-level styles are in [Layout.astro](src/layouts/Layout.astro); the prose-content styles for MDX are in [ProjectLayout.astro](src/layouts/ProjectLayout.astro).
 
-## Template Structure
+### Layouts
 
-Bloomfolio is designed as a portfolio website template with the following sections and components:
+- **`Layout.astro`**: base HTML, head/meta tags, header/footer, view transitions (`<ClientRouter />`).
+- **`ProjectLayout.astro`**: wraps `Layout.astro` and renders the per-project header (title, dates, links, skills) + featured image/video, then `<slot />` for the body. Used by `pages/projects/[...slug].astro`.
 
-### Hero Section (Component)
-- Title
-- Description
-- Avatar
+### Pages
 
-### About Section (Component)
-- Title
-- Description
+- `index.astro` — home: About + Projects.
+- `about.astro` — full About page.
+- `projects/index.astro` — projects index.
+- `projects/[...slug].astro` — dynamic project routes from the `projects` collection.
+- `404.astro`, `500.astro` — error pages.
 
-### Work Section (Component + Content Loaded)
-- Company Name
-- Position
-- Position Description
-- Period (e.g., May 2012 - Feb 2020)
+## Conventions
 
-### Education Section (Component + Content Loaded)
-- University Name
-- Course Name
-- Description
-- Period (e.g., May 2012 - Feb 2020)
-- Link to college website
+- Project pages should import images via Astro's image pipeline rather than referencing `/public/...` so they get optimized.
+- Videos go to `public/videos/projects/<slug>/<name>.{mp4,webm}`. Both formats are typically provided; the components prefer webm and fall back to mp4.
+- New skills in project frontmatter should match existing capitalization (e.g. "ROS 2", "C++", "Robotic Manipulation"). Check existing entries before adding.
+- When adding figures inside MDX, use the `<figure class="mx-auto my-6 w-fit max-w-full">` + `<Image>` + `<figcaption>` pattern from existing files (e.g. [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
 
-### Projects Section (Component + Content Loaded)
-- Image
-- Title
-- Period (e.g., May 2012 - Feb 2020)
-- Description
-- Skills
-- Link Demo
-- Link Source
+## MCP tools for documentation
 
-### Hackathon Section (Component + Content Loaded)
-- Period (e.g., Nov 23rd - 25th, 2018)
-- Title
-- Location
-- Description
-- Link Source
+When working with framework specifics, prefer the MCP-served docs:
 
-### Contact Section (Component)
-Contact information
-
-### Blog Page (Page + Content Loaded)
-- Image
-- Title
-- Publish Date
-- Content
-
-## Development Workflow
-
-### MCP Tools for Documentation
-
-When building components or implementing features, **always use the available MCP tools** to search documentation:
-
-1. **Astro Documentation**: Use `mcp__astro-docs__search_astro_docs` to search official Astro framework documentation
-   - Use for: routing, components, content collections, layouts, data fetching, SSR/SSG patterns
-
-2. **DaisyUI Documentation**: Use `mcp__context7__resolve-library-id` and `mcp__context7__get-library-docs` to search DaisyUI component documentation
-   - Use for: UI components, theming, component props, styling patterns
-   - First resolve the library ID, then fetch the documentation with specific topics
-
-**Important**: Always consult these documentation sources before implementing features to ensure best practices and correct API usage.
+- **Astro**: `mcp__astro-docs__search_astro_docs` for routing, content collections, image API, etc.
+- **DaisyUI**: `mcp__context7__resolve-library-id` then `mcp__context7__get-library-docs` for component APIs and theming.
