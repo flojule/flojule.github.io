@@ -1,6 +1,6 @@
 ---
 title: "Street sweeping tracker"
-description: "BroomBuster is a Progressive Web App and Python command-line tool that shows where your cars are parked on a live map and tells you when street sweeping applies. Supports several Bay Area cities and Chicago."
+description: "BroomBuster is a Web App and Python command-line tool that shows where your cars are parked on a live map and tells you when street sweeping applies. Supports several Bay Area cities and Chicago."
 image: "./bay_area.webp"
 startDate: "2025-06-06"
 endDate: "2026-03-11"
