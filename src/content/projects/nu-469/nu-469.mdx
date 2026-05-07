@@ -1,70 +1,94 @@
 ---
 title: "Mobile robot algorithms: localization, planning & learning"
-description: "Three interconnected projects from a mobile robotics course: UKF-based localization fusing odometry and landmark measurements, A* path planning with motion control, and a data-driven motion model learned with Locally Weighted Linear Regression."
+description: "Three projects from a mobile robotics course: Unscented Kalman Filter localization, A* path planning with motion control, and a learned motion model via Locally Weighted Linear Regression. All validated on the UTIAS MRCLAM dataset."
 image: "./ukf.webp"
 startDate: "2025-09-15"
 endDate: "2025-12-15"
-skills: ["Python", "Kalman Filter", "Localization", "A*", "Path Planning", "Motion Control", "Machine Learning", "Regression", "Sensor Fusion"]
-sourceLink: "https://github.com/flojule/UKF"
+skills: ["Python", "UKF", "Localization", "A*", "Path Planning", "Motion Control", "Machine Learning", "Regression", "Sensor Fusion"]
 ---
 
-## UKF-based mobile robot localization
+import { Image } from "astro:assets";
+import ukfImg from "./ukf.webp";
+import searchImg from "./search.webp";
+import lwlrImg from "./lwlr.webp";
 
-Implemented an Unscented Kalman Filter to localize a wheeled robot in an environment with known landmarks. Robot odometry drives the prediction step via a unicycle motion model, while range and bearing measurements to landmarks correct the state estimate. Validated on the [UTIAS MRCLAM](http://asrl.utias.utoronto.ca/datasets/mrclam/) single-robot dataset.
+## Overview
 
-The filter operates in two steps each timestep:
+Three connected projects from an AI and ML for robotics course, each tackling one piece of the autonomy stack on a differential-drive robot. All are validated on the [University of Toronto Institute for Aerospace Studies Multi-Robot Cooperative Localization and Mapping (UTIAS MRCLAM)](http://asrl.utias.utoronto.ca/datasets/mrclam/) single-robot dataset.
 
-- **Predict**: the current pose is propagated forward using a unicycle motion model and sigma points, accounting for process noise in wheel velocities.
-- **Correct**: visible landmark measurements (range + bearing) are used to pull the estimate toward ground truth, weighted by sensor noise.
+---
 
-Dead reckoning accumulates orientation error and diverges shortly. The UKF tracks ground truth throughout the run.
+## Unscented Kalman Filter (UKF) localization
 
-<div style="text-align:center">
+[Source: github.com/flojule/UKF](https://github.com/flojule/UKF)
 
-![UKF localization result](./ukf.webp)
+The UKF fuses body twist commands (prediction) with range-and-bearing measurements to known landmarks (correction) to maintain a pose estimate $(x, y, \theta)$.
 
-</div>
+- **Predict**: a unicycle motion model propagates sigma points forward, accounting for wheel-velocity process noise.
+- **Correct**: visible landmark measurements pull the estimate toward ground truth, weighted by sensor noise.
 
-[[Source]](https://github.com/flojule/UKF)
+Dead reckoning diverges quickly from orientation drift; the UKF tracks ground truth across the run (avg. position error 0.107 m, avg. bearing error 0.049 rad).
+
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <Image
+    src={ukfImg}
+    alt="UKF localization result on the UTIAS MRCLAM dataset"
+    class="block h-auto max-w-full rounded-lg"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    UKF estimate vs. ground truth and dead reckoning
+  </figcaption>
+</figure>
 
 ---
 
 ## A* path planning and motion control
 
-A* path planner for a wheeled robot navigating a landmark-based environment, with offline (full map) and online (partial knowledge) variants, plus a proportional controller that drives the robot along the planned paths. Validated on the UTIAS MRCLAM dataset.
+[Source: github.com/flojule/search-a-star](https://github.com/flojule/search-a-star)
 
-### Path Planning (A*)
+A* search on a grid map plus a proportional motion controller that drives the robot along the resulting waypoints.
 
-Paths are planned on a grid using A* with a Chebyshev distance heuristic (admissible for 8-directional movement). Two tie-breaking criteria improve path quality: fewest direction changes and octile distance. Two grid resolutions are compared — coarse (1 m/cell) and fine (0.1 m/cell, with landmarks inflated by the robot footprint).
+**Path planning.** A* uses a Chebyshev distance heuristic (admissible for 8-directional movement). Tie-breaking on fewest direction changes plus octile distance produces cleaner paths. Two grid resolutions compared: coarse (1 m/cell) and fine (0.1 m/cell with the robot footprint inflated around landmarks). An online variant replans from scratch as the robot reveals neighbors — coarse grids work better here due to fewer waypoints and direction changes.
 
-Online planning starts with no map knowledge. At each timestep the robot reveals its neighbors and A* replans from scratch — coarse grids yield faster, cleaner trajectories due to fewer waypoints and direction changes.
+**Motion controller.** Proportional control on linear velocity $v = K_v \cdot d$ and angular velocity $\omega = K_\omega \cdot \Delta\theta$, with $v$ scaled by $\cos(\Delta\theta)$ to avoid moving away from the target while turning. A collision-avoidance layer reorients on occupied next-cells. Best gains from a sweep: $K_v = 2$, $K_\omega = 5$ — 24 s completion, low overshoot.
 
-### Motion Controller
-
-A proportional controller tracks the waypoints by independently commanding linear velocity $v = K_v \cdot d$ and angular velocity $\omega = K_\omega \cdot \Delta\theta$. Linear velocity is scaled by $\cos(\Delta\theta)$ to avoid moving away from the target while turning. A collision avoidance layer reorients the robot when the next cell is occupied.
-
-<div style="text-align:center">
-
-![A* path planning result](./search.webp)
-
-</div>
-
-[[Source]](https://github.com/flojule/search-a-star)
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <Image
+    src={searchImg}
+    alt="A* path planning result"
+    class="block h-auto max-w-full rounded-lg"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    Online A* trajectory through a landmark-based environment
+  </figcaption>
+</figure>
 
 ---
 
-## Learning a robot motion model with LWLR
+## Learned motion model with Locally Weighted Linear Regression (LWLR)
 
-Instead of relying on an analytical unicycle model, this project learns the robot's motion model directly from data. Given a control input $(v, \omega)$ and the previous pose, Locally Weighted Linear Regression (LWLR) predicts the resulting pose change by fitting a local linear model weighted by similarity to the query point.
+[Source: github.com/flojule/LWLR](https://github.com/flojule/LWLR)
 
-LWLR assigns each training sample a weight based on its distance to the query in control space, then solves a weighted least-squares problem. This non-parametric approach adapts to non-linearities in the true motion model without requiring an explicit parameterization.
+LWLR replaces the analytical unicycle motion model with a data-driven one. Given a control input $(v, \omega)$ and the previous pose, it predicts the resulting pose change by solving a weighted least-squares problem in which each training sample is weighted by similarity to the query in control space.
 
-The learned model is evaluated against the analytical unicycle model on held-out odometry sequences — the data-driven model captures systematic errors (wheel slip, asymmetry) that the closed-form model cannot represent.
+This non-parametric approach captures systematic effects — wheel slip, asymmetry — that the closed-form unicycle model cannot represent. Evaluated against the analytical model on held-out odometry sequences.
 
-<div style="text-align:center">
-
-![LWLR learned motion model](./lwlr.webp)
-
-</div>
-
-[[Source]](https://github.com/flojule/LWLR)
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <Image
+    src={lwlrImg}
+    alt="LWLR learned motion model result"
+    class="block h-auto max-w-full rounded-lg"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    Learned LWLR motion model vs. the analytical unicycle baseline
+  </figcaption>
+</figure>

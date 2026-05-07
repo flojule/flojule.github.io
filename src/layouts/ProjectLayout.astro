@@ -2,16 +2,18 @@
 import Layout from "./Layout.astro";
 import "katex/dist/katex.min.css";
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import SkillBadge from "../components/SkillBadge.astro";
 import { ExternalLink } from "@lucide/astro";
 import { siteConfig } from "../config";
+import { getVideoMimeType, getVideoSources } from "../lib/video";
 
 interface Props {
   title: string;
   description: string;
   startDate: Date;
   endDate?: Date;
-  image: any;
+  image: ImageMetadata;
   video?: string;
   skills: string[];
   demoLink?: string;
@@ -33,24 +35,6 @@ const {
 } = Astro.props;
 
 const hasSkills = skills && skills.length > 0;
-
-function getVideoMimeType(videoPath: string) {
-  const extension = videoPath.split(".").pop()?.toLowerCase();
-  if (extension === "webm") return 'video/webm; codecs="vp9"';
-  if (extension === "ogg" || extension === "ogv") return "video/ogg";
-  return "video/mp4";
-}
-
-function getVideoSources(videoPath: string) {
-  const extension = videoPath.split(".").pop()?.toLowerCase();
-
-  if (extension === "mp4") {
-    const webmPath = videoPath.replace(/\.mp4$/i, ".webm");
-    return [webmPath, videoPath];
-  }
-
-  return [videoPath];
-}
 
 function formatPeriod(startDate: Date, endDate?: Date) {
   const options: Intl.DateTimeFormatOptions = {

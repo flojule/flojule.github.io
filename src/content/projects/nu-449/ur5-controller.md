@@ -1,6 +1,6 @@
 ---
 title: "PID and feedforward control of a UR5 arm"
-description: "Simulated trajectory tracking on a UR5 robotic arm in CoppeliaSim, comparing a PID controller against a PID with computed-torque feedforward. Both follow a screw quintic trajectory and are evaluated on joint tracking accuracy, torque commands, and end-effector error."
+description: "Simulated trajectory tracking on a UR5 robotic arm in CoppeliaSim. Compares a Proportional-Integral-Derivative (PID) controller against PID with computed-torque feedforward, evaluated on joint tracking accuracy, torque commands, and end-effector error."
 image: "./ur5.gif"
 startDate: "2025-11-19"
 endDate: "2025-12-15"

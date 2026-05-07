@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import SkillBadge from "./SkillBadge.astro";
 import { ExternalLink } from "@lucide/astro";
 import type { CollectionEntry } from "astro:content";
+import { getVideoMimeType, getVideoSources } from "../lib/video";
 
 interface Props {
   project: CollectionEntry<"projects">;
@@ -12,24 +13,6 @@ const { project } = Astro.props;
 const hasDemoLink = Boolean(project.data.demoLink);
 const hasSourceLink = Boolean(project.data.sourceLink);
 const actionCount = Number(hasDemoLink) + Number(hasSourceLink);
-
-function getVideoMimeType(videoPath: string) {
-  const extension = videoPath.split(".").pop()?.toLowerCase();
-  if (extension === "webm") return 'video/webm; codecs="vp9"';
-  if (extension === "ogg" || extension === "ogv") return "video/ogg";
-  return "video/mp4";
-}
-
-function getVideoSources(videoPath: string) {
-  const extension = videoPath.split(".").pop()?.toLowerCase();
-
-  if (extension === "mp4") {
-    const webmPath = videoPath.replace(/\.mp4$/i, ".webm");
-    return [webmPath, videoPath];
-  }
-
-  return [videoPath];
-}
 
 function formatPeriod(startDate: Date, endDate?: Date) {
   const options: Intl.DateTimeFormatOptions = {
