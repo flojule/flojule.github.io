@@ -1,11 +1,11 @@
 ---
-title: "4WD platform with passive articulated chassis for stair-climbing wheelchair"
-description: "Semi-autonomous stair-climbing wheelchair with a passive yaw joint and four-wheel-drive articulated chassis. Validated kinematics and control on a 1/4-scale platform; full-scale integration is underway."
+title: "4WD platform with passive articulated chassis"
+description: "Semi-autonomous stair-climbing wheelchair with a 4-wheel-drive articulated chassis and large soft airless wheels."
 image: "./flowheely_integration.webp"
 startDate: "2026-04-01"
 skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Mobile Robotics", "Control Systems", "Articulated Chassis"]
 sourceLink: "https://github.com/flojule/flowheely"
-video: "/videos/projects/flowheely/miniwheely.mp4"
+video: "/videos/projects/flowheely/test_drive.mp4"
 ---
 
 import { Image } from "astro:assets";
@@ -13,17 +13,17 @@ import miniwheelyImg from "./miniwheely.webp";
 import cadImg from "./cad.webp";
 import integrationImg from "./flowheely_integration.webp";
 
-## Overview
+## Flowheely overview
 
 Flowheely is a semi-autonomous stair-climbing wheelchair built around a 4WD articulated chassis with a passive yaw joint between front and rear bodies. The yaw joint lets the chassis curve around turning stairs while keeping all four soft airless wheels in driven contact with the steps.
 
-The full-scale platform is in mechanical and electrical integration. Kinematics and the control architecture were first validated on a 1/4-scale test vehicle (miniwheely), described below.
+I built this all from scratch. The project includes mechanical design and fabrication, embedded systems, ROS 2 software architecture, control systems, and computer vision.
 
-<figure class="mx-auto my-6 w-fit max-w-full">
+<figure class="mx-auto my-6 w-4/5 max-w-full">
   <Image
     src={cadImg}
     alt="CAD of Flowheely on a curved staircase"
-    class="block h-auto max-w-full rounded-lg"
+    class="block h-auto w-full rounded-lg"
     loading="lazy"
     decoding="async"
     data-figure-img
@@ -33,66 +33,85 @@ The full-scale platform is in mechanical and electrical integration. Kinematics 
   </figcaption>
 </figure>
 
-<figure class="mx-auto my-6 w-fit max-w-full">
-  <video
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-    class="block h-auto max-w-full rounded-lg"
-    data-figure-img
-  >
-    <source src="/videos/projects/flowheely/miniwheely.webm" type='video/webm; codecs="vp9"' />
-    <source src="/videos/projects/flowheely/miniwheely.mp4" type="video/mp4" />
-  </video>
-  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-    Miniwheely: 1/4-scale test platform driving with closed-loop yaw-joint control
-  </figcaption>
-</figure>
-
-## Control
-
-All three control modes close the loop on the yaw-joint angle between front and rear bodies. Mode selection determines what the operator (or planner) commands; the joint controller and the wheel-speed allocation handle the rest.
-
-- **Differential drive (joint locked at 0&deg;)** — front and rear bodies are held collinear and the wheelchair behaves as a rigid 4WD differential-drive robot. Used for tight maneuvers and general navigation, manual or autonomous.
-- **Yaw-angle steering** — the operator commands a target joint angle. Feels like driving a car: the joint sets a steady-state turn radius and the wheels are coordinated to follow it. Manual driving mode.
-- **Body yaw-rate control** — the controller takes a commanded body yaw rate and resolves it through the joint and wheel speeds. Used for autonomous navigation.
-
-The articulated yaw joint is the key enabler for curved stair climbing; whether to also use it on flat ground (versus pure differential drive) is still TBD.
-
 ## Miniwheely (1/4-scale)
 
-Miniwheely is a 1/4-scale platform built to validate the kinematics and the articulated-chassis concept before committing to the full-scale build. The original goal also included validating stair climbing, but building a representative scaled stair setup turned out to be more involved than the validation was worth. Once the control architecture was understood and working on miniwheely, moving to the full-scale platform was the right next step.
+Miniwheely is a 1/4-scale platform built to validate the kinematics and the articulated-chassis concept before committing to the full-scale build.
 
-<figure class="mx-auto my-6 w-fit max-w-full">
-  <Image
-    src={miniwheelyImg}
-    alt="Miniwheely 1/4-scale platform next to the full-scale Flowheely chassis"
-    class="block h-auto max-w-full rounded-lg"
-    loading="lazy"
-    decoding="async"
-    data-figure-img
-  />
-  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-    Miniwheely (left) alongside the scaled design demonstrator Flowheely chassis (right)
-  </figcaption>
-</figure>
+<div class="my-6 flex max-w-full flex-col items-center gap-4 sm:flex-row sm:items-start">
+  <figure class="m-0 min-w-0 sm:basis-0 sm:grow-[64]">
+    <Image
+      src={miniwheelyImg}
+      alt="Miniwheely 1/4-scale platform next to the full-scale Flowheely chassis"
+      class="block h-64 w-auto max-w-full rounded-lg sm:h-auto sm:w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+    <figcaption class="mt-1 w-0 min-w-full text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+      Miniwheely (left) and the full-scale Flowheely chassis (right)
+    </figcaption>
+  </figure>
+  <figure class="m-0 min-w-0 sm:basis-0 sm:grow-[27]">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      class="block h-64 w-auto max-w-full rounded-lg sm:h-auto sm:w-full"
+      data-figure-img
+    >
+      <source src="/videos/projects/flowheely/miniwheely.webm" type='video/webm; codecs="vp9"' />
+      <source src="/videos/projects/flowheely/miniwheely.mp4" type="video/mp4" />
+    </video>
+    <figcaption class="mt-1 w-0 min-w-full text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+      Closed-loop yaw-joint control
+    </figcaption>
+  </figure>
+</div>
 
-## Status
+## Full-scale integration
 
-Full-scale mechanical and electrical integration is underway. The control stack validated on miniwheely is being ported to the full-scale platform.
+Full-scale mechanical and electrical integration is done. The safety system and control architecture are validated. Next steps include testing on real stairs with the full-size wheels.
 
-<figure class="mx-auto my-6 w-fit max-w-full">
-  <Image
-    src={integrationImg}
-    alt="Full-scale Flowheely chassis during integration"
-    class="block h-auto max-w-full rounded-lg"
-    loading="lazy"
-    decoding="async"
-    data-figure-img
-  />
-  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-    Full-scale Flowheely chassis during integration
-  </figcaption>
-</figure>
+A full simulation in Gazebo has been built to allow for fast development of the control, vision, and path-planning components of the system.
+
+The robot is controllable with several methods: webapp, gamepad, keyboard. A Foxglove telemetry tool has been built for navigation and control debugging.
+
+<div class="mx-auto my-6 flex max-w-full flex-wrap justify-center gap-4">
+  <figure class="w-[calc(50%-0.5rem)] max-w-xs">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      class="block h-auto w-full rounded-lg"
+      data-figure-img
+    >
+      <source src="/videos/projects/flowheely/test_drive.webm" type='video/webm; codecs="vp9"' />
+      <source src="/videos/projects/flowheely/test_drive.mp4" type="video/mp4" />
+    </video>
+    <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+      Full-scale platform test drive (small wheels)
+    </figcaption>
+  </figure>
+  <figure class="w-[calc(50%-0.5rem)] max-w-xs">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      class="block h-auto w-full rounded-lg"
+      data-figure-img
+    >
+      <source src="/videos/projects/flowheely/webapp_sim.webm" type='video/webm; codecs="vp9"' />
+      <source src="/videos/projects/flowheely/webapp_sim.mp4" type="video/mp4" />
+    </video>
+    <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+      Gazebo simulation and webapp control
+    </figcaption>
+  </figure>
+</div>
+
