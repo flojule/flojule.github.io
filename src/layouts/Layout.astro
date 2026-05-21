@@ -294,8 +294,23 @@ const isHomePage = Astro.url.pathname === "/";
 
       const initVideos = () => {
         document.querySelectorAll("video[autoplay]").forEach((video) => {
-          if (video instanceof HTMLVideoElement) {
-            video.play().catch(() => {});
+          if (!(video instanceof HTMLVideoElement)) return;
+          // The view-transition swap inserts these <video> nodes via script, so
+          // the native `autoplay` attribute never fires. Start playback manually,
+          // retrying once the element has data in case it isn't ready at swap time.
+          video.muted = true; // Safari only honors muted autoplay via the property
+          video.playsInline = true;
+          const tryPlay = () => {
+            const p = video.play();
+            if (p && typeof p.catch === "function") p.catch(() => {});
+          };
+          if (video.readyState >= 2) {
+            tryPlay();
+          } else {
+            video.addEventListener("loadeddata", tryPlay, { once: true });
+            video.addEventListener("canplay", tryPlay, { once: true });
+            if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load();
+            tryPlay();
           }
         });
       };
@@ -318,6 +333,7 @@ const isHomePage = Astro.url.pathname === "/";
       initPdfOverlay();
       initExternalLinks();
       document.addEventListener("astro:page-load", initPdfOverlay);
+      document.addEventListener("astro:after-swap", initVideos);
       document.addEventListener("astro:page-load", initVideos);
       document.addEventListener("astro:page-load", initExternalLinks);
     </script>
