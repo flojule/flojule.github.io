@@ -1,23 +1,26 @@
 ---
 title: "4WD platform with passive articulated chassis"
-description: "Semi-autonomous stair-climbing wheelchair with a 4-wheel-drive articulated chassis and large soft airless wheels."
+description: "I am building a stair-climbing platform with a 4-wheel-drive articulated chassis and soft airless wheels."
 image: "./flowheely_integration.webp"
 startDate: "2026-04-01"
 skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Mobile Robotics", "Control Systems", "Articulated Chassis"]
 sourceLink: "https://github.com/flojule/flowheely"
-video: "/videos/projects/flowheely/test_drive.mp4"
+video: "/videos/projects/flowheely/climb.mp4"
 ---
 
 import { Image } from "astro:assets";
 import miniwheelyImg from "./miniwheely.webp";
 import cadImg from "./cad.webp";
 import integrationImg from "./flowheely_integration.webp";
+import floWheelyImg from "./flo-wheely.webp";
 
 ## Flowheely overview
 
-Flowheely is a semi-autonomous stair-climbing wheelchair built around a 4WD articulated chassis with a passive yaw joint between front and rear bodies. The yaw joint lets the chassis curve around turning stairs while keeping all four soft airless wheels in driven contact with the steps.
+Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint between front and rear bodies. The yaw joint lets the chassis curve around turning stairs while keeping all four soft airless wheels in driven contact with the steps.
 
-I built this all from scratch. The project includes mechanical design and fabrication, embedded systems, ROS 2 software architecture, control systems, and computer vision.
+I built this entire project from scratch. This includes mechanical design and fabrication, embedded systems, ROS 2 software architecture, control systems, and computer vision.
+
+Off-the-shelf components include: onboard computer, motors and motor controllers, camera, IMU, encoders, and electrical components.
 
 <figure class="mx-auto my-6 w-4/5 max-w-full">
   <Image
@@ -29,7 +32,7 @@ I built this all from scratch. The project includes mechanical design and fabric
     data-figure-img
   />
   <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-    CAD: full-scale Flowheely climbing a curved staircase
+    CAD: curved staircase climbing with the articulated chassis and self-leveling chair
   </figcaption>
 </figure>
 
@@ -78,8 +81,8 @@ A full simulation in Gazebo has been built to allow for fast development of the 
 
 The robot is controllable with several methods: webapp, gamepad, keyboard. A Foxglove telemetry tool has been built for navigation and control debugging.
 
-<div class="mx-auto my-6 flex max-w-full flex-wrap justify-center gap-4">
-  <figure class="w-[calc(50%-0.5rem)] max-w-xs">
+<div class="mx-auto my-6 flex w-4/5 max-w-full flex-wrap justify-center gap-4">
+  <figure class="w-[calc(50%-0.5rem)]">
     <video
       autoplay
       muted
@@ -96,7 +99,7 @@ The robot is controllable with several methods: webapp, gamepad, keyboard. A Fox
       Full-scale platform test drive (small wheels)
     </figcaption>
   </figure>
-  <figure class="w-[calc(50%-0.5rem)] max-w-xs">
+  <figure class="w-[calc(50%-0.5rem)]">
     <video
       autoplay
       muted
@@ -114,4 +117,36 @@ The robot is controllable with several methods: webapp, gamepad, keyboard. A Fox
     </figcaption>
   </figure>
 </div>
+
+<figure class="mx-auto my-6 w-4/5 max-w-full">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    class="block h-auto w-full rounded-lg"
+    data-figure-img
+  >
+    <source src="/videos/projects/flowheely/loop.webm" type='video/webm; codecs="vp9"' />
+    <source src="/videos/projects/flowheely/loop.mp4" type="video/mp4" />
+  </video>
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    Driving up and down the stairs
+  </figcaption>
+</figure>
+
+<figure class="mx-auto my-6 w-4/5 max-w-full">
+  <Image
+    src={floWheelyImg}
+    alt="Flowheely full-scale build with the large airless wheels"
+    class="block h-auto w-full rounded-lg"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    Full-scale Flowheely with the full-size wheels, the seat is coming soon!
+  </figcaption>
+</figure>
 
