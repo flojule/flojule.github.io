@@ -1,11 +1,11 @@
 ---
 title: "4WD platform with passive articulated chassis"
 description: "I am building a stair-climbing platform with a 4-wheel-drive articulated chassis and soft airless wheels."
-image: "./flowheely_integration.webp"
+image: "./flowheely.webp"
 startDate: "2026-04-01"
 skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Mobile Robotics", "Control Systems", "Articulated Chassis"]
 sourceLink: "https://github.com/flojule/flowheely"
-video: "/videos/projects/flowheely/climb.mp4"
+video: "/videos/projects/flowheely/stairs.mp4"
 ---
 
 import { Image } from "astro:assets";
@@ -13,6 +13,7 @@ import miniwheelyImg from "./miniwheely.webp";
 import cadImg from "./cad.webp";
 import integrationImg from "./flowheely_integration.webp";
 import floWheelyImg from "./flo-wheely.webp";
+import flowheelyPhotoImg from "./flowheely.webp";
 
 ## Flowheely overview
 
@@ -146,7 +147,41 @@ The robot is controllable with several methods: webapp, gamepad, keyboard. A Fox
     data-figure-img
   />
   <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-    Full-scale Flowheely with the full-size wheels, the seat is coming soon!
+    Full-scale Flowheely with the full-size wheels.
   </figcaption>
 </figure>
+
+<div class="mx-auto my-6 flex w-4/5 max-w-full items-start justify-center gap-4">
+  <figure class="m-0 min-w-0 basis-0 grow-[3]">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster={flowheelyPhotoImg.src}
+      class="block h-auto w-full rounded-lg"
+      data-figure-img
+    >
+      <source src="/videos/projects/flowheely/wheelchair.webm" type='video/webm; codecs="vp9"' />
+      <source src="/videos/projects/flowheely/wheelchair.mp4" type="video/mp4" />
+    </video>
+    <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+      It's a wheelchair!
+    </figcaption>
+  </figure>
+  <figure class="m-0 min-w-0 basis-0 grow-[4]">
+    <Image
+      src={flowheelyPhotoImg}
+      alt="Flowheely full-scale platform"
+      class="block h-auto w-full rounded-lg"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+    <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+      Full-scale platform
+    </figcaption>
+  </figure>
+</div>
 
