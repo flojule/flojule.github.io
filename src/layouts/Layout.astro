@@ -300,6 +300,9 @@ const isHomePage = Astro.url.pathname === "/";
           // retrying once the element has data in case it isn't ready at swap time.
           video.muted = true; // Safari only honors muted autoplay via the property
           video.playsInline = true;
+          // Show the native control bar (scrub/pause) on every video except
+          // opted-out previews (e.g. project-card thumbnails).
+          if (!video.hasAttribute("data-no-controls")) video.controls = true;
           const tryPlay = () => {
             const p = video.play();
             if (p && typeof p.catch === "function") p.catch(() => {});
