@@ -39,6 +39,7 @@ function formatPeriod(startDate: Date, endDate?: Date) {
           preload="metadata"
           poster={project.data.image.src}
           class="w-full h-full object-cover"
+          data-no-controls
         >
           {getVideoSources(project.data.video).map((source) => (
             <source src={source} type={getVideoMimeType(source)} />
