@@ -307,14 +307,32 @@ const isHomePage = Astro.url.pathname === "/";
             const p = video.play();
             if (p && typeof p.catch === "function") p.catch(() => {});
           };
-          if (video.readyState >= 2) {
+          // Firefox can fail <source> selection during a view-transition swap and
+          // report MEDIA_ERR_SRC_NOT_SUPPORTED though the files are fine; re-running
+          // load() re-selects the source and self-heals without a manual refresh.
+          const reselect = () => {
+            const tries = Number(video.dataset.reselectTries || "0");
+            if (tries >= 3) return;
+            video.dataset.reselectTries = String(tries + 1);
+            video.load();
             tryPlay();
-          } else {
-            video.addEventListener("loadeddata", tryPlay, { once: true });
-            video.addEventListener("canplay", tryPlay, { once: true });
-            if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load();
-            tryPlay();
+          };
+          // Bind handlers once even though init runs on both swap and page-load.
+          if (!video.dataset.videoBound) {
+            video.dataset.videoBound = "1";
+            video.addEventListener("error", reselect);
+            video.addEventListener("loadeddata", tryPlay);
+            video.addEventListener("canplay", tryPlay);
           }
+          // Selection may have already failed (or never started) before this ran.
+          if (
+            video.error ||
+            video.networkState === HTMLMediaElement.NETWORK_EMPTY ||
+            video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE
+          ) {
+            reselect();
+          }
+          tryPlay();
         });
       };
 
