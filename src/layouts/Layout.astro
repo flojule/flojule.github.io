@@ -354,12 +354,23 @@ const isHomePage = Astro.url.pathname === "/";
         figureVideos().forEach((video) => {
           video.muted = true; // Safari only honors muted autoplay via the property
           video.playsInline = true;
-          // Show the native control bar (pause/scrub/fullscreen) except on
-          // opted-out previews (e.g. project-card thumbnails).
-          if (!video.hasAttribute("data-no-controls")) video.controls = true;
           // Bind handlers once even though init runs on both swap and page-load.
           if (!video.dataset.videoBound) {
             video.dataset.videoBound = "1";
+            // Native controls stay hidden by default; reveal the control bar on
+            // mouse hover (pointer devices) and toggle on tap (touch devices),
+            // except on opted-out previews (e.g. project-card thumbnails).
+            if (!video.hasAttribute("data-no-controls")) {
+              video.addEventListener("pointerenter", (e) => {
+                if (e.pointerType === "mouse") video.controls = true;
+              });
+              video.addEventListener("pointerleave", (e) => {
+                if (e.pointerType === "mouse") video.controls = false;
+              });
+              video.addEventListener("pointerdown", (e) => {
+                if (e.pointerType !== "mouse") video.controls = !video.controls;
+              });
+            }
             // Firefox can fail <source> selection during a view-transition swap
             // and report MEDIA_ERR_SRC_NOT_SUPPORTED though the files are fine;
             // re-running load() re-selects the source and self-heals.
