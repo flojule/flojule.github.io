@@ -9,6 +9,7 @@ sourceLink: "https://github.com/flojule/crazyflo"
 video: "/videos/projects/nu-499/crazyflo_path_transient.mp4"
 ---
 
+import { Image } from "astro:assets";
 import cfPhoto from './crazyflo.webp';
 
 ## Overview
@@ -141,7 +142,9 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
       loop
       playsinline
       preload="metadata"
-      class="w-full rounded-xl"
+      width="1200"
+      height="1200"
+      data-figure-img
       aria-label="Animation of the planned cooperative payload transport trajectory"
     >
       <source src="/videos/projects/nu-499/animation.webm" type='video/webm; codecs="vp9"' />
@@ -149,7 +152,10 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
       <img
         src="/images/projects/nu-499/animation.gif"
         alt="Animation of the planned cooperative payload transport trajectory"
-        class="w-full rounded-xl"
+        class="w-full"
+        width="1200"
+        height="1200"
+        data-figure-img
         loading="lazy"
       />
     </video>
@@ -162,7 +168,10 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
     <img
       src="/images/projects/nu-499/cf_plot.webp"
       alt="State and trajectory plot for the Crazyflie payload transport system"
-      class="w-full rounded-xl"
+      class="w-full"
+      width="1599"
+      height="964"
+      data-figure-img
       loading="lazy"
     />
   </figure>
@@ -173,7 +182,7 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
     <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
       <p class="font-semibold">transient trail</p>
     </div>
-    <video autoplay muted loop playsinline preload="metadata" class="w-full rounded-xl" aria-label="Transient path animation">
+    <video autoplay muted loop playsinline preload="metadata" width="1920" height="1080" data-figure-img aria-label="Transient path animation">
       <source src="/videos/projects/nu-499/crazyflo_path_transient.webm" type='video/webm; codecs="vp9"' />
       <source src="/videos/projects/nu-499/crazyflo_path_transient.mp4" type="video/mp4" />
     </video>
@@ -183,7 +192,7 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
     <div class="mb-0 flex min-h-[1.75rem] items-center justify-center text-center">
       <p class="font-semibold">persistent trail</p>
     </div>
-    <video autoplay muted loop playsinline preload="metadata" class="w-full rounded-xl" aria-label="Persistent path animation">
+    <video autoplay muted loop playsinline preload="metadata" width="1920" height="1080" data-figure-img aria-label="Persistent path animation">
       <source src="/videos/projects/nu-499/crazyflo_path_persistent.webm" type='video/webm; codecs="vp9"' />
       <source src="/videos/projects/nu-499/crazyflo_path_persistent.mp4" type="video/mp4" />
     </video>
@@ -204,6 +213,13 @@ All listed constraints are **hard constraints** and must always be satisfied. Th
 - **Localization** — accurate localization is the hardest scaling challenge. The current setup relies on a Lighthouse base station for precise positioning; operating without fixed infrastructure would require a robust onboard or distributed localization solution before this approach can transfer to real-world environments.
 - **Decentralized Control** — centralized OCP solvers can compute coordinated trajectories for multiple agents, but scalability and real-time performance are concerns. Future work should explore decentralized or hierarchical control architectures to enable real-time coordination.
 
-<div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-  <img src={cfPhoto.src} alt="Crazyflie drones carrying a payload" style={{ maxWidth: '80%', borderRadius: '0.5rem' }} />
-</div>
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+  <Image
+    src={cfPhoto}
+    alt="Crazyflie drones carrying a payload"
+    class="w-full"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+</figure>

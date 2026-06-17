@@ -27,18 +27,18 @@ The UKF fuses body twist commands (prediction) with range-and-bearing measuremen
 - **Predict**: a unicycle motion model propagates sigma points forward, accounting for wheel-velocity process noise.
 - **Correct**: visible landmark measurements pull the estimate toward ground truth, weighted by sensor noise.
 
-Dead reckoning diverges quickly from orientation drift; the UKF tracks ground truth across the run (avg. position error 0.107 m, avg. bearing error 0.049 rad).
+Dead reckoning diverges quickly from orientation drift; the UKF tracks ground truth across the run.
 
 <figure class="mx-auto my-6 w-fit max-w-full">
   <Image
     src={ukfImg}
     alt="UKF localization result on the UTIAS MRCLAM dataset"
-    class="block h-auto max-w-full rounded-lg"
+    class="max-w-full"
     loading="lazy"
     decoding="async"
     data-figure-img
   />
-  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+  <figcaption>
     UKF estimate vs. ground truth and dead reckoning
   </figcaption>
 </figure>
@@ -51,20 +51,20 @@ Dead reckoning diverges quickly from orientation drift; the UKF tracks ground tr
 
 A* search on a grid map plus a proportional motion controller that drives the robot along the resulting waypoints.
 
-**Path planning.** A* uses a Chebyshev distance heuristic (admissible for 8-directional movement). Tie-breaking on fewest direction changes plus octile distance produces cleaner paths. Two grid resolutions compared: coarse (1 m/cell) and fine (0.1 m/cell with the robot footprint inflated around landmarks). An online variant replans from scratch as the robot reveals neighbors — coarse grids work better here due to fewer waypoints and direction changes.
+**Path planning.** A* uses a Chebyshev distance heuristic (admissible for 8-directional movement). Tie-breaking on fewest direction changes plus octile distance produces cleaner paths. Two grid resolutions compared: coarse (1 m/cell) and fine (0.1 m/cell with the robot footprint inflated around landmarks). An online variant replans from scratch as the robot reveals neighbors, coarse grids work better here due to fewer waypoints and direction changes.
 
-**Motion controller.** Proportional control on linear velocity $v = K_v \cdot d$ and angular velocity $\omega = K_\omega \cdot \Delta\theta$, with $v$ scaled by $\cos(\Delta\theta)$ to avoid moving away from the target while turning. A collision-avoidance layer reorients on occupied next-cells. Best gains from a sweep: $K_v = 2$, $K_\omega = 5$ — 24 s completion, low overshoot.
+**Motion controller.** Proportional control on linear velocity $v = K_v \cdot d$ and angular velocity $\omega = K_\omega \cdot \Delta\theta$, with $v$ scaled by $\cos(\Delta\theta)$ to avoid moving away from the target while turning. A collision-avoidance layer reorients on occupied next-cells.
 
 <figure class="mx-auto my-6 w-fit max-w-full">
   <Image
     src={searchImg}
     alt="A* path planning result"
-    class="block h-auto max-w-full rounded-lg"
+    class="max-w-full"
     loading="lazy"
     decoding="async"
     data-figure-img
   />
-  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+  <figcaption>
     Online A* trajectory through a landmark-based environment
   </figcaption>
 </figure>
@@ -77,18 +77,23 @@ A* search on a grid map plus a proportional motion controller that drives the ro
 
 LWLR replaces the analytical unicycle motion model with a data-driven one. Given a control input $(v, \omega)$ and the previous pose, it predicts the resulting pose change by solving a weighted least-squares problem in which each training sample is weighted by similarity to the query in control space.
 
-This non-parametric approach captures systematic effects — wheel slip, asymmetry — that the closed-form unicycle model cannot represent. Evaluated against the analytical model on held-out odometry sequences.
+This non-parametric approach captures systematic effects: wheel slip, non-uniform ground friction, etc... that the closed-form unicycle model does not represent. Different models are trained with different inputs:
+- current controls only
+- current controls + current pose
+- current + previous controls
+- current + previous controls and current pose. 
+Moderate success.
 
 <figure class="mx-auto my-6 w-fit max-w-full">
   <Image
     src={lwlrImg}
     alt="LWLR learned motion model result"
-    class="block h-auto max-w-full rounded-lg"
+    class="max-w-full"
     loading="lazy"
     decoding="async"
     data-figure-img
   />
-  <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+  <figcaption>
     Learned LWLR motion model vs. the analytical unicycle baseline
   </figcaption>
 </figure>
