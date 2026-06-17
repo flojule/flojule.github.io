@@ -17,9 +17,9 @@ import flowheelyPhotoImg from "./flowheely.webp";
 import climbImg from "./climb.webp";
 import descentImg from "./descent.webp";
 
-## Flowheely overview
+## Overview
 
-Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint between front and rear bodies. The yaw joint lets the chassis curve around turning stairs while keeping all four soft airless wheels in driven contact with the steps.
+Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint between front and rear chassis. The yaw joint allows for a slipless driving regime, as well as it lets the chassis curve around turning stairs while keeping all four soft airless wheels in driven contact with the steps.
 
 I built this entire project from scratch. This includes mechanical design and fabrication, ROS 2 software architecture, control systems, and computer vision.
 
@@ -39,22 +39,22 @@ Off-the-shelf components include: onboard computer, motors and motor controllers
   </figcaption>
 </figure>
 
-## Miniwheely (1/4-scale)
+## Subscale (1/4-scale)
 
-Miniwheely is a 1/4-scale platform built to validate the kinematics and the articulated-chassis concept before committing to the full-scale build.
+A subscale platform was built to validate the kinematics and the articulated-chassis concept.
 
 <div class="my-6 flex max-w-full flex-col items-center gap-4 sm:flex-row sm:items-start">
   <figure class="m-0 min-w-0 sm:basis-0 sm:grow-[64]">
     <Image
       src={miniwheelyImg}
-      alt="Miniwheely 1/4-scale platform next to the full-scale Flowheely chassis"
+      alt="Subscale development platforms"
       class="block h-64 w-auto max-w-full rounded-lg sm:h-auto sm:w-full"
       loading="lazy"
       decoding="async"
       data-figure-img
     />
     <figcaption class="mt-1 w-0 min-w-full text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-      Miniwheely (left) and the full-scale Flowheely chassis (right)
+      Subscale kinematic (left) and concept (right) demonstrator
     </figcaption>
   </figure>
   <figure class="m-0 min-w-0 sm:basis-0 sm:grow-[27]">
@@ -76,13 +76,14 @@ Miniwheely is a 1/4-scale platform built to validate the kinematics and the arti
   </figure>
 </div>
 
-## Full-scale integration
+## Full-scale platform
 
-Full-scale mechanical and electrical integration is done. The safety system and control architecture are validated. Next steps include testing on real stairs with the full-size wheels.
-
-A full simulation in Gazebo has been built to allow for fast development of the control, vision, and path-planning components of the system.
-
-The robot is controllable with several methods: webapp, gamepad, keyboard. A Foxglove telemetry tool has been built for navigation and control debugging.
+The full-scale platform development tasks include:
+- kinematics and control systems.
+- simulation in gazebo to support development and testing.
+- stair climbing capabilities.
+- chair auto-leveling.
+- driver assistance and user interface.
 
 <div class="mx-auto my-6 flex w-4/5 max-w-full flex-wrap justify-center gap-4">
   <figure class="w-[calc(50%-0.5rem)]">
@@ -99,7 +100,7 @@ The robot is controllable with several methods: webapp, gamepad, keyboard. A Fox
       <source src="/videos/projects/flowheely/test_drive.mp4" type="video/mp4" />
     </video>
     <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-      Full-scale platform test drive (small wheels)
+      Full-scale platform with small wheels
     </figcaption>
   </figure>
   <figure class="w-[calc(50%-0.5rem)]">
@@ -149,7 +150,7 @@ The robot is controllable with several methods: webapp, gamepad, keyboard. A Fox
     data-figure-img
   />
   <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-    Full-scale Flowheely with the full-size wheels.
+    Full-scale platform with the full-size wheels.
   </figcaption>
 </figure>
 
