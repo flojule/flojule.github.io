@@ -58,12 +58,12 @@ function formatPeriod(startDate: Date, endDate?: Date) {
       video ? (
         <figure class="mb-6 rounded-2xl overflow-hidden">
           <video
-            autoplay
+            data-autoplay
             controls
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
             poster={image?.src}
             class="w-full aspect-video object-cover"
           >
