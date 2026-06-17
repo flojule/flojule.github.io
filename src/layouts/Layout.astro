@@ -292,48 +292,106 @@ const isHomePage = Astro.url.pathname === "/";
         });
       };
 
+      // Autoplay videos carry a `data-autoplay` marker + preload="none" so the
+      // static HTML never starts downloads. JS then autoplays whatever is in
+      // view and prefetches the rest one at a time, so upcoming videos are
+      // buffered before you reach them without flooding Firefox's per-host
+      // connection limit (the original all-at-once failure).
+      const figureVideos = () =>
+        Array.from(document.querySelectorAll("video[data-autoplay]")).filter(
+          (v): v is HTMLVideoElement => v instanceof HTMLVideoElement,
+        );
+
+      const tryPlay = (video: HTMLVideoElement) => {
+        const p = video.play();
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      };
+
+      // Force a download even though the attribute hint is preload="none".
+      const startBuffering = (video: HTMLVideoElement) => {
+        if (video.dataset.buffering === "1") return;
+        video.dataset.buffering = "1";
+        video.preload = "auto";
+        video.load();
+      };
+
+      // Keep up to MAX_PARALLEL videos buffering at once (document order), so a
+      // couple are ready ahead of you without flooding the per-host connection
+      // limit. An in-view video jumps ahead via the observer below.
+      const MAX_PARALLEL = 2;
+      const activeLoads = () =>
+        figureVideos().filter(
+          (v) => v.dataset.buffering === "1" && v.dataset.buffered !== "1",
+        ).length;
+      const pumpPrefetch = () => {
+        while (activeLoads() < MAX_PARALLEL) {
+          const next = figureVideos().find((v) => v.dataset.buffering !== "1");
+          if (!next) break;
+          startBuffering(next);
+        }
+      };
+
+      const videoObserver =
+        "IntersectionObserver" in window
+          ? new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  const video = entry.target;
+                  if (!(video instanceof HTMLVideoElement)) return;
+                  if (entry.isIntersecting) {
+                    startBuffering(video); // priority-load the one in view now
+                    tryPlay(video);
+                  } else {
+                    video.pause();
+                  }
+                });
+              },
+              { rootMargin: "300px 0px" }, // start playing just before it scrolls in
+            )
+          : null;
+
       const initVideos = () => {
-        document.querySelectorAll("video[autoplay]").forEach((video) => {
-          if (!(video instanceof HTMLVideoElement)) return;
-          // The view-transition swap inserts these <video> nodes via script, so
-          // the native `autoplay` attribute never fires. Start playback manually,
-          // retrying once the element has data in case it isn't ready at swap time.
+        figureVideos().forEach((video) => {
           video.muted = true; // Safari only honors muted autoplay via the property
           video.playsInline = true;
-          // Show the native control bar (scrub/pause) on every video except
+          // Show the native control bar (pause/scrub/fullscreen) except on
           // opted-out previews (e.g. project-card thumbnails).
           if (!video.hasAttribute("data-no-controls")) video.controls = true;
-          const tryPlay = () => {
-            const p = video.play();
-            if (p && typeof p.catch === "function") p.catch(() => {});
-          };
-          // Firefox can fail <source> selection during a view-transition swap and
-          // report MEDIA_ERR_SRC_NOT_SUPPORTED though the files are fine; re-running
-          // load() re-selects the source and self-heals without a manual refresh.
-          const reselect = () => {
-            const tries = Number(video.dataset.reselectTries || "0");
-            if (tries >= 3) return;
-            video.dataset.reselectTries = String(tries + 1);
-            video.load();
-            tryPlay();
-          };
           // Bind handlers once even though init runs on both swap and page-load.
           if (!video.dataset.videoBound) {
             video.dataset.videoBound = "1";
-            video.addEventListener("error", reselect);
-            video.addEventListener("loadeddata", tryPlay);
-            video.addEventListener("canplay", tryPlay);
+            // Firefox can fail <source> selection during a view-transition swap
+            // and report MEDIA_ERR_SRC_NOT_SUPPORTED though the files are fine;
+            // re-running load() re-selects the source and self-heals.
+            video.addEventListener("error", () => {
+              const tries = Number(video.dataset.reselectTries || "0");
+              if (tries < 3) {
+                video.dataset.reselectTries = String(tries + 1);
+                video.load();
+                tryPlay(video);
+                return; // retrying: keep its slot; canplaythrough will pump next
+              }
+              video.dataset.buffered = "1"; // gave up: free its slot, keep going
+              pumpPrefetch();
+            });
+            video.addEventListener(
+              "canplaythrough",
+              () => {
+                video.dataset.buffered = "1";
+                pumpPrefetch();
+              },
+              { once: true },
+            );
+            video.addEventListener("loadeddata", () => tryPlay(video));
+            video.addEventListener("canplay", () => tryPlay(video));
           }
-          // Selection may have already failed (or never started) before this ran.
-          if (
-            video.error ||
-            video.networkState === HTMLMediaElement.NETWORK_EMPTY ||
-            video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE
-          ) {
-            reselect();
+          if (videoObserver) videoObserver.observe(video);
+          else {
+            startBuffering(video);
+            tryPlay(video);
           }
-          tryPlay();
         });
+        pumpPrefetch(); // kick off the background prefetch chain
       };
 
       const initExternalLinks = () => {

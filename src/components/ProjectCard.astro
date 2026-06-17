@@ -32,11 +32,11 @@ function formatPeriod(startDate: Date, endDate?: Date) {
     <figure class="aspect-video">
       {project.data.video ? (
         <video
-          autoplay
+          data-autoplay
           muted
           loop
           playsinline
-          preload="metadata"
+          preload="none"
           poster={project.data.image.src}
           class="w-full h-full object-cover"
           data-no-controls
