@@ -19,13 +19,13 @@ import descentImg from "./descent.webp";
 
 ## Overview
 
-Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint between front and rear chassis. The yaw joint allows for a slipless driving regime, as well as it lets the chassis curve around turning stairs while keeping all four soft airless wheels in driven contact with the steps.
+Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint. The yaw joint allows the chassis to curve around turning stairs while keeping all four soft airless wheels in contact with the steps. On flat ground, the vehicle can drive in a slipless regime within a 1m turning radius. Tighter turns (up to pure rotation) are also possible with a hybrid skid-steer mode. All modes are unified under a single control interface for seamless driving.
 
-I built this entire project from scratch. This includes mechanical design and fabrication, ROS 2 software architecture, control systems, and computer vision.
+I built this entire project from scratch. This includes mechanical design, fabrication, ROS 2 software architecture, control systems, and computer vision.
 
 Off-the-shelf components include: onboard computer, motors and motor controllers, camera, IMU, encoders, and electrical components.
 
-<figure class="mx-auto my-6 w-4/5 max-w-full">
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
   <Image
     src={cadImg}
     alt="CAD of Flowheely on a curved staircase"
@@ -39,38 +39,39 @@ Off-the-shelf components include: onboard computer, motors and motor controllers
   </figcaption>
 </figure>
 
-## Subscale (1/4-scale)
+## Subscale platform
 
-A subscale platform was built to validate the kinematics and the articulated-chassis concept.
+I built a subscale (1/4-scale) platform to validate the kinematics and the articulated-chassis concept.
 
-<div class="my-6 flex max-w-full flex-col items-center gap-4 sm:flex-row sm:items-start">
-  <figure class="m-0 min-w-0 sm:basis-0 sm:grow-[64]">
+<div class="my-6 flex max-w-full items-start gap-4">
+  <figure class="m-0 min-w-0 basis-0 grow-[64]">
     <Image
       src={miniwheelyImg}
       alt="Subscale development platforms"
-      class="block h-64 w-auto max-w-full rounded-lg sm:h-auto sm:w-full"
+      class="block h-auto w-full rounded-lg"
       loading="lazy"
       decoding="async"
       data-figure-img
     />
-    <figcaption class="mt-1 w-0 min-w-full text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-      Subscale kinematic (left) and concept (right) demonstrator
+    <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+      Subscale kinematic demonstrator (left) and concept demonstrator (right)
     </figcaption>
   </figure>
-  <figure class="m-0 min-w-0 sm:basis-0 sm:grow-[27]">
+  <figure class="m-0 min-w-0 basis-0 grow-[27]">
     <video
       autoplay
       muted
       loop
       playsinline
       preload="metadata"
-      class="block h-64 w-auto max-w-full rounded-lg sm:h-auto sm:w-full"
+      width="360"
+      height="640"
       data-figure-img
     >
       <source src="/videos/projects/flowheely/miniwheely.webm" type='video/webm; codecs="vp9"' />
       <source src="/videos/projects/flowheely/miniwheely.mp4" type="video/mp4" />
     </video>
-    <figcaption class="mt-1 w-0 min-w-full text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
+    <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
       Closed-loop yaw-joint control
     </figcaption>
   </figure>
@@ -79,13 +80,14 @@ A subscale platform was built to validate the kinematics and the articulated-cha
 ## Full-scale platform
 
 The full-scale platform development tasks include:
-- kinematics and control systems.
-- simulation in gazebo to support development and testing.
-- stair climbing capabilities.
-- chair auto-leveling.
-- driver assistance and user interface.
+- kinematics and control systems
+- simulation in gazebo to support development and testing
+- user interface
+- stair climbing capabilities
+- chair auto-leveling
+- driver assistance
 
-<div class="mx-auto my-6 flex w-4/5 max-w-full flex-wrap justify-center gap-4">
+<div class="mx-auto my-6 flex w-full max-w-full flex-wrap justify-center gap-4 sm:w-4/5">
   <figure class="w-[calc(50%-0.5rem)]">
     <video
       autoplay
@@ -93,7 +95,8 @@ The full-scale platform development tasks include:
       loop
       playsinline
       preload="metadata"
-      class="block h-auto w-full rounded-lg"
+      width="480"
+      height="854"
       data-figure-img
     >
       <source src="/videos/projects/flowheely/test_drive.webm" type='video/webm; codecs="vp9"' />
@@ -110,7 +113,8 @@ The full-scale platform development tasks include:
       loop
       playsinline
       preload="metadata"
-      class="block h-auto w-full rounded-lg"
+      width="480"
+      height="854"
       data-figure-img
     >
       <source src="/videos/projects/flowheely/webapp_sim.webm" type='video/webm; codecs="vp9"' />
@@ -122,14 +126,15 @@ The full-scale platform development tasks include:
   </figure>
 </div>
 
-<figure class="mx-auto my-6 w-4/5 max-w-full">
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
   <video
     autoplay
     muted
     loop
     playsinline
     preload="metadata"
-    class="block h-auto w-full rounded-lg"
+    width="1280"
+    height="720"
     data-figure-img
   >
     <source src="/videos/projects/flowheely/loop.webm" type='video/webm; codecs="vp9"' />
@@ -140,7 +145,7 @@ The full-scale platform development tasks include:
   </figcaption>
 </figure>
 
-<figure class="mx-auto my-6 w-4/5 max-w-full">
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
   <Image
     src={floWheelyImg}
     alt="Flowheely full-scale build with the large airless wheels"
@@ -150,11 +155,11 @@ The full-scale platform development tasks include:
     data-figure-img
   />
   <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-    Full-scale platform with the full-size wheels.
+    Full-scale platform with the full-size wheels
   </figcaption>
 </figure>
 
-<div class="mx-auto my-6 flex w-4/5 max-w-full items-start justify-center gap-4">
+<div class="mx-auto my-6 flex w-full max-w-full items-start justify-center gap-4 sm:w-4/5">
   <figure class="m-0 min-w-0 basis-0 grow-[3]">
     <video
       autoplay
@@ -162,8 +167,8 @@ The full-scale platform development tasks include:
       loop
       playsinline
       preload="metadata"
-      poster={flowheelyPhotoImg.src}
-      class="block h-auto w-full rounded-lg"
+      width="1080"
+      height="1920"
       data-figure-img
     >
       <source src="/videos/projects/flowheely/wheelchair.webm" type='video/webm; codecs="vp9"' />
@@ -183,12 +188,12 @@ The full-scale platform development tasks include:
       data-figure-img
     />
     <figcaption class="mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm">
-      Full-scale platform
+      Full-scale wheelchair
     </figcaption>
   </figure>
 </div>
 
-<div class="mx-auto my-6 flex w-4/5 max-w-full items-start justify-center gap-4">
+<div class="mx-auto my-6 flex w-full max-w-full items-start justify-center gap-4 sm:w-4/5">
   <figure class="m-0 min-w-0 basis-0 grow">
     <Image
       src={climbImg}
@@ -217,14 +222,15 @@ The full-scale platform development tasks include:
   </figure>
 </div>
 
-<figure class="mx-auto my-6 w-4/5 max-w-full">
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
   <video
     autoplay
     muted
     loop
     playsinline
     preload="metadata"
-    class="block h-auto w-full rounded-lg"
+    width="1280"
+    height="720"
     data-figure-img
   >
     <source src="/videos/projects/flowheely/upndown.webm" type='video/webm; codecs="vp9"' />
