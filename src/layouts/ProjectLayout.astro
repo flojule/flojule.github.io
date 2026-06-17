@@ -272,6 +272,15 @@ function formatPeriod(startDate: Date, endDate?: Date) {
     margin: 0;
   }
 
+  /* Standardized figure videos; intrinsic width/height reserve the aspect ratio. */
+  .prose-content video[data-figure-img] {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 0;
+  }
+
   .prose-content strong {
     font-weight: 600;
   }
