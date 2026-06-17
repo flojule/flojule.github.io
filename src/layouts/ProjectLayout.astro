@@ -173,6 +173,8 @@ function formatPeriod(startDate: Date, endDate?: Date) {
 </Layout>
 
 <style is:global>
+  @reference "../styles/global.css";
+
   .prose-content {
     color: inherit;
     line-height: 1.75;
@@ -267,18 +269,23 @@ function formatPeriod(startDate: Date, endDate?: Date) {
     margin: 1.5rem 0;
   }
 
-  /* For MDX figures that manage their own spacing/alignment. */
-  .prose-content img[data-figure-img] {
-    margin: 0;
-  }
-
-  /* Standardized figure videos; intrinsic width/height reserve the aspect ratio. */
-  .prose-content video[data-figure-img] {
+  /* Shared figure media (img + video) across project pages; intrinsic
+     width/height on the element reserves the aspect ratio. Each element keeps
+     only its width utility (w-full or max-w-full). */
+  .prose-content :is(img, video)[data-figure-img] {
     display: block;
-    width: 100%;
     height: auto;
     border-radius: 0.5rem;
     margin: 0;
+  }
+
+  .prose-content video[data-figure-img] {
+    width: 100%;
+  }
+
+  /* Shared figure captions. */
+  .prose-content figcaption {
+    @apply mt-1 text-center text-xs font-semibold tracking-wide text-base-content/60 sm:text-sm;
   }
 
   .prose-content strong {
