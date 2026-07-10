@@ -5,12 +5,12 @@ image: "./flowheely.webp"
 startDate: "2026-04-01"
 skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Mobile Robotics", "Control Systems", "Articulated Chassis"]
 sourceLink: "https://github.com/flojule/flowheely"
-video: "/videos/projects/flowheely/stairs.mp4"
+video: "/videos/projects/flowheely/flowheely_stairs.mp4"
 ---
 
 import { Image } from "astro:assets";
 import miniwheelyImg from "./miniwheely.webp";
-import cadImg from "./cad.webp";
+import mainImg from "./flowheely_main.webp";
 import integrationImg from "./flowheely_integration.webp";
 import floWheelyImg from "./flo-wheely.webp";
 import flowheelyPhotoImg from "./flowheely.webp";
@@ -19,25 +19,30 @@ import descentImg from "./descent.webp";
 
 ## Overview
 
+<div class="my-6 flex flex-col items-start gap-6 sm:flex-row">
+<div class="min-w-0 grow-[3] basis-0">
+
 Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint. The yaw joint allows the chassis to curve around turning stairs while keeping all four soft airless wheels in contact with the steps. On flat ground, the vehicle can drive in a slipless regime within a 1m turning radius. Tighter turns (up to pure rotation) are also possible with a hybrid skid-steer mode. All modes are unified under a single control interface for seamless driving.
 
 I built this entire project from scratch. This includes mechanical design, fabrication, ROS 2 software architecture, control systems, and computer vision.
 
 Off-the-shelf components include: onboard computer, motors and motor controllers, camera, IMU, encoders, and electrical components.
 
-<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
-  <Image
-    src={cadImg}
-    alt="CAD of Flowheely on a curved staircase"
-    class="w-full"
-    loading="lazy"
-    decoding="async"
-    data-figure-img
-  />
-  <figcaption>
-    CAD: curved staircase climbing with the articulated chassis and self-leveling chair
-  </figcaption>
-</figure>
+</div>
+  <figure class="m-0 min-w-0 grow-[2] basis-0">
+    <Image
+      src={mainImg}
+      alt="Flowheely full-scale platform on a staircase"
+      class="w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+    <figcaption>
+      Full-scale platform
+    </figcaption>
+  </figure>
+</div>
 
 ## Subscale platform
 
@@ -79,13 +84,13 @@ I built a subscale (1/4-scale) platform to validate the kinematics and the artic
 
 ## Full-scale platform
 
-The full-scale platform development tasks include:
+### Mechanical, electrical and software integration
 - kinematics and control systems
 - simulation in gazebo to support development and testing
 - user interface
 - stair climbing capabilities
-- chair auto-leveling
-- driver assistance
+
+Demonstration of the full-scale platform capabilities to climb stairs and maneuver.
 
 <div class="mx-auto my-6 flex w-full max-w-full flex-wrap justify-center gap-4 sm:w-4/5">
   <figure class="w-[calc(50%-0.5rem)]">
@@ -146,18 +151,29 @@ The full-scale platform development tasks include:
 </figure>
 
 <figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
-  <Image
-    src={floWheelyImg}
-    alt="Flowheely full-scale build with the large airless wheels"
-    class="w-full"
-    loading="lazy"
-    decoding="async"
+  <video
+    data-autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+    width="1920"
+    height="1080"
     data-figure-img
-  />
+  >
+    <source src="/videos/projects/flowheely/stairs.webm" type='video/webm; codecs="vp9"' />
+    <source src="/videos/projects/flowheely/stairs.mp4" type="video/mp4" />
+  </video>
   <figcaption>
-    Full-scale platform with the full-size wheels
+    Close up
   </figcaption>
 </figure>
+
+### Wheelchair integration
+- wheelchair mechanism design and optimization
+- chair auto-leveling
+
+Demonstration of the wheelchair integration with the platform. The wheelchair is mounted on a self-leveling mechanism that keeps the seat horizontal while climbing or descending stairs.
 
 <div class="mx-auto my-6 flex w-full max-w-full items-start justify-center gap-4 sm:w-4/5">
   <figure class="m-0 min-w-0 basis-0 grow-[3]">
@@ -240,4 +256,11 @@ The full-scale platform development tasks include:
     Climbing up and down the stairs. Seat auto-leveling in development. (8x speed)
   </figcaption>
 </figure>
+
+### Advanced-Driver Assistance System (ADAS)
+- classical computer vision for stair detection and collision avoidance
+- machine learning for general ADAS features and to improve performance of stair navigation. The stack uses YOLO26 trained on the ADE20K dataset for semantic segmentation.
+
+Demonstration of the ADAS features. The platform can detect stairs, automatically navigate them,  (seat leveling auto-engages and vehicle remains square with the leading step) and avoid collisions with obstacles. Work in progress.
+
 
