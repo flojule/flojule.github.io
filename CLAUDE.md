@@ -32,10 +32,12 @@ npm run astro check   # type check (will prompt to install @astrojs/check on fir
 ```
 src/
 ├── components/   # Reusable Astro components
+│   └── icons/    # Shared inline SVG icon components (e.g. GithubIcon.astro)
 ├── content/      # Content collections (markdown / mdx)
 │   ├── education/
 │   └── projects/
 ├── layouts/      # Layout.astro, ProjectLayout.astro
+├── lib/          # Framework-agnostic helpers (date.ts, video.ts)
 ├── pages/        # File-based routing
 ├── styles/       # global.css (Tailwind + DaisyUI)
 ├── config.ts        # Site config (name, title, description, social links)
@@ -49,7 +51,7 @@ public/
 
 Schemas live in [src/content.config.ts](src/content.config.ts):
 
-- **`education`** (md only): title, subtitle, startDate, endDate?, logo?, link?
+- **`education`** (md only): title, subtitle, startDate, endDate?, link?, graduationLabel?
 - **`projects`** (md + mdx): title, description, image, startDate, endDate?, skills, demoLink?, demoLabel?, sourceLink?, video?, draft?
 
 Drafts are filtered out everywhere via `getCollection("projects", ({ data }) => !data.draft)`.
