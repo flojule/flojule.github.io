@@ -2,25 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import { House, ArrowLeft } from "@lucide/astro";
 import { siteConfig } from "../config";
-
-interface Props {
-  error?: unknown;
-}
-
-const { error } = Astro.props;
-
-// Sanitize error for display - NEVER expose sensitive server details in production
-const displayMessage =
-  "An unexpected error occurred while processing your request.";
-
-// Log full error server-side for debugging (only visible in server logs)
-if (error instanceof Error) {
-  console.error("500 Server Error:", {
-    message: error.message,
-    stack: error.stack,
-    timestamp: new Date().toISOString(),
-  });
-}
 ---
 
 <Layout
@@ -37,7 +18,7 @@ if (error instanceof Error) {
 
       <!-- Error Description -->
       <p class="text-xl mb-8 text-base-content/70">
-        {displayMessage}
+        An unexpected error occurred while processing your request.
         <br />
         Please try again later or contact support if the problem persists.
       </p>
