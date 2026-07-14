@@ -16,6 +16,7 @@ import floWheelyImg from "./flo-wheely.webp";
 import flowheelyPhotoImg from "./flowheely.webp";
 import climbImg from "./climb.webp";
 import descentImg from "./descent.webp";
+import gamepadImg from "./gamepad.webp";
 
 ## Overview
 
@@ -261,6 +262,38 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
 - classical computer vision for stair detection and collision avoidance
 - machine learning for general ADAS features and to improve performance of stair navigation. The stack uses YOLO26 trained on the ADE20K dataset for semantic segmentation.
 
-Demonstration of the ADAS features. The platform can detect stairs, automatically navigate them,  (seat leveling auto-engages and vehicle remains square with the leading step) and avoid collisions with obstacles. Work in progress.
+The platform can detect stairs, and assist with stair climbing and descending (seat leveling auto-engages and vehicle remains square with the leading step) and avoid collisions with obstacles. Work in progress.
 
+<figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
+  <Image
+    src={gamepadImg}
+    alt="Gamepad with phone-mounted driver interface, platform in the background"
+    class="w-full"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption>
+    Driver interface: gamepad with phone-mounted webapp
+  </figcaption>
+</figure>
+
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+  <video
+    data-autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+    width="1280"
+    height="630"
+    data-figure-img
+  >
+    <source src="/videos/projects/flowheely/onboard.webm" type='video/webm; codecs="vp9"' />
+    <source src="/videos/projects/flowheely/onboard.mp4" type="video/mp4" />
+  </video>
+  <figcaption>
+    Onboard view. A forward facing camera is used for collision avoidance and object detection, while a down facing camera is used for stair navigation. 
+  </figcaption>
+</figure>
 
