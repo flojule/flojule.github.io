@@ -8,12 +8,14 @@ import { siteConfig } from "../config";
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
   contentClass?: string;
 }
 
 const {
   title = siteConfig.name,
   description = siteConfig.description[0],
+  image = siteConfig.ogImage,
   contentClass = "",
 } = Astro.props;
 
@@ -60,13 +62,13 @@ const isHomePage = Astro.url.pathname === "/";
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={origin} />
-    <meta property="og:image" content={`${origin}${siteConfig.ogImage}`} />
+    <meta property="og:image" content={`${origin}${image}`} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${origin}${siteConfig.ogImage}`} />
+    <meta name="twitter:image" content={`${origin}${image}`} />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
     <!-- Top Banner / Navbar -->
