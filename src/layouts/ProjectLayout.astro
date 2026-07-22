@@ -16,6 +16,7 @@ interface Props {
   startDate: Date;
   endDate?: Date;
   image: ImageMetadata;
+  imagePosition?: string;
   video?: string;
   skills: string[];
   demoLink?: string;
@@ -29,6 +30,7 @@ const {
   startDate,
   endDate,
   image,
+  imagePosition,
   video,
   skills,
   demoLink,
@@ -54,6 +56,7 @@ const hasSkills = skills && skills.length > 0;
             preload="none"
             poster={image?.src}
             class="w-full aspect-video object-cover"
+            style={imagePosition && `object-position: ${imagePosition}`}
           >
             {getVideoSources(video).map((source) => (
               <source src={source} type={getVideoMimeType(source)} />
@@ -67,6 +70,7 @@ const hasSkills = skills && skills.length > 0;
             src={image}
             alt={title}
             class="w-full aspect-video object-cover"
+            style={imagePosition && `object-position: ${imagePosition}`}
             width={1200}
             height={630}
             sizes="(min-width: 1024px) 56rem, 100vw"
