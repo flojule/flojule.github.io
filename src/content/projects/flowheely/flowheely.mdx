@@ -5,7 +5,7 @@ image: "./flowheely.webp"
 startDate: "2026-04-01"
 skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Mobile Robotics", "Control Systems", "ADAS", "Computer Vision"]
 sourceLink: "https://github.com/flojule/flowheely"
-video: "/videos/projects/flowheely/flowheely_stairs.mp4"
+video: "/videos/projects/flowheely/bob_4x_labeled.mp4"
 ---
 
 import { Image } from "astro:assets";
@@ -17,20 +17,13 @@ import flowheelyPhotoImg from "./flowheely.webp";
 import climbImg from "./climb.webp";
 import descentImg from "./descent.webp";
 import gamepadImg from "./gamepad.webp";
+import chairImg from "./chair.webp";
+import bobRiderImg from "./bob_rider.webp";
 
 ## Overview
 
-<div class="my-6 flex flex-col items-start gap-6 sm:flex-row">
-<div class="min-w-0 grow-[3] basis-0">
-
-Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint. The yaw joint allows the chassis to curve around turning stairs while keeping all four soft airless wheels in contact with the steps. On flat ground, the vehicle can drive in a slipless regime within a 1m turning radius. Tighter turns (up to pure rotation) are also possible with a hybrid skid-steer mode. All modes are unified under a single control interface for seamless driving.
-
-I built this entire project from scratch. This includes mechanical design, fabrication, ROS 2 software architecture, control systems, and computer vision.
-
-Off-the-shelf components include: onboard computer, motors and motor controllers, camera, IMU, encoders, and electrical components.
-
-</div>
-  <figure class="m-0 min-w-0 grow-[2] basis-0">
+<div class="mx-auto my-6 flex w-full max-w-full flex-wrap justify-center gap-4 sm:w-4/5">
+  <figure class="w-[calc(50%-0.5rem)]">
     <Image
       src={mainImg}
       alt="Flowheely full-scale platform on a staircase"
@@ -40,10 +33,29 @@ Off-the-shelf components include: onboard computer, motors and motor controllers
       data-figure-img
     />
     <figcaption>
-      Full-scale platform
+      Original full-scale platform
+    </figcaption>
+  </figure>
+  <figure class="w-[calc(50%-0.5rem)]">
+    <Image
+      src={bobRiderImg}
+      alt="Bob riding the full-scale platform"
+      class="w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+    <figcaption>
+      Bob and his upgraded ride (last wheel coming!)
     </figcaption>
   </figure>
 </div>
+
+Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint. The yaw joint allows the chassis to curve around turning stairs while keeping all four soft airless wheels in contact with the steps. On flat ground, the vehicle can drive in a slipless regime within a 1m turning radius. Tighter turns (up to pure rotation) are also possible with a hybrid skid-steer mode. All modes are unified under a single control interface for seamless driving.
+
+I built this entire project from scratch. This includes mechanical design, fabrication, ROS 2 software architecture, control systems, and computer vision.
+
+Off-the-shelf components include: onboard computer, motors and motor controllers, camera, IMU, encoders, and electrical components.
 
 ## Subscale platform
 
@@ -294,6 +306,43 @@ The platform can detect stairs, and assist with stair climbing and descending (s
   </video>
   <figcaption>
     Onboard view. A forward facing camera is used for collision avoidance and object detection, while a down facing camera is used for stair navigation. 
+  </figcaption>
+</figure>
+
+## Hardware upgrades
+
+A couple of hardware upgrades have been implemented to improve performance. The original wheels had very uneven radial stiffness which made for a bumpy ride and poor handling, this has proven to be a significant upgrade. The original seat was a quick proof of concept but meant to be replaced, which finally happened! Side rails are being designed as well (not yet implemented). I am also evaluating upgrading the seat actuation for a linear actuator to allow for a self-locking mechanism for safety and power efficiency.
+
+<figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
+  <Image
+    src={chairImg}
+    alt="Upgraded wheelchair seat"
+    class="w-full"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption>
+    Upgraded seat and wheels (one missing).
+  </figcaption>
+</figure>
+
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+  <video
+    data-autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+    width="1920"
+    height="1080"
+    data-figure-img
+  >
+    <source src="/videos/projects/flowheely/bob.webm" type='video/webm; codecs="vp9"' />
+    <source src="/videos/projects/flowheely/bob.mp4" type="video/mp4" />
+  </video>
+  <figcaption>
+    Bob going for a spin with his ride.
   </figcaption>
 </figure>
 
