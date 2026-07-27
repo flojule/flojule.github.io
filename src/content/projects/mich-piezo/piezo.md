@@ -1,7 +1,7 @@
 ---
 title: "Printed nanocomposite energy harvesters"
 description: "Built and integrated the systems for a custom 3D printer that produces piezoelectric nanocomposites with controlled filler alignment. Published in ACS Applied Materials & Interfaces (2018) with Mohammad Malakooti and Henry Sodano."
-image: "https://pubs.acs.org/cms/10.1021/acsami.8b13643/asset/images/medium/am-2018-13643m_0006.gif"
+image: "./piezo.webp"
 startDate: "2016-09-01"
 endDate: "2016-12-15"
 skills: ["Composites", "Piezoelectric", "Additive Manufacturing", "LabVIEW"]

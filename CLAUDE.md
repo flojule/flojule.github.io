@@ -71,7 +71,7 @@ Project pages may be `.md` (simple body) or `.mdx` (custom components, math, vid
 
 ### Pages
 
-- `index.astro` — home: About + Projects.
+- `index.astro` — home: Projects grid.
 - `about.astro` — full About page.
 - `projects/index.astro` — projects index.
 - `projects/[...slug].astro` — dynamic project routes from the `projects` collection.

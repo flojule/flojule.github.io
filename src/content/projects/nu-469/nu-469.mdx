@@ -51,7 +51,7 @@ Dead reckoning diverges quickly from orientation drift; the UKF tracks ground tr
 
 A* search on a grid map plus a proportional motion controller that drives the robot along the resulting waypoints.
 
-**Path planning.** A* uses a Chebyshev distance heuristic (admissible for 8-directional movement). Tie-breaking on fewest direction changes plus octile distance produces cleaner paths. Two grid resolutions compared: coarse (1 m/cell) and fine (0.1 m/cell with the robot footprint inflated around landmarks). An online variant replans from scratch as the robot reveals neighbors, coarse grids work better here due to fewer waypoints and direction changes.
+**Path planning.** A* uses a Chebyshev distance heuristic (admissible for 8-directional movement). Tie-breaking on fewest direction changes plus octile distance produces cleaner paths. Two grid resolutions compared: coarse (1 m/cell) and fine (0.1 m/cell with the robot footprint inflated around landmarks). An online variant replans from scratch as the robot reveals neighbors; coarse grids work better here due to fewer waypoints and direction changes.
 
 **Motion controller.** Proportional control on linear velocity $v = K_v \cdot d$ and angular velocity $\omega = K_\omega \cdot \Delta\theta$, with $v$ scaled by $\cos(\Delta\theta)$ to avoid moving away from the target while turning. A collision-avoidance layer reorients on occupied next-cells.
 
@@ -77,11 +77,13 @@ A* search on a grid map plus a proportional motion controller that drives the ro
 
 LWLR replaces the analytical unicycle motion model with a data-driven one. Given a control input $(v, \omega)$ and the previous pose, it predicts the resulting pose change by solving a weighted least-squares problem in which each training sample is weighted by similarity to the query in control space.
 
-This non-parametric approach captures systematic effects: wheel slip, non-uniform ground friction, etc... that the closed-form unicycle model does not represent. Different models are trained with different inputs:
+This non-parametric approach captures systematic effects that the closed-form unicycle model does not represent, such as wheel slip and non-uniform ground friction. Different models are trained with different inputs:
+
 - current controls only
 - current controls + current pose
 - current + previous controls
-- current + previous controls and current pose. 
+- current + previous controls and current pose
+
 Moderate success.
 
 <figure class="mx-auto my-6 w-fit max-w-full">
