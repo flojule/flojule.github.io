@@ -1,13 +1,16 @@
 ---
 title: "EKF SLAM on a TurtleBot3"
 description: "Built a full Simultaneous Localization And Mapping (SLAM) stack in ROS 2 from scratch: 2D geometry library, simulator, odometry, and Extended Kalman Filter (EKF) SLAM with unknown data association, deployed on a real TurtleBot3."
-image: "./real_slam.png"
+image: "./real_slam.webp"
 startDate: "2026-01-01"
 endDate: "2026-03-31"
 skills: ["C++", "ROS 2", "SLAM", "EKF", "Localization", "Sensor Fusion", "TurtleBot3"]
 sourceLink: "https://github.com/ME495-Navigation/slam-flojule"
 video: "/videos/projects/nu-495/real_slam_wide_10x.mp4"
 ---
+
+import { Image } from "astro:assets";
+import realSlamImg from "./real_slam.webp";
 
 ## Overview
 
@@ -90,8 +93,16 @@ The filter was deployed on a physical TurtleBot3 navigating an environment of cy
 | **SLAM** | −0.016 | −0.001 | −0.018 |
 | Odometry | 0.131 | −0.005 | −0.040 |
 
-<div style="text-align:center; margin: 1.5rem 0;">
-
-![Real-world SLAM result](./real_slam.png)
-
-</div>
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <Image
+    src={realSlamImg}
+    alt="Real-world SLAM result: SLAM estimate, odometry, and landmarks in RViz"
+    class="max-w-full"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+  />
+  <figcaption>
+    SLAM estimate (green) vs. odometry (blue) after a full loop
+  </figcaption>
+</figure>
