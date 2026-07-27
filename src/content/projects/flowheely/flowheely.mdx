@@ -1,6 +1,6 @@
 ---
 title: "Stair-climbing wheelchair"
-description: "I am building a stair-climbing platform with a 4-wheel-drive articulated chassis and soft airless wheels. A driver-assist system allows for easy and safe operation in stairs."
+description: "I am building a stair-climbing platform with a 4-wheel-drive articulated chassis and soft airless wheels. A driver-assist system allows for easy and safe operation on stairs."
 image: "./bob_rider.webp"
 imagePosition: "center 15%"
 startDate: "2026-04-01"
@@ -13,7 +13,6 @@ import { Image } from "astro:assets";
 import miniwheelyImg from "./miniwheely.webp";
 import mainImg from "./flowheely_main.webp";
 import integrationImg from "./flowheely_integration.webp";
-import floWheelyImg from "./flo-wheely.webp";
 import flowheelyPhotoImg from "./flowheely.webp";
 import climbImg from "./climb.webp";
 import descentImg from "./descent.webp";
@@ -47,12 +46,12 @@ import bobRiderImg from "./bob_rider.webp";
       data-figure-img
     />
     <figcaption>
-      Bob and his upgraded ride (last wheel coming!)
+      Bob and his upgraded ride (more to come)
     </figcaption>
   </figure>
 </div>
 
-Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint. The yaw joint allows the chassis to curve around turning stairs while keeping all four soft airless wheels in contact with the steps. On flat ground, the vehicle can drive in a slipless regime within a 1m turning radius. Tighter turns (up to pure rotation) are also possible with a hybrid skid-steer mode. All modes are unified under a single control interface for seamless driving.
+Flowheely is a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint. The yaw joint allows the chassis to curve around turning stairs while keeping all four soft airless wheels in contact with the steps. On flat ground, the vehicle can drive in a slipless regime within a 1 m turning radius. Tighter turns (up to pure rotation) are also possible with a hybrid skid-steer mode. All modes are unified under a single control interface for seamless driving.
 
 I built this entire project from scratch. This includes mechanical design, fabrication, ROS 2 software architecture, control systems, and computer vision.
 
@@ -100,7 +99,7 @@ I built a subscale (1/4-scale) platform to validate the kinematics and the artic
 
 ### Mechanical, electrical and software integration
 - kinematics and control systems
-- simulation in gazebo to support development and testing
+- simulation in Gazebo to support development and testing
 - user interface
 - stair climbing capabilities
 
@@ -271,9 +270,10 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
   </figcaption>
 </figure>
 
-### Advanced-Driver Assistance System (ADAS)
+### Advanced Driver-Assistance System (ADAS)
 - classical computer vision for stair detection and collision avoidance
-- machine learning for general ADAS features and to improve performance of stair navigation. The stack uses YOLO26 trained on the ADE20K dataset for semantic segmentation.
+- machine learning for general ADAS features and to improve performance of stair navigation
+- the machine learning stack uses YOLO26 trained on the ADE20K dataset for semantic segmentation
 
 The platform can detect stairs, and assist with stair climbing and descending (seat leveling auto-engages and vehicle remains square with the leading step) and avoid collisions with obstacles. Work in progress.
 
@@ -306,13 +306,17 @@ The platform can detect stairs, and assist with stair climbing and descending (s
     <source src="/videos/projects/flowheely/onboard.mp4" type="video/mp4" />
   </video>
   <figcaption>
-    Onboard view. A forward facing camera is used for collision avoidance and object detection, while a down facing camera is used for stair navigation. 
+    Onboard view. A forward-facing camera is used for collision avoidance and object detection, while a down-facing camera is used for stair navigation.
   </figcaption>
 </figure>
 
-## Hardware upgrades
+### Hardware upgrades
 
-A couple of hardware upgrades have been implemented to improve performance. The original wheels had very uneven radial stiffness which made for a bumpy ride and poor handling, this has proven to be a significant upgrade. The original seat was a quick proof of concept but meant to be replaced, which finally happened! Side rails are being designed as well (not yet implemented). I am also evaluating upgrading the seat actuation for a linear actuator to allow for a self-locking mechanism for safety and power efficiency.
+I am in the process of doing a number of hardware upgrades:
+- Wheels: the original wheels had very uneven radial stiffness, which made for a bumpy ride and poor handling. The new wheels have proven to be a significant upgrade.
+- Seat: the original seat was a quick proof of concept, meant to be replaced, which finally happened! Armrests are on the way.
+- Linear actuator: I will be testing a linear actuator to allow for a self-locking mechanism, for safety and power efficiency.
+- Onboard controls: I am adding a joystick and a small touch screen for full control by the user.
 
 <figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
   <Image
@@ -324,7 +328,7 @@ A couple of hardware upgrades have been implemented to improve performance. The 
     data-figure-img
   />
   <figcaption>
-    Upgraded seat and wheels (one missing).
+    Upgraded seat and wheels.
   </figcaption>
 </figure>
 
