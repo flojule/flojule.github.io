@@ -1,7 +1,7 @@
 ---
 title: "Self-healing thermoset composites"
 description: "Mechanical testing and characterization of a new class of intrinsically self-mendable thermoset polymers. Published in Polymer (2017) with Lisha Zhang and Henry Sodano."
-image: "https://ars.els-cdn.com/content/image/1-s2.0-S0032386117302550-fx1.jpg"
+image: "./self-healing.webp"
 startDate: "2016-01-01"
 endDate: "2016-05-01"
 skills: ["Composites", "Mechanical Testing", "Polymer Chemistry"]

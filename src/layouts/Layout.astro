@@ -40,7 +40,9 @@ const pageTransition = {
   backwards: blurFadeAnimation,
 };
 
-const origin = Astro.url.origin;
+const pageUrl = Astro.url.href;
+// Resolves both site-relative paths and absolute remote image URLs.
+const imageUrl = new URL(image, Astro.url).href;
 const isHomePage = Astro.url.pathname === "/";
 ---
 
@@ -51,6 +53,7 @@ const isHomePage = Astro.url.pathname === "/";
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/kiwi.svg" />
+    <link rel="canonical" href={pageUrl} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
@@ -61,14 +64,14 @@ const isHomePage = Astro.url.pathname === "/";
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={origin} />
-    <meta property="og:image" content={`${origin}${image}`} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={imageUrl} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${origin}${image}`} />
+    <meta name="twitter:image" content={imageUrl} />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
     <!-- Top Banner / Navbar -->
@@ -136,6 +139,8 @@ const isHomePage = Astro.url.pathname === "/";
               </button>
             </>
           )}
+          <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
+          <a href="/projects" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">Projects</a>
           <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
           <a href="/about" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">About me</a>
         </nav>

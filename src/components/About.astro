@@ -35,11 +35,12 @@ function formatGraduation(entry: EducationEntry) {
     return entry.graduationLabel;
   }
 
+  // UTC getters: frontmatter dates are UTC midnight, local getters can shift them.
   if (entry.endDate) {
-    return `${entry.endDate.getFullYear()}`;
+    return `${entry.endDate.getUTCFullYear()}`;
   }
 
-  return `${entry.startDate.getFullYear()}`;
+  return `${entry.startDate.getUTCFullYear()}`;
 }
 ---
 

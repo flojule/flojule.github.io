@@ -15,7 +15,7 @@ interface Props {
   description: string;
   startDate: Date;
   endDate?: Date;
-  image: ImageMetadata;
+  image: ImageMetadata | string;
   imagePosition?: string;
   video?: string;
   skills: string[];
@@ -39,9 +39,11 @@ const {
 } = Astro.props;
 
 const hasSkills = skills && skills.length > 0;
+// Frontmatter images may be a remote URL string instead of an imported asset.
+const ogImage = typeof image === "string" ? image : image?.src;
 ---
 
-<Layout title={`${siteConfig.name} - ${title}`} description={description} image={image?.src}>
+<Layout title={`${siteConfig.name} - ${title}`} description={description} image={ogImage}>
   <section class="bg-base-200">
     <article class="max-w-4xl mx-auto px-4 pt-3 pb-16">
     <!-- Featured Media -->
@@ -54,7 +56,7 @@ const hasSkills = skills && skills.length > 0;
             loop
             playsinline
             preload="none"
-            poster={image?.src}
+            poster={ogImage}
             class="w-full aspect-video object-cover"
             style={imagePosition && `object-position: ${imagePosition}`}
           >
