@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { House, FolderOpen } from "@lucide/astro";
+import { House, User } from "@lucide/astro";
 import { siteConfig } from "../config";
 ---
 
@@ -31,22 +31,10 @@ import { siteConfig } from "../config";
           <House class="size-5" />
           Go Home
         </a>
-        <a href="/#projects" class="btn btn-outline gap-2">
-          <FolderOpen class="size-5" />
-          View Projects
+        <a href="/about" class="btn btn-outline gap-2">
+          <User class="size-5" />
+          About me
         </a>
-      </div>
-
-      <!-- Helpful Links -->
-      <div class="flex justify-center gap-2 mt-12">
-        <p class="text-sm text-base-content/60 mb-4">
-          You might be looking for:
-        </p>
-        <div class="flex gap-3 justify-center flex-wrap text-sm">
-          <a href="/projects" class="link link-hover">Projects</a>
-          <span class="text-base-content/30">•</span>
-          <a href="/about" class="link link-hover">About</a>
-        </div>
       </div>
     </div>
   </div>
