@@ -243,12 +243,21 @@ const imageUrl = new URL(image, Astro.url).href;
         return `${base}${src}`;
       };
 
-      // Viewer params must join the fragment the href may already carry
-      // (e.g. "#toolbar=0&navpanes=0"); a second "#" makes the whole thing a
-      // literal fragment and silently disables both sets of options.
+      // Applied to every PDF the overlay opens, so a new link cannot forget
+      // them. Chromium's viewer honours these; Firefox (pdf.js) and Safari
+      // ignore them and always draw their own chrome.
+      // `scrollbar` is deliberately left alone — these PDFs are multi-page.
+      // `pagemode=none` is the pdf.js spelling of `navpanes=0`: the patent PDF
+      // sets /PageMode /UseOutlines internally, so Firefox opens its sidebar
+      // unless the URL overrides it.
+      const VIEWER_PARAMS = "toolbar=0&navpanes=0&pagemode=none&view=FitH";
+
+      // Viewer params must join the fragment the href may already carry;
+      // a second "#" makes the whole thing a literal fragment and silently
+      // disables both sets of options.
       const withViewerParams = (href: string) => {
         const [path, fragment = ""] = href.split("#");
-        return `${path}#${fragment ? `${fragment}&` : ""}view=FitH`;
+        return `${path}#${fragment ? `${fragment}&` : ""}${VIEWER_PARAMS}`;
       };
 
       const closePdfOverlay = (overlay: HTMLElement) => {
