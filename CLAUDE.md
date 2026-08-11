@@ -14,7 +14,7 @@ npm run dev      # localhost:4321
 npm run build    # outputs to ./dist
 npm run preview  # serve the production build locally
 npm run astro -- <command>
-npm run astro check   # type check (will prompt to install @astrojs/check on first run)
+npm run check    # type check (astro check)
 ```
 
 ## Architecture

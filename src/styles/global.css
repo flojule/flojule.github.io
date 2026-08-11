@@ -42,6 +42,29 @@
   --color-accent-content: #2a0a13;
 }
 
+/* The toggle shows the scheme it switches *to*, so it tracks the effective
+   scheme using the same three-case rule as the palette above. */
+[data-theme-icon="sun"] {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-theme-icon="moon"] {
+    display: none;
+  }
+  :root:not([data-theme="light"]) [data-theme-icon="sun"] {
+    display: inline-block;
+  }
+}
+
+[data-theme="dark"] [data-theme-icon="moon"] {
+  display: none;
+}
+
+[data-theme="dark"] [data-theme-icon="sun"] {
+  display: inline-block;
+}
+
 html,
 body {
   min-height: 100vh;

@@ -14,7 +14,7 @@ export interface SiteConfig {
 }
 export const siteConfig: SiteConfig = {
   name: "Florian Julé",
-  title: "Product design, system integration and testing",
+  title: "Product design and systems integration",
   description: [
     "Engineer with 8 years at Joby Aviation, where I led teams designing mechanisms and composite structures for the Joby S4 eVTOL — from first prototype to designs for FAA certification.",
     "I am currently pursuing an M.S. in Robotics at Northwestern University, with a focus on designing robotic systems for human augmentation.",
@@ -28,7 +28,7 @@ export const siteConfig: SiteConfig = {
     — I also share some of it on <a href='https://www.youtube.com/@flojule' target='_blank' rel='noopener noreferrer'>YouTube</a>.",
     "Feel free to <a href='https://linkedin.com/in/flojule' target='_blank' rel='noopener noreferrer'>connect</a> and reach out!",
   ],
-  location: "Berkeley, California",
+  location: "Oakland, California",
   socialLinks: {
     github: "https://github.com/flojule",
     linkedin: "https://linkedin.com/in/flojule",
