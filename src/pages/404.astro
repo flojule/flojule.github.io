@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { House, User } from "@lucide/astro";
+import { House, ArrowLeft } from "@lucide/astro";
 import { siteConfig } from "../config";
 ---
 
@@ -31,10 +31,18 @@ import { siteConfig } from "../config";
           <House class="size-5" />
           Go Home
         </a>
-        <a href="/about" class="btn btn-outline gap-2">
-          <User class="size-5" />
-          About me
-        </a>
+        <button type="button" data-go-back class="btn btn-outline gap-2">
+          <ArrowLeft class="size-5" />
+          Go Back
+        </button>
+      </div>
+
+      <!-- Helpful Links -->
+      <div class="mt-8">
+        <p class="text-sm text-base-content/60 mb-4">Need help?</p>
+        <div class="flex gap-3 justify-center flex-wrap text-sm">
+          <a href="/about" class="link link-hover">About me</a>
+        </div>
       </div>
     </div>
   </div>
