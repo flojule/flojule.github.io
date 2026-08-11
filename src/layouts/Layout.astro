@@ -1,9 +1,11 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+import { Image } from "astro:assets";
 import { ChevronLeft } from "@lucide/astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import { siteConfig } from "../config";
+import footerRidge from "../assets/telluride_no_bg.webp";
 
 interface Props {
   title?: string;
@@ -140,8 +142,6 @@ const isHomePage = Astro.url.pathname === "/";
             </>
           )}
           <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
-          <a href="/projects" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">Projects</a>
-          <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
           <a href="/about" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">About me</a>
         </nav>
       </div>
@@ -152,9 +152,12 @@ const isHomePage = Astro.url.pathname === "/";
     </div>
 
     <footer aria-hidden="true" class="safe-bottom-inset footer-safe-height relative mt-auto -mt-2 overflow-hidden bg-base-200">
-      <img
-        src="/telluride_no_bg.webp"
+      <Image
+        src={footerRidge}
         alt=""
+        width={1280}
+        widths={[768, 1280, 1920]}
+        sizes="100vw"
         loading="lazy"
         decoding="async"
         class="absolute inset-0 h-full w-full object-cover object-top opacity-80"
@@ -215,6 +218,20 @@ const isHomePage = Astro.url.pathname === "/";
         return `${base}${src}`;
       };
 
+      // Viewer params must join the fragment the href may already carry
+      // (e.g. "#toolbar=0&navpanes=0"); a second "#" makes the whole thing a
+      // literal fragment and silently disables both sets of options.
+      const withViewerParams = (href: string) => {
+        const [path, fragment = ""] = href.split("#");
+        return `${path}#${fragment ? `${fragment}&` : ""}view=FitH`;
+      };
+
+      const closePdfOverlay = (overlay: HTMLElement) => {
+        overlay.classList.add("hidden");
+        overlay.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      };
+
       const initPdfOverlay = () => {
         const overlay = document.querySelector("[data-pdf-overlay]");
         const objectEl = document.querySelector("[data-pdf-overlay-object]");
@@ -233,9 +250,7 @@ const isHomePage = Astro.url.pathname === "/";
         let lastTrigger = null;
 
         const closeOverlay = () => {
-          overlay.classList.add("hidden");
-          overlay.classList.remove("flex");
-          document.body.classList.remove("overflow-hidden");
+          closePdfOverlay(overlay);
 
           if (lastTrigger instanceof HTMLElement) {
             lastTrigger.focus();
@@ -261,7 +276,7 @@ const isHomePage = Astro.url.pathname === "/";
           event?.preventDefault?.();
           lastTrigger = trigger;
 
-          objectEl.setAttribute("data", `${href}#view=FitH`);
+          objectEl.setAttribute("data", withViewerParams(href));
           fallbackLink.href = href;
           fallbackLink.textContent = `Open ${label} in a new tab`;
 
@@ -281,13 +296,17 @@ const isHomePage = Astro.url.pathname === "/";
         closeButtons.forEach((button) => {
           button.addEventListener("click", closeOverlay);
         });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && !overlay.classList.contains("hidden")) {
-            closeOverlay();
-          }
-        });
       };
+
+      // Bound once at module scope. Registering it inside init() would stack a
+      // new listener — closed over a detached overlay — on every navigation.
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        const overlay = document.querySelector("[data-pdf-overlay]");
+        if (overlay instanceof HTMLElement && !overlay.classList.contains("hidden")) {
+          closePdfOverlay(overlay);
+        }
+      });
 
       // Autoplay videos carry a `data-autoplay` marker + preload="none" so the
       // static HTML never starts downloads. JS then autoplays whatever is in
@@ -299,13 +318,29 @@ const isHomePage = Astro.url.pathname === "/";
           (v): v is HTMLVideoElement => v instanceof HTMLVideoElement,
         );
 
+      // Card thumbnails opt out of eager buffering entirely. Forcing
+      // preload="auto" pulls each clip in full the moment it nears the
+      // viewport, which on a grid of them is tens of MB before you have
+      // scrolled anywhere. They stream progressively while playing instead,
+      // and stop fetching when they scroll out and pause.
+      const prefetchableVideos = () =>
+        figureVideos().filter((v) => !v.hasAttribute("data-no-prefetch"));
+
+      // Autoplaying loops have no pause affordance on cards, and they are the
+      // bulk of the page weight. Reduced-motion visitors keep the poster and
+      // download nothing until they ask for playback via the controls.
+      const prefersReducedMotion = () =>
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+
       const tryPlay = (video: HTMLVideoElement) => {
+        if (prefersReducedMotion()) return;
         const p = video.play();
         if (p && typeof p.catch === "function") p.catch(() => {});
       };
 
       // Force a download even though the attribute hint is preload="none".
       const startBuffering = (video: HTMLVideoElement) => {
+        if (prefersReducedMotion()) return;
         if (video.dataset.buffering === "1") return;
         video.dataset.buffering = "1";
         video.preload = "auto";
@@ -316,41 +351,80 @@ const isHomePage = Astro.url.pathname === "/";
       // couple are ready ahead of you without flooding the per-host connection
       // limit. An in-view video jumps ahead via the observer below.
       const MAX_PARALLEL = 2;
+      // ...but only read ahead this far. Chaining through every video on the
+      // page pulls the whole article's media on a bounce; a media-heavy page
+      // is >100MB of clips the visitor never scrolls to.
+      const PREFETCH_AHEAD_SCREENS = 2;
+      const isApproaching = (video: HTMLVideoElement) =>
+        video.getBoundingClientRect().top <
+        window.innerHeight * (1 + PREFETCH_AHEAD_SCREENS);
       const activeLoads = () =>
-        figureVideos().filter(
+        prefetchableVideos().filter(
           (v) => v.dataset.buffering === "1" && v.dataset.buffered !== "1",
         ).length;
       const pumpPrefetch = () => {
         while (activeLoads() < MAX_PARALLEL) {
-          const next = figureVideos().find((v) => v.dataset.buffering !== "1");
+          const next = prefetchableVideos().find(
+            (v) => v.dataset.buffering !== "1" && isApproaching(v),
+          );
           if (!next) break;
           startBuffering(next);
         }
       };
 
-      const videoObserver =
+      // Scrolling brings more videos into read-ahead range. Bound once at
+      // module scope; rAF-coalesced so a scroll burst pumps at most per frame.
+      let pumpQueued = false;
+      const queuePump = () => {
+        if (pumpQueued) return;
+        pumpQueued = true;
+        requestAnimationFrame(() => {
+          pumpQueued = false;
+          pumpPrefetch();
+        });
+      };
+      window.addEventListener("scroll", queuePump, { passive: true });
+      window.addEventListener("resize", queuePump, { passive: true });
+
+      const onIntersect = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (!(video instanceof HTMLVideoElement)) return;
+          if (entry.isIntersecting) {
+            // Only read-ahead videos get the forced full download; cards just play.
+            if (!video.hasAttribute("data-no-prefetch")) startBuffering(video);
+            tryPlay(video);
+          } else {
+            video.pause();
+          }
+        });
+      };
+
+      const makeObserver = (rootMargin: string) =>
         "IntersectionObserver" in window
-          ? new IntersectionObserver(
-              (entries) => {
-                entries.forEach((entry) => {
-                  const video = entry.target;
-                  if (!(video instanceof HTMLVideoElement)) return;
-                  if (entry.isIntersecting) {
-                    startBuffering(video); // priority-load the one in view now
-                    tryPlay(video);
-                  } else {
-                    video.pause();
-                  }
-                });
-              },
-              { rootMargin: "300px 0px" }, // start playing just before it scrolls in
-            )
+          ? new IntersectionObserver(onIntersect, { rootMargin })
           : null;
 
+      // Project-page figures start just before they scroll in. Card thumbnails
+      // wait until they are actually on screen, so an unseen row costs nothing.
+      const figureObserver = makeObserver("300px 0px");
+      const cardObserver = makeObserver("0px");
+      const observerFor = (video: HTMLVideoElement) =>
+        video.hasAttribute("data-no-prefetch") ? cardObserver : figureObserver;
+
       const initVideos = () => {
+        // Drop observations of the previous page's (now detached) videos.
+        figureObserver?.disconnect();
+        cardObserver?.disconnect();
+        const reducedMotion = prefersReducedMotion();
         figureVideos().forEach((video) => {
           video.muted = true; // Safari only honors muted autoplay via the property
           video.playsInline = true;
+          if (reducedMotion) {
+            // Poster only, plus a way to start it deliberately.
+            video.controls = true;
+            return;
+          }
           // Bind handlers once even though init runs on both swap and page-load.
           if (!video.dataset.videoBound) {
             video.dataset.videoBound = "1";
@@ -393,11 +467,9 @@ const isHomePage = Astro.url.pathname === "/";
             video.addEventListener("loadeddata", () => tryPlay(video));
             video.addEventListener("canplay", () => tryPlay(video));
           }
-          if (videoObserver) videoObserver.observe(video);
-          else {
-            startBuffering(video);
-            tryPlay(video);
-          }
+          const observer = observerFor(video);
+          if (observer) observer.observe(video);
+          else tryPlay(video); // no IntersectionObserver: play, but never force-load
         });
         pumpPrefetch(); // kick off the background prefetch chain
       };
@@ -425,11 +497,6 @@ const isHomePage = Astro.url.pathname === "/";
       document.addEventListener("astro:page-load", initExternalLinks);
     </script>
     <style is:global>
-      html {
-        scroll-behavior: smooth;
-        scrollbar-gutter: stable;
-      }
-
       /* Initial Page Load Blur-Fade Animation */
       @keyframes pageLoadBlurFade {
         0% {
@@ -443,8 +510,16 @@ const isHomePage = Astro.url.pathname === "/";
       }
 
       html {
-        animation: pageLoadBlurFade 0.3s ease-in-out;
-        animation-fill-mode: both;
+        scroll-behavior: smooth;
+        scrollbar-gutter: stable;
+        animation: pageLoadBlurFade 0.3s ease-in-out both;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+          animation: none;
+        }
       }
 
       /* Blur Fade View Transitions (for page-to-page navigation) */

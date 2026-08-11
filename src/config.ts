@@ -10,7 +10,6 @@ export interface SiteConfig {
   location: string;
   socialLinks: SocialLinks;
   ogImage: string;
-  projectsIndexDescription: string;
   aboutDescription: string;
 }
 export const siteConfig: SiteConfig = {
@@ -36,7 +35,6 @@ export const siteConfig: SiteConfig = {
     resume: `${import.meta.env.BASE_URL}FlorianJule_resume.pdf#toolbar=0&navpanes=0`,
   },
   ogImage: "/images/flo_1_0.webp",
-  projectsIndexDescription: "Engineering and robotics projects by Florian Julé.",
   aboutDescription:
     "Florian Julé — engineer with 8 years at Joby Aviation and currently pursuing an M.S. in Robotics at Northwestern, focused on robotic systems for human augmentation.",
 };
