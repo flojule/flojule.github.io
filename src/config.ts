@@ -32,7 +32,8 @@ export const siteConfig: SiteConfig = {
   socialLinks: {
     github: "https://github.com/flojule",
     linkedin: "https://linkedin.com/in/flojule",
-    resume: `${import.meta.env.BASE_URL}FlorianJule_resume.pdf#toolbar=0&navpanes=0`,
+    // Viewer params are applied by the PDF overlay, not stored here.
+    resume: `${import.meta.env.BASE_URL}FlorianJule_resume.pdf`,
   },
   ogImage: "/images/flo_1_0.webp",
   aboutDescription:
