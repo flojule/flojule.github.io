@@ -4,7 +4,7 @@ import SkillBadge from "./SkillBadge.astro";
 import GithubIcon from "./icons/GithubIcon.astro";
 import { ExternalLink } from "@lucide/astro";
 import type { CollectionEntry } from "astro:content";
-import { getVideoMimeType, getVideoSources } from "../lib/video";
+import { VIDEO_MIME_TYPE } from "../lib/video";
 import { formatPeriod } from "../lib/date";
 
 interface Props {
@@ -14,6 +14,8 @@ interface Props {
 }
 
 const { project, eager = false } = Astro.props;
+// Prefer the card-sized encode; fall back to the full one when a project has none.
+const cardVideo = project.data.cardVideo ?? project.data.video;
 const hasDemoLink = Boolean(project.data.demoLink);
 const hasSourceLink = Boolean(project.data.sourceLink);
 const actionCount = Number(hasDemoLink) + Number(hasSourceLink);
@@ -44,9 +46,7 @@ const poster = project.data.video
           style={project.data.imagePosition && `object-position: ${project.data.imagePosition}`}
           data-no-controls
         >
-          {getVideoSources(project.data.video).map((source) => (
-            <source src={source} type={getVideoMimeType(source)} />
-          ))}
+          <source src={cardVideo} type={VIDEO_MIME_TYPE} />
           Your browser does not support this video format.
         </video>
       ) : (

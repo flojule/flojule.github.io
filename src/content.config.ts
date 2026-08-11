@@ -27,6 +27,9 @@ const projects = defineCollection({
     demoLabel: z.string().optional(),
     sourceLink: z.string().url().optional(),
     video: z.string().optional(),
+    // Card thumbnails render at ~350x200 CSS px, so they get their own
+    // downscaled encode instead of pulling the full-size `video`.
+    cardVideo: z.string().optional(),
     draft: z.boolean().optional().default(false),
   }),
 });

@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import { Image } from "astro:assets";
-import { ChevronLeft } from "@lucide/astro";
+import { Moon, Sun } from "@lucide/astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import { siteConfig } from "../config";
 import footerRidge from "../assets/telluride_no_bg.webp";
@@ -45,7 +45,6 @@ const pageTransition = {
 const pageUrl = Astro.url.href;
 // Resolves both site-relative paths and absolute remote image URLs.
 const imageUrl = new URL(image, Astro.url).href;
-const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
@@ -58,6 +57,33 @@ const isHomePage = Astro.url.pathname === "/";
     <link rel="canonical" href={pageUrl} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- Applies the stored theme before first paint so there is no flash of the
+         wrong scheme. No stored choice means no data-theme, which leaves the
+         daisyUI `--prefersdark` default following the OS. Re-applied after each
+         view transition, which restores <html> attributes from the new page. -->
+    <script is:inline>
+      (() => {
+        const applyTheme = () => {
+          // Blocked storage (private browsing, cookies disabled) throws on
+          // access; falling through to the OS preference is the right default.
+          let stored = null;
+          try {
+            stored = localStorage.getItem("theme");
+          } catch {}
+          if (stored === "light" || stored === "dark") {
+            document.documentElement.dataset.theme = stored;
+          } else {
+            delete document.documentElement.dataset.theme;
+          }
+        };
+        applyTheme();
+        if (!window.__themeSwapBound) {
+          window.__themeSwapBound = true;
+          document.addEventListener("astro:after-swap", applyTheme);
+        }
+      })();
+    </script>
 
     <!-- View Transitions -->
     <ClientRouter />
@@ -85,18 +111,6 @@ const isHomePage = Astro.url.pathname === "/";
             class="inline-flex items-center text-base font-bold tracking-tight text-base-content transition-colors hover:text-primary"
           >
             {siteConfig.name}
-          </a>
-          <a
-            href="/"
-            aria-label="Back to Home"
-            aria-hidden={isHomePage ? "true" : "false"}
-            tabindex={isHomePage ? "-1" : undefined}
-            class:list={[
-              "ml-1 hidden size-7 items-center justify-center rounded-full bg-base-100 p-0 text-base-content/70 shadow-sm ring-1 ring-base-content/10 transition-colors hover:bg-base-100 hover:text-primary min-[500px]:inline-flex md:ml-6 lg:ml-8",
-              isHomePage && "pointer-events-none invisible",
-            ]}
-          >
-            <ChevronLeft class="size-4.5" aria-hidden="true" />
           </a>
         </div>
         <nav class="ml-auto flex shrink-0 flex-nowrap items-center justify-end gap-2 whitespace-nowrap text-[13px] font-medium leading-none sm:gap-3 sm:text-sm">
@@ -143,6 +157,17 @@ const isHomePage = Astro.url.pathname === "/";
           )}
           <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
           <a href="/about" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">About me</a>
+          <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
+          <button
+            type="button"
+            data-theme-toggle
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode"
+            class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
+          >
+            <Moon class="size-[18px]" data-theme-icon="moon" aria-hidden="true" />
+            <Sun class="size-[18px]" data-theme-icon="sun" aria-hidden="true" />
+          </button>
         </nav>
       </div>
     </header>
@@ -205,7 +230,7 @@ const isHomePage = Astro.url.pathname === "/";
     <script>
       const baseUrl = import.meta.env.BASE_URL ?? "/";
 
-      const normalizePdfSrc = (src) => {
+      const normalizePdfSrc = (src: string) => {
         if (!src) return null;
 
         // Absolute URLs (http:, https:, etc.) should be used as-is.
@@ -247,7 +272,7 @@ const isHomePage = Astro.url.pathname === "/";
           return;
         }
 
-        let lastTrigger = null;
+        let lastTrigger: HTMLElement | null = null;
 
         const closeOverlay = () => {
           closePdfOverlay(overlay);
@@ -257,7 +282,7 @@ const isHomePage = Astro.url.pathname === "/";
           }
         };
 
-        const openOverlay = (trigger, event) => {
+        const openOverlay = (trigger: HTMLElement, event: Event) => {
           // Let users open in a new tab/window using modifiers.
           if (event instanceof MouseEvent) {
             if (event.button !== 0) return;
@@ -489,8 +514,49 @@ const isHomePage = Astro.url.pathname === "/";
         });
       };
 
+      // Toggles against the *effective* scheme, so the first click from the
+      // OS-follows default always lands on the opposite of what is on screen.
+      const initThemeToggle = () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!(button instanceof HTMLElement)) return;
+        if (button.dataset.themeToggleReady === "true") return;
+        button.dataset.themeToggleReady = "true";
+
+        button.addEventListener("click", () => {
+          const root = document.documentElement;
+          const isDark = root.dataset.theme
+            ? root.dataset.theme === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const next = isDark ? "light" : "dark";
+          root.dataset.theme = next;
+          // The toggle still works for this session if the write is refused.
+          try {
+            localStorage.setItem("theme", next);
+          } catch {}
+        });
+      };
+
+      // Shared by the 404 and 500 pages. A visitor who landed directly on an
+      // error URL has no history entry to return to, so fall back to home
+      // rather than leaving the button inert.
+      const initGoBack = () => {
+        const button = document.querySelector("[data-go-back]");
+        if (!(button instanceof HTMLElement)) return;
+        if (button.dataset.goBackReady === "true") return;
+        button.dataset.goBackReady = "true";
+
+        button.addEventListener("click", () => {
+          if (window.history.length > 1) history.back();
+          else window.location.href = "/";
+        });
+      };
+
       initPdfOverlay();
       initExternalLinks();
+      initThemeToggle();
+      initGoBack();
+      document.addEventListener("astro:page-load", initGoBack);
+      document.addEventListener("astro:page-load", initThemeToggle);
       document.addEventListener("astro:page-load", initPdfOverlay);
       document.addEventListener("astro:after-swap", initVideos);
       document.addEventListener("astro:page-load", initVideos);

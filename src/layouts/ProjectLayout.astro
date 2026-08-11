@@ -7,7 +7,7 @@ import SkillBadge from "../components/SkillBadge.astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import { ExternalLink } from "@lucide/astro";
 import { siteConfig } from "../config";
-import { getVideoMimeType, getVideoSources } from "../lib/video";
+import { VIDEO_MIME_TYPE } from "../lib/video";
 import { formatPeriod } from "../lib/date";
 
 interface Props {
@@ -65,25 +65,35 @@ const ogImage =
             class="w-full aspect-video object-cover"
             style={imagePosition && `object-position: ${imagePosition}`}
           >
-            {getVideoSources(video).map((source) => (
-              <source src={source} type={getVideoMimeType(source)} />
-            ))}
+            <source src={video} type={VIDEO_MIME_TYPE} />
             Your browser does not support this video format.
           </video>
         </figure>
       ) : image && (
         <figure class="mb-6 rounded-2xl overflow-hidden">
-          <Image
-            src={image}
-            alt={title}
-            class="w-full aspect-video object-cover"
-            style={imagePosition && `object-position: ${imagePosition}`}
-            width={1200}
-            widths={[640, 896, 1200]}
-            sizes="(min-width: 1024px) 56rem, 100vw"
-            loading="eager"
-            fetchpriority="high"
-          />
+          {typeof image === "string" ? (
+            // Remote URLs skip the image pipeline, so they cannot be given a srcset.
+            <img
+              src={image}
+              alt={title}
+              class="w-full aspect-video object-cover"
+              style={imagePosition && `object-position: ${imagePosition}`}
+              loading="eager"
+              fetchpriority="high"
+            />
+          ) : (
+            <Image
+              src={image}
+              alt={title}
+              class="w-full aspect-video object-cover"
+              style={imagePosition && `object-position: ${imagePosition}`}
+              width={1200}
+              widths={[640, 896, 1200]}
+              sizes="(min-width: 1024px) 56rem, 100vw"
+              loading="eager"
+              fetchpriority="high"
+            />
+          )}
         </figure>
       )
     }
