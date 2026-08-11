@@ -80,7 +80,7 @@ function formatGraduation(entry: EducationEntry) {
       </article>
 
       {
-        photoSrc && (
+        photo && photoSrc && (
           <div class="surface-card order-1 lg:order-2 lg:col-start-2 card border border-base-300 shadow-lg">
             <div class="card-body items-center">
               <a
@@ -306,11 +306,11 @@ function formatGraduation(entry: EducationEntry) {
       previousButtons.length > 0 &&
       nextButtons.length > 0
     ) {
-      let lastActiveElement = null;
+      let lastActiveElement: Element | null = null;
       let currentIndex = 0;
       let soloMode = false;
 
-      const renderPhoto = (index) => {
+      const renderPhoto = (index: number) => {
         const trigger = triggers[index];
 
         if (!(trigger instanceof HTMLAnchorElement)) {
@@ -337,13 +337,13 @@ function formatGraduation(entry: EducationEntry) {
         }
       };
 
-      const movePhoto = (direction) => {
+      const movePhoto = (direction: number) => {
         if (soloMode) return;
         const nextIndex = (currentIndex + direction + triggers.length) % triggers.length;
         renderPhoto(nextIndex);
       };
 
-      const openLightbox = (index, trigger) => {
+      const openLightbox = (index: number, trigger: Element) => {
         lastActiveElement = trigger;
         renderPhoto(index);
         overlay.classList.remove("hidden");
