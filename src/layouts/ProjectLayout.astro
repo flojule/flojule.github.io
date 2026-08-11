@@ -1,7 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import "katex/dist/katex.min.css";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import SkillBadge from "../components/SkillBadge.astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
@@ -40,7 +40,12 @@ const {
 
 const hasSkills = skills && skills.length > 0;
 // Frontmatter images may be a remote URL string instead of an imported asset.
-const ogImage = typeof image === "string" ? image : image?.src;
+// Imported assets go through the pipeline so neither the social card nor the
+// video poster serves the multi-MB original.
+const ogImage =
+  typeof image === "string"
+    ? image
+    : image && (await getImage({ src: image, width: 1200, format: "webp" })).src;
 ---
 
 <Layout title={`${siteConfig.name} - ${title}`} description={description} image={ogImage}>
@@ -74,8 +79,10 @@ const ogImage = typeof image === "string" ? image : image?.src;
             class="w-full aspect-video object-cover"
             style={imagePosition && `object-position: ${imagePosition}`}
             width={1200}
-            height={630}
+            widths={[640, 896, 1200]}
             sizes="(min-width: 1024px) 56rem, 100vw"
+            loading="eager"
+            fetchpriority="high"
           />
         </figure>
       )

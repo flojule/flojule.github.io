@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import SkillBadge from "./SkillBadge.astro";
 import GithubIcon from "./icons/GithubIcon.astro";
 import { ExternalLink } from "@lucide/astro";
@@ -9,25 +9,37 @@ import { formatPeriod } from "../lib/date";
 
 interface Props {
   project: CollectionEntry<"projects">;
+  /** Cards above the fold skip lazy-loading so the LCP image is not deferred. */
+  eager?: boolean;
 }
 
-const { project } = Astro.props;
+const { project, eager = false } = Astro.props;
 const hasDemoLink = Boolean(project.data.demoLink);
 const hasSourceLink = Boolean(project.data.sourceLink);
 const actionCount = Number(hasDemoLink) + Number(hasSourceLink);
+const href = `/projects/${project.id.split("/").pop()}`;
+const cardImageSizes = "(min-width: 1024px) 22rem, (min-width: 768px) calc(50vw - 2rem), 100vw";
+// The poster must not be the full-size original; render a card-sized derivative.
+const poster = project.data.video
+  ? (await getImage({ src: project.data.image, width: 640, format: "webp" })).src
+  : undefined;
 ---
 
 <article class="surface-card card overflow-hidden border border-base-300 shadow-lg transition-shadow hover:shadow-xl">
-  <a href={`/projects/${project.id.split("/").pop()}`}>
+  <!-- Same destination as the title link below, so it is hidden from the
+       a11y tree instead of announced twice (and, for video cards, announced
+       with no accessible name at all). -->
+  <a href={href} tabindex="-1" aria-hidden="true">
     <figure class="aspect-video">
       {project.data.video ? (
         <video
           data-autoplay
+          data-no-prefetch
           muted
           loop
           playsinline
           preload="none"
-          poster={project.data.image.src}
+          poster={poster}
           class="w-full h-full object-cover"
           style={project.data.imagePosition && `object-position: ${project.data.imagePosition}`}
           data-no-controls
@@ -43,16 +55,18 @@ const actionCount = Number(hasDemoLink) + Number(hasSourceLink);
           alt={project.data.title}
           class="w-full h-full object-cover"
           style={project.data.imagePosition && `object-position: ${project.data.imagePosition}`}
-          width={600}
-          height={400}
-          sizes="(min-width: 1024px) 22rem, (min-width: 768px) calc(50vw - 2rem), 100vw"
+          width={640}
+          widths={[320, 640, 960]}
+          sizes={cardImageSizes}
+          loading={eager ? "eager" : "lazy"}
+          fetchpriority={eager ? "high" : "auto"}
         />
       )}
     </figure>
   </a>
   <div class="card-body gap-3 p-5 sm:p-6">
     <h3 class="card-title text-lg sm:text-xl hover:text-primary transition-colors">
-      <a href={`/projects/${project.id.split("/").pop()}`}>{project.data.title}</a>
+      <a href={href}>{project.data.title}</a>
     </h3>
     <div class="flex items-center justify-between gap-3">
       <time class="text-sm text-base-content/60">

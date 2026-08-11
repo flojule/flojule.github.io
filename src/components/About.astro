@@ -1,5 +1,6 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 interface EducationEntry {
   title: string;
@@ -15,7 +16,7 @@ interface Props {
   headline: string;
   location?: string;
   description: string[];
-  photo?: string | { src: string };
+  photo?: string | ImageMetadata;
   education: EducationEntry[];
 }
 
@@ -28,7 +29,12 @@ const {
   education,
 } = Astro.props;
 
-const photoSrc = typeof photo === "string" ? photo : photo?.src;
+// The card shows a 160px thumbnail; the lightbox opens a larger derivative
+// rather than the multi-hundred-KB original.
+const photoSrc =
+  typeof photo === "string"
+    ? photo
+    : photo && (await getImage({ src: photo, width: 1200, format: "webp" })).src;
 
 function formatGraduation(entry: EducationEntry) {
   if (entry.graduationLabel) {
@@ -97,8 +103,8 @@ function formatGraduation(entry: EducationEntry) {
                       src={photo}
                       alt={name}
                       width={320}
-                      height={320}
-                      sizes="(min-width: 1024px) 320px, 160px"
+                      widths={[160, 320]}
+                      sizes="160px"
                       class="h-full w-full object-cover"
                     />
                   )
@@ -382,21 +388,26 @@ function formatGraduation(entry: EducationEntry) {
       previousButtons.forEach((button) => button.addEventListener("click", () => movePhoto(-1)));
       nextButtons.forEach((button) => button.addEventListener("click", () => movePhoto(1)));
 
-      document.addEventListener("keydown", (event) => {
-        if (!overlay.classList.contains("hidden")) {
-          if (event.key === "Escape") {
-            closeLightbox();
-          } else if (!soloMode && (event.key === "ArrowLeft" || event.key === "ArrowUp")) {
-            event.preventDefault();
-            movePhoto(-1);
-          } else if (!soloMode && (event.key === "ArrowRight" || event.key === "ArrowDown")) {
-            event.preventDefault();
-            movePhoto(1);
-          }
+      // Replace the previous page's handler rather than stacking a new one on
+      // every navigation back to this page.
+      document.removeEventListener("keydown", onKeydown);
+      onKeydown = (event) => {
+        if (overlay.classList.contains("hidden")) return;
+        if (event.key === "Escape") {
+          closeLightbox();
+        } else if (!soloMode && (event.key === "ArrowLeft" || event.key === "ArrowUp")) {
+          event.preventDefault();
+          movePhoto(-1);
+        } else if (!soloMode && (event.key === "ArrowRight" || event.key === "ArrowDown")) {
+          event.preventDefault();
+          movePhoto(1);
         }
-      });
+      };
+      document.addEventListener("keydown", onKeydown);
     }
   };
+
+  let onKeydown: (event: KeyboardEvent) => void = () => {};
 
   initPhotoLightbox();
   document.addEventListener("astro:page-load", initPhotoLightbox);
