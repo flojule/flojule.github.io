@@ -1,8 +1,13 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, synthwave, retro, valentine, dim;
+  themes: light --default, dark --prefersdark;
 };
 
+/* Burgundy brand ramp, tuned per scheme.
+   Light: deep burgundy on white (accent 13:1, primary 10:1).
+   Dark: the same hue lifted to a rose — the light values only reach 1.2-2.3:1
+   on daisyUI's dark base and are effectively invisible (skill badges most of
+   all, since badge-soft paints the accent as *text*). */
 :root,
 [data-theme] {
   --color-primary: #7b1e3a;
@@ -14,6 +19,27 @@
   --surface-radius: 0.625rem;
   --safe-area-top: env(safe-area-inset-top, 0px);
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Same hue (~13deg), lifted in lightness: 5.6:1 / 6.9:1 / 6.9:1 on base-100. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-primary: #e37a87;
+    --color-primary-content: #2a0a13;
+    --color-secondary: #ea939c;
+    --color-secondary-content: #2a0a13;
+    --color-accent: #f48d99;
+    --color-accent-content: #2a0a13;
+  }
+}
+
+[data-theme="dark"] {
+  --color-primary: #e37a87;
+  --color-primary-content: #2a0a13;
+  --color-secondary: #ea939c;
+  --color-secondary-content: #2a0a13;
+  --color-accent: #f48d99;
+  --color-accent-content: #2a0a13;
 }
 
 html,

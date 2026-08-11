@@ -3,8 +3,11 @@ import Layout from "../layouts/Layout.astro";
 import About from "../components/About.astro";
 import { getCollection } from "astro:content";
 import { siteConfig } from "../config";
+import portrait from "../assets/nyse.webp";
 
-const educationEntries = (await getCollection("education"))
+// Copy before sorting: getCollection returns a cached array that must not be
+// reordered in place.
+const educationEntries = [...(await getCollection("education"))]
   .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime())
   .map(({ data }) => data);
 ---
@@ -20,7 +23,7 @@ const educationEntries = (await getCollection("education"))
       headline={siteConfig.title}
       location={siteConfig.location}
       description={siteConfig.description}
-      photo="/images/nyse.webp"
+      photo={portrait}
       education={educationEntries}
     />
   </main>
