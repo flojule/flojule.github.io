@@ -4,9 +4,10 @@ description: "I am building a stair-climbing platform with a 4-wheel-drive artic
 image: "./bob_rider.webp"
 imagePosition: "center 15%"
 startDate: "2026-04-01"
-skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Mobile Robotics", "Control Systems", "ADAS", "Computer Vision"]
+skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Control Systems", "ADAS", "Computer Vision"]
 # sourceLink: "https://github.com/flojule/flowheely"
-video: "/videos/projects/flowheely/bob_4x_labeled.mp4"
+video: "/videos/projects/flowheely/bob_4x_labeled.webm"
+cardVideo: "/videos/projects/flowheely/bob_4x_labeled_card.webm"
 ---
 
 import { Image } from "astro:assets";
@@ -87,7 +88,6 @@ I built a subscale (1/4-scale) platform to validate the kinematics and the artic
       data-figure-img
     >
       <source src="/videos/projects/flowheely/miniwheely.webm" type='video/webm; codecs="vp9"' />
-      <source src="/videos/projects/flowheely/miniwheely.mp4" type="video/mp4" />
     </video>
     <figcaption>
       Closed-loop yaw-joint control
@@ -118,7 +118,6 @@ Demonstration of the full-scale platform capabilities to climb stairs and maneuv
       data-figure-img
     >
       <source src="/videos/projects/flowheely/test_drive.webm" type='video/webm; codecs="vp9"' />
-      <source src="/videos/projects/flowheely/test_drive.mp4" type="video/mp4" />
     </video>
     <figcaption>
       Full-scale platform with small wheels
@@ -136,7 +135,6 @@ Demonstration of the full-scale platform capabilities to climb stairs and maneuv
       data-figure-img
     >
       <source src="/videos/projects/flowheely/webapp_sim.webm" type='video/webm; codecs="vp9"' />
-      <source src="/videos/projects/flowheely/webapp_sim.mp4" type="video/mp4" />
     </video>
     <figcaption>
       Gazebo simulation and webapp control
@@ -156,7 +154,6 @@ Demonstration of the full-scale platform capabilities to climb stairs and maneuv
     data-figure-img
   >
     <source src="/videos/projects/flowheely/loop.webm" type='video/webm; codecs="vp9"' />
-    <source src="/videos/projects/flowheely/loop.mp4" type="video/mp4" />
   </video>
   <figcaption>
     Driving up and down the stairs
@@ -175,7 +172,6 @@ Demonstration of the full-scale platform capabilities to climb stairs and maneuv
     data-figure-img
   >
     <source src="/videos/projects/flowheely/stairs.webm" type='video/webm; codecs="vp9"' />
-    <source src="/videos/projects/flowheely/stairs.mp4" type="video/mp4" />
   </video>
   <figcaption>
     Close up
@@ -201,7 +197,6 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
       data-figure-img
     >
       <source src="/videos/projects/flowheely/wheelchair.webm" type='video/webm; codecs="vp9"' />
-      <source src="/videos/projects/flowheely/wheelchair.mp4" type="video/mp4" />
     </video>
     <figcaption>
       It's a wheelchair!
@@ -263,7 +258,6 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
     data-figure-img
   >
     <source src="/videos/projects/flowheely/upndown.webm" type='video/webm; codecs="vp9"' />
-    <source src="/videos/projects/flowheely/upndown.mp4" type="video/mp4" />
   </video>
   <figcaption>
     Climbing up and down the stairs. Seat auto-leveling in development. (8x speed)
@@ -271,11 +265,9 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
 </figure>
 
 ### Advanced Driver-Assistance System (ADAS)
-- classical computer vision for stair detection and collision avoidance
-- machine learning for general ADAS features and to improve performance of stair navigation
-- the machine learning stack uses YOLO26 trained on the ADE20K dataset for semantic segmentation
 
-The platform can detect stairs, and assist with stair climbing and descending (seat leveling auto-engages and vehicle remains square with the leading step) and avoid collisions with obstacles. Work in progress.
+The platform can detect stairs, and assist with stair climbing and descending (seat leveling auto-engages and vehicle remains square with the leading step) and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception.
+Work in progress.
 
 <figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
   <Image
@@ -303,7 +295,6 @@ The platform can detect stairs, and assist with stair climbing and descending (s
     data-figure-img
   >
     <source src="/videos/projects/flowheely/onboard.webm" type='video/webm; codecs="vp9"' />
-    <source src="/videos/projects/flowheely/onboard.mp4" type="video/mp4" />
   </video>
   <figcaption>
     Onboard view. A forward-facing camera is used for collision avoidance and object detection, while a down-facing camera is used for stair navigation.
@@ -313,10 +304,10 @@ The platform can detect stairs, and assist with stair climbing and descending (s
 ### Hardware upgrades
 
 I am in the process of doing a number of hardware upgrades:
-- Wheels: the original wheels had very uneven radial stiffness, which made for a bumpy ride and poor handling. The new wheels have proven to be a significant upgrade for higher speed driving and general smoothness.
+- Wheels: the original wheels had uneven radial stiffness, which made for a bumpy ride and poor handling. The new wheels have proven to be a significant upgrade for higher speed driving and general smoothness.
 - Seat: the original seat was a quick proof of concept, meant to be replaced, which finally happened! Armrests are on the way.
 - Linear actuator: the current solution with the rotary actuator has poor rigidity (largely from the gear train). I will be testing a linear actuator to allow for higher overall chair stiffness and a self-locking mechanism, for safety and power efficiency.
-- Onboard controls: I am adding a joystick and a small touch screen for full control by the user.
+- Onboard controls: addition of a joystick and touch screen for full control and awareness by the user.
 
 <figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
   <Image
@@ -344,7 +335,6 @@ I am in the process of doing a number of hardware upgrades:
     data-figure-img
   >
     <source src="/videos/projects/flowheely/bob.webm" type='video/webm; codecs="vp9"' />
-    <source src="/videos/projects/flowheely/bob.mp4" type="video/mp4" />
   </video>
   <figcaption>
     Bob can finally get around on his own

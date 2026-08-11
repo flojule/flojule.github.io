@@ -47,16 +47,4 @@ import { siteConfig } from "../config";
       </div>
     </div>
   </div>
-
-<script>
-  const initGoBack = () => {
-    const button = document.querySelector("[data-go-back]");
-    if (!(button instanceof HTMLElement) || button.dataset.goBackReady === "true") return;
-    button.dataset.goBackReady = "true";
-    button.addEventListener("click", () => history.back());
-  };
-
-  initGoBack();
-  document.addEventListener("astro:page-load", initGoBack);
-</script>
 </Layout>
