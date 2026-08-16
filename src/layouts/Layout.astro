@@ -2,8 +2,10 @@
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import { Image } from "astro:assets";
-import { Moon, Sun } from "@lucide/astro";
+// Aliased: `Image` is already the astro:assets component in this file.
+import { Image as GalleryIcon, Moon, Sun } from "@lucide/astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
+import PhotoLightbox from "../components/PhotoLightbox.astro";
 import { siteConfig } from "../config";
 import footerRidge from "../assets/telluride_no_bg.webp";
 
@@ -115,16 +117,29 @@ const imageUrl = new URL(image, Astro.url).href;
         </div>
         <nav class="ml-auto flex shrink-0 flex-nowrap items-center justify-end gap-2 whitespace-nowrap text-[13px] font-medium leading-none sm:gap-3 sm:text-sm">
           <span class="hidden min-[350px]:max-[499px]:block h-4 w-px bg-base-content/20" aria-hidden="true"></span>
+          <button
+            type="button"
+            data-photo-gallery-open
+            aria-label="Open photo gallery"
+            title="Photo gallery"
+            aria-haspopup="dialog"
+            class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
+          >
+            <GalleryIcon class="size-[18px]" aria-hidden="true" />
+          </button>
           {siteConfig.socialLinks.github && (
-            <a
-              href={siteConfig.socialLinks.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary"
-            >
-              <GithubIcon class="size-[18px]" />
-            </a>
+            <>
+              <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
+              <a
+                href={siteConfig.socialLinks.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary"
+              >
+                <GithubIcon class="size-[18px]" />
+              </a>
+            </>
           )}
           {siteConfig.socialLinks.linkedin && (
             <>
@@ -189,6 +204,8 @@ const imageUrl = new URL(image, Astro.url).href;
       />
     </footer>
 
+    <PhotoLightbox />
+
     <div
       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4"
       data-pdf-overlay
@@ -228,6 +245,8 @@ const imageUrl = new URL(image, Astro.url).href;
 
     <!-- Smooth Scroll -->
     <script>
+      import { closeOverlay, isOverlayOpen, openOverlay } from "../lib/overlay";
+
       const baseUrl = import.meta.env.BASE_URL ?? "/";
 
       const normalizePdfSrc = (src: string) => {
@@ -260,12 +279,6 @@ const imageUrl = new URL(image, Astro.url).href;
         return `${path}#${fragment ? `${fragment}&` : ""}${VIEWER_PARAMS}`;
       };
 
-      const closePdfOverlay = (overlay: HTMLElement) => {
-        overlay.classList.add("hidden");
-        overlay.classList.remove("flex");
-        document.body.classList.remove("overflow-hidden");
-      };
-
       const initPdfOverlay = () => {
         const overlay = document.querySelector("[data-pdf-overlay]");
         const objectEl = document.querySelector("[data-pdf-overlay-object]");
@@ -283,15 +296,15 @@ const imageUrl = new URL(image, Astro.url).href;
 
         let lastTrigger: HTMLElement | null = null;
 
-        const closeOverlay = () => {
-          closePdfOverlay(overlay);
+        const close = () => {
+          closeOverlay(overlay);
 
           if (lastTrigger instanceof HTMLElement) {
             lastTrigger.focus();
           }
         };
 
-        const openOverlay = (trigger: HTMLElement, event: Event) => {
+        const openPdf = (trigger: HTMLElement, event: Event) => {
           // Let users open in a new tab/window using modifiers.
           if (event instanceof MouseEvent) {
             if (event.button !== 0) return;
@@ -314,9 +327,7 @@ const imageUrl = new URL(image, Astro.url).href;
           fallbackLink.href = href;
           fallbackLink.textContent = `Open ${label} in a new tab`;
 
-          overlay.classList.remove("hidden");
-          overlay.classList.add("flex");
-          document.body.classList.add("overflow-hidden");
+          openOverlay(overlay);
         };
 
         triggers.forEach((trigger) => {
@@ -324,11 +335,11 @@ const imageUrl = new URL(image, Astro.url).href;
           if (trigger.dataset.pdfOverlayReady === "true") return;
           trigger.dataset.pdfOverlayReady = "true";
 
-          trigger.addEventListener("click", (event) => openOverlay(trigger, event));
+          trigger.addEventListener("click", (event) => openPdf(trigger, event));
         });
 
         closeButtons.forEach((button) => {
-          button.addEventListener("click", closeOverlay);
+          button.addEventListener("click", close);
         });
       };
 
@@ -337,9 +348,7 @@ const imageUrl = new URL(image, Astro.url).href;
       document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape") return;
         const overlay = document.querySelector("[data-pdf-overlay]");
-        if (overlay instanceof HTMLElement && !overlay.classList.contains("hidden")) {
-          closePdfOverlay(overlay);
-        }
+        if (isOverlayOpen(overlay)) closeOverlay(overlay);
       });
 
       // Autoplay videos carry a `data-autoplay` marker + preload="none" so the
