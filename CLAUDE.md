@@ -37,7 +37,7 @@ src/
 │   ├── education/
 │   └── projects/
 ├── layouts/      # Layout.astro, ProjectLayout.astro
-├── lib/          # Framework-agnostic helpers (date.ts, video.ts)
+├── lib/          # Framework-agnostic helpers (date.ts, video.ts, gallery.ts, overlay.ts)
 ├── pages/        # File-based routing
 ├── styles/       # global.css (Tailwind + DaisyUI)
 ├── config.ts        # Site config (name, title, description, social links)
@@ -64,6 +64,19 @@ Project pages may be `.md` (simple body) or `.mdx` (custom components, math, vid
 - DaisyUI semantic tokens (`primary`, `base-content`, `base-200`, etc.) are preferred over raw color classes for theme consistency.
 - Layout-level styles are in [Layout.astro](src/layouts/Layout.astro); the prose-content styles for MDX are in [ProjectLayout.astro](src/layouts/ProjectLayout.astro).
 
+### Photo viewer
+
+[PhotoLightbox.astro](src/components/PhotoLightbox.astro) is rendered once by `Layout.astro`, so any page can open a photo. Two openers:
+
+| Opener | Playlist |
+|---|---|
+| `<a href="<src>" data-photo-lightbox="<group>">` | every anchor sharing that group name, in document order |
+| `<button data-photo-gallery-open>` | all of `public/gallery/`, reshuffled on each open |
+
+A one-photo playlist hides the prev/next arrows. Clicking anything that is not the photo or a control closes the viewer. The gallery list comes from [gallery.json.ts](src/pages/gallery.json.ts) (built from `public/gallery/` by [gallery.ts](src/lib/gallery.ts)) and is fetched on first open.
+
+Both full-screen overlays (photo viewer, PDF viewer) share the show/hide helpers in [overlay.ts](src/lib/overlay.ts).
+
 ### Layouts
 
 - **`Layout.astro`**: base HTML, head/meta tags, header/footer, view transitions (`<ClientRouter />`).
@@ -80,7 +93,8 @@ Project pages may be `.md` (simple body) or `.mdx` (custom components, math, vid
 ## Conventions
 
 - Project pages should import images via Astro's image pipeline rather than referencing `/public/...` so they get optimized.
-- Videos go to `public/videos/projects/<slug>/<name>.{mp4,webm}`. Both formats are typically provided; the components prefer webm and fall back to mp4.
+- Videos go to `public/videos/projects/<slug>/<name>.webm` (VP9; see [video.ts](src/lib/video.ts)).
+- Gallery photos are served straight from `public/gallery/*.webp` — pre-optimized to a max side of 1800 px at quality 75, EXIF rotation baked in, lowercase-kebab filenames. Add new ones already encoded that way; they are picked up automatically.
 - New skills in project frontmatter should match existing capitalization (e.g. "ROS 2", "C++", "Robotic Manipulation"). Check existing entries before adding.
 - When adding figures inside MDX, use the `<figure class="mx-auto my-6 w-fit max-w-full">` + `<Image>` + `<figcaption>` pattern from existing files (e.g. [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
 
