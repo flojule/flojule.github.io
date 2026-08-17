@@ -106,91 +106,92 @@ const imageUrl = new URL(image, Astro.url).href;
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
     <!-- Top Banner / Navbar -->
     <header class="safe-top-inset sticky top-0 z-50 w-full border-b border-base-content/10 bg-base-200/60 backdrop-blur">
-      <div class="mx-auto flex min-h-12 max-w-6xl flex-wrap items-center justify-between gap-x-2 gap-y-1 px-3 py-1.5 min-[360px]:px-4 min-[400px]:gap-x-3">
-        <div class="flex shrink-0 items-center gap-2">
-          <a
-            href="/"
-            class="inline-flex items-center text-sm font-bold tracking-tight text-base-content transition-colors hover:text-primary min-[375px]:text-base"
-          >
-            {siteConfig.name}
-          </a>
+      <!-- Padding sits outside the max-width, matching the page sections below
+           (`px-4` on the section, `max-w-6xl` on its inner div). Putting it
+           inside instead lines up until both containers hit 6xl, then insets
+           the bar 16px from the content grid. -->
+      <div class="px-3 min-[360px]:px-4">
+        <div class="mx-auto flex min-h-12 max-w-6xl flex-wrap items-center justify-between gap-x-2 gap-y-1 py-1.5 min-[400px]:gap-x-3">
+          <div class="flex shrink-0 items-center gap-2">
+            <a
+              href="/"
+              class="inline-flex items-center text-sm font-bold tracking-tight text-base-content transition-colors hover:text-primary min-[375px]:text-base"
+            >
+              {siteConfig.name}
+            </a>
+          </div>
+          <!-- One layout at every width: the three icons read as a group, and a
+               divider sits only where it separates two text items. Nothing is
+               added or removed as the viewport changes — the gap, the label
+               size and the icon size just step up, so the bar stays on one line
+               down to 320px without ever restructuring. -->
+          <nav class="ml-auto flex shrink-0 flex-nowrap items-center justify-end gap-1 whitespace-nowrap text-xs font-medium leading-none min-[360px]:gap-1.5 min-[400px]:gap-2 min-[400px]:text-[13px] sm:gap-3 sm:text-sm">
+            <button
+              type="button"
+              data-photo-gallery-open
+              aria-label="Open photo gallery"
+              title="Photo gallery"
+              aria-haspopup="dialog"
+              class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
+            >
+              <GalleryIcon class="size-4 min-[400px]:size-[18px]" aria-hidden="true" />
+            </button>
+            {siteConfig.socialLinks.github && (
+              <>
+                <a
+                  href={siteConfig.socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary"
+                >
+                  <GithubIcon class="size-4 min-[400px]:size-[18px]" />
+                </a>
+              </>
+            )}
+            {siteConfig.socialLinks.linkedin && (
+              <>
+                <a
+                  href={siteConfig.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4 min-[400px]:size-[18px]" aria-hidden="true" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>
+                </a>
+              </>
+            )}
+            {siteConfig.socialLinks.resume && (
+              <>
+                <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
+                <button
+                  type="button"
+                  data-pdf-overlay-open
+                  data-pdf-src={siteConfig.socialLinks.resume}
+                  data-pdf-label="resume"
+                  aria-haspopup="dialog"
+                  class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
+                >
+                  Resume
+                </button>
+              </>
+            )}
+            <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
+<a href="/about" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">About</a>
+            <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
+            <button
+              type="button"
+              data-theme-toggle
+              aria-label="Toggle dark mode"
+              title="Toggle dark mode"
+              class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
+            >
+              <Moon class="size-4 min-[400px]:size-[18px]" data-theme-icon="moon" aria-hidden="true" />
+              <Sun class="size-4 min-[400px]:size-[18px]" data-theme-icon="sun" aria-hidden="true" />
+            </button>
+          </nav>
         </div>
-        <!-- The bar must stay on one line down to 320px. Every lever the nav
-             has — gap, label size, icon size, the "me" in "About me", and the
-             dividers that only separate one icon from another — steps back in
-             as the viewport widens, so nothing is trimmed once there is room
-             for it. From `sm` up this is the original full-size bar. -->
-        <nav class="ml-auto flex shrink-0 flex-nowrap items-center justify-end gap-1 whitespace-nowrap text-xs font-medium leading-none min-[360px]:gap-1.5 min-[400px]:gap-2 min-[400px]:text-[13px] sm:gap-3 sm:text-sm">
-          <button
-            type="button"
-            data-photo-gallery-open
-            aria-label="Open photo gallery"
-            title="Photo gallery"
-            aria-haspopup="dialog"
-            class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
-          >
-            <GalleryIcon class="size-4 min-[400px]:size-[18px]" aria-hidden="true" />
-          </button>
-          {siteConfig.socialLinks.github && (
-            <>
-              <span class="hidden h-4 w-px bg-base-content/20 min-[500px]:block" aria-hidden="true"></span>
-              <a
-                href={siteConfig.socialLinks.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary"
-              >
-                <GithubIcon class="size-4 min-[400px]:size-[18px]" />
-              </a>
-            </>
-          )}
-          {siteConfig.socialLinks.linkedin && (
-            <>
-              <span class="hidden h-4 w-px bg-base-content/20 min-[500px]:block" aria-hidden="true"></span>
-              <a
-                href={siteConfig.socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4 min-[400px]:size-[18px]" aria-hidden="true" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>
-              </a>
-            </>
-          )}
-          {siteConfig.socialLinks.resume && (
-            <>
-              <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
-              <button
-                type="button"
-                data-pdf-overlay-open
-                data-pdf-src={siteConfig.socialLinks.resume}
-                data-pdf-label="resume"
-                aria-haspopup="dialog"
-                class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
-              >
-                Resume
-              </button>
-            </>
-          )}
-          <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
-          <a href="/about" class="inline-flex items-center text-base-content/70 transition-colors hover:text-primary">
-            <span class="min-[500px]:hidden">About</span>
-            <span class="hidden min-[500px]:inline">About me</span>
-          </a>
-          <span class="h-4 w-px bg-base-content/20" aria-hidden="true"></span>
-          <button
-            type="button"
-            data-theme-toggle
-            aria-label="Toggle dark mode"
-            title="Toggle dark mode"
-            class="inline-flex cursor-pointer items-center text-base-content/70 transition-colors hover:text-primary"
-          >
-            <Moon class="size-4 min-[400px]:size-[18px]" data-theme-icon="moon" aria-hidden="true" />
-            <Sun class="size-4 min-[400px]:size-[18px]" data-theme-icon="sun" aria-hidden="true" />
-          </button>
-        </nav>
       </div>
     </header>
 
