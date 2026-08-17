@@ -85,6 +85,19 @@ body {
   height: calc(8rem + var(--safe-area-bottom));
 }
 
+/* Top-bar controls. Every one is a same-size icon, so the row spaces itself on
+   padding plus `gap`. The padding is the tap target: it makes each control
+   32x36 rather than the icon's bare 24x24, and it costs no bar height because
+   `min-h-12` already reserves the room. The nav's `-mr-1` cancels the last
+   control's right padding, so the icons still end flush with the content grid. */
+.icon-btn {
+  @apply inline-flex cursor-pointer items-center px-1 py-1.5 text-base-content/70 transition-colors hover:text-primary;
+}
+
+.nav-icon {
+  @apply size-6;
+}
+
 .surface-card {
   --radius-box: var(--surface-radius);
   border-radius: var(--surface-radius);
