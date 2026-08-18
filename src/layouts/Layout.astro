@@ -102,6 +102,10 @@ const imageUrl = new URL(image, Astro.url).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+
+    <!-- Privacy-friendly, cookieless visit analytics (GoatCounter). -->
+    <script is:inline data-goatcounter="https://flojule.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+    ></script>
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
     <!-- Top Banner / Navbar -->
@@ -195,10 +199,11 @@ const imageUrl = new URL(image, Astro.url).href;
       <slot />
     </div>
 
-    <footer aria-hidden="true" class="safe-bottom-inset footer-safe-height relative mt-auto -mt-2 overflow-hidden bg-base-200">
+    <footer class="safe-bottom-inset footer-safe-height relative mt-auto -mt-2 overflow-hidden bg-base-200">
       <Image
         src={footerRidge}
         alt=""
+        aria-hidden="true"
         width={1280}
         widths={[768, 1280, 1920]}
         sizes="100vw"
@@ -206,6 +211,9 @@ const imageUrl = new URL(image, Astro.url).href;
         decoding="async"
         class="absolute inset-0 h-full w-full object-cover object-top opacity-80"
       />
+      <p class="absolute bottom-2 right-3 z-10 text-[11px] text-base-content/50">
+        © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+      </p>
     </footer>
 
     <PhotoLightbox />
