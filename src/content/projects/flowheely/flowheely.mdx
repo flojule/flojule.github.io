@@ -1,7 +1,7 @@
 ---
 title: "Stair-climbing wheelchair"
-description: "I am building a stair-climbing platform with a 4-wheel-drive articulated chassis and soft airless wheels. A driver-assist system allows for easy and safe operation on stairs."
-image: "./bob_rider.webp"
+description: "I built a stair-climbing wheelchair with a 4-wheel-drive articulated chassis and self-leveling seat. A driver-assist system allows for easy and safe operation on stairs."
+image: "./bob_stairs.webp"
 imagePosition: "center 15%"
 startDate: "2026-04-01"
 skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Control Systems", "ADAS", "Computer Vision"]
@@ -19,44 +19,35 @@ import climbImg from "./climb.webp";
 import descentImg from "./descent.webp";
 import gamepadImg from "./gamepad.webp";
 import chairImg from "./chair.webp";
-import bobRiderImg from "./bob_rider.webp";
+import bobStairsImg from "./bob_stairs.webp";
 
 ## Overview
 
-<div class="mx-auto my-6 flex w-full max-w-full flex-wrap justify-center gap-4 sm:w-4/5">
-  <figure class="w-[calc(50%-0.5rem)]">
+<div class="my-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+  <figure class="m-0 w-full shrink-0 sm:w-2/5">
     <Image
-      src={mainImg}
-      alt="Flowheely full-scale platform on a staircase"
+      src={bobStairsImg}
+      alt="Bob on the stair-climbing platform on a staircase"
       class="w-full"
       loading="lazy"
       decoding="async"
       data-figure-img
     />
     <figcaption>
-      Original full-scale platform
+      Bob going down the stairs
     </figcaption>
   </figure>
-  <figure class="w-[calc(50%-0.5rem)]">
-    <Image
-      src={bobRiderImg}
-      alt="Bob riding the full-scale platform"
-      class="w-full"
-      loading="lazy"
-      decoding="async"
-      data-figure-img
-    />
-    <figcaption>
-      Bob and his upgraded ride (more to come!)
-    </figcaption>
-  </figure>
-</div>
 
-I have been developing a driver-assisted stair-climbing platform (for wheelchairs, and potentially other applications) built around a 4WD articulated chassis with a passive yaw joint. The yaw joint allows the chassis to curve around turning stairs while keeping all four soft airless wheels in contact with the steps. On flat ground, the vehicle can drive in a slipless regime within a 1 m turning radius. Tighter turns (up to pure rotation) are also possible with a hybrid skid-steer mode. All modes are unified under a single control interface for seamless driving.
+  <div class="min-w-0 flex-1">
 
-I built this entire project from scratch. This includes mechanical design, fabrication, ROS 2 software architecture, control systems, and computer vision.
+I developed a driver-assisted stair-climbing platform (for wheelchairs and other applications) built around a 4WD articulated chassis with a passive yaw joint. The vehicle is capable of slipless maneuvering down to a 1 m turn radius. Tighter turns are possible with a skid-steer mode (unified under a single control interface). The seat is mounted on a self-leveling mechanism that keeps the seat horizontal while climbing or descending stairs. A driver-assist system allows for easy stair operation (keeps the vehicle square with the steps) and avoids collisions with obstacles.
+
+I built this entire project from scratch. This includes mechanical design, fabrication, integration, ROS 2 software architecture, control systems, and computer vision.
 
 Off-the-shelf components include: onboard computer, motors and motor controllers, camera, IMU, encoders, and electrical components.
+
+  </div>
+</div>
 
 ## Subscale platform
 
