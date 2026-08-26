@@ -4,7 +4,7 @@ description: "BroomBuster is a Web App and Python command-line tool that shows w
 image: "./bay_area.webp"
 startDate: "2025-06-06"
 endDate: "2026-03-11"
-skills: ["Python", "FastAPI", "GeoPandas", "Plotly", "GIS", "PWA"]
+skills: ["Python", "GeoPandas", "Plotly", "GIS"]
 sourceLink: "https://github.com/flojule/BroomBuster"
 ---
 

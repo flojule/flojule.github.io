@@ -4,7 +4,7 @@ description: "Jack-in-the-box physics simulation using Lagrangian dynamics, with
 image: "./jack.gif"
 startDate: "2025-11-20"
 endDate: "2025-12-15"
-skills: ["Python", "Simulation", "Dynamics"]
+skills: ["Python", "Dynamics"]
 sourceLink: "https://colab.research.google.com/drive/1GbK8QCuSXqyXczOBCpMx2uguokdekqmy"
 draft: true
 ---
