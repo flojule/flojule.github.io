@@ -6,8 +6,8 @@ imagePosition: "center 15%"
 startDate: "2026-04-01"
 skills: ["ROS 2", "Python", "C++", "Mechanical Design", "Control Systems", "ADAS", "Computer Vision"]
 # sourceLink: "https://github.com/flojule/flowheely"
-video: "/videos/projects/flowheely/bob_4x_labeled.webm"
-cardVideo: "/videos/projects/flowheely/bob_4x_labeled_card.webm"
+video: "/videos/projects/flowheely/bob_rider_4x_labeled.webm"
+cardVideo: "/videos/projects/flowheely/bob_rider_4x_labeled_card.webm"
 ---
 
 import { Image } from "astro:assets";
@@ -257,8 +257,7 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
 
 ### Advanced Driver-Assistance System (ADAS)
 
-The platform can detect stairs, and assist with stair climbing and descending (seat leveling auto-engages and vehicle remains square with the leading step) and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception.
-Work in progress.
+The platform can detect stairs, and assist with stair climbing and descending (vehicle remains square with the steps) and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception. Two cameras are used: a forward-facing (D435i) and a down-facing (D405) camera.
 
 <figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
   <Image
@@ -281,22 +280,24 @@ Work in progress.
     loop
     playsinline
     preload="none"
-    width="1280"
-    height="630"
+    width="1920"
+    height="948"
     data-figure-img
   >
-    <source src="/videos/projects/flowheely/onboard.webm" type='video/webm; codecs="vp9"' />
+    <source src="/videos/projects/flowheely/phone_console.webm" type='video/webm; codecs="vp9"' />
   </video>
   <figcaption>
-    Onboard view. A forward-facing camera is used for collision avoidance and object detection, while a down-facing camera is used for stair navigation.
+    Driver console with stair-assist on. Semantic segmentation of the environment (front camera only) and step detection on both cameras using depth.
   </figcaption>
 </figure>
 
 ### Hardware upgrades
 
-I am in the process of doing a number of hardware upgrades:
+I have proceeded with a number of hardware upgrades:
 - Wheels: the original wheels had uneven radial stiffness, which made for a bumpy ride and poor handling. The new wheels have proven to be a significant upgrade for higher speed driving and general smoothness.
-- Seat: the original seat was a quick proof of concept, meant to be replaced, which finally happened! Armrests are on the way.
+- Seat: the original seat was a quick proof of concept, meant to be replaced, which finally happened!
+
+Considerations for future upgrades:
 - Linear actuator: the current solution with the rotary actuator has poor rigidity (largely from the gear train). I will be testing a linear actuator to allow for higher overall chair stiffness and a self-locking mechanism, for safety and power efficiency.
 - Onboard controls: addition of a joystick and touch screen for full control and awareness by the user.
 
@@ -321,14 +322,32 @@ I am in the process of doing a number of hardware upgrades:
     loop
     playsinline
     preload="none"
-    width="1920"
-    height="1080"
+    width="1280"
+    height="720"
     data-figure-img
   >
-    <source src="/videos/projects/flowheely/bob.webm" type='video/webm; codecs="vp9"' />
+    <source src="/videos/projects/flowheely/bob_rider.webm" type='video/webm; codecs="vp9"' />
   </video>
   <figcaption>
     Bob can finally get around on his own
+  </figcaption>
+</figure>
+
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+  <video
+    data-autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+    width="1280"
+    height="720"
+    data-figure-img
+  >
+    <source src="/videos/projects/flowheely/bob_crawler.webm" type='video/webm; codecs="vp9"' />
+  </video>
+  <figcaption>
+    Crawling over rough terrain
   </figcaption>
 </figure>
 
