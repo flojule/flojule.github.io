@@ -25,3 +25,8 @@ pnpm-debug.log*
 
 .vscode/
 .claude/
+
+# video masters (source files, not deployed)
+*.mov
+*.MOV
+*.MP4

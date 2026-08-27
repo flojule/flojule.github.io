@@ -40,7 +40,7 @@ import bobStairsImg from "./bob_stairs.webp";
 
   <div class="min-w-0 flex-1">
 
-I developed a driver-assisted stair-climbing platform (for wheelchairs and other applications) built around a 4WD articulated chassis with a passive yaw joint. The vehicle is capable of slipless maneuvering down to a 1 m turn radius. Tighter turns are possible with a skid-steer mode (unified under a single control interface). The seat is mounted on a self-leveling mechanism that keeps the seat horizontal while climbing or descending stairs. A driver-assist system allows for easy stair operation (keeps the vehicle square with the steps) and avoids collisions with obstacles.
+I developed a driver-assisted stair-climbing platform (for wheelchairs and other applications) built around a 4WD articulated chassis with a passive yaw joint. The vehicle is capable of slipless maneuvering down to a 1 m turn radius. Tighter turns are possible with a skid-steer mode (unified under a single control interface). The seat is mounted on a self-leveling mechanism that keeps the seat horizontal while climbing or descending stairs. A driver-assist system allows for easy stair operation (keeping the vehicle square with the steps) and avoids collisions with obstacles.
 
 I built this entire project from scratch. This includes mechanical design, fabrication, integration, ROS 2 software architecture, control systems, and computer vision.
 
@@ -88,13 +88,13 @@ I built a subscale (1/4-scale) platform to validate the kinematics and the artic
 
 ## Full-scale platform
 
-### Mechanical, electrical and software integration
+### Mechanical, electrical, and software integration
 - kinematics and control systems
 - simulation in Gazebo to support development and testing
 - user interface
 - stair climbing capabilities
 
-Demonstration of the full-scale platform capabilities to climb stairs and maneuver.
+Demonstration of the full-scale platform's ability to climb stairs and maneuver.
 
 <div class="mx-auto my-6 flex w-full max-w-full flex-wrap justify-center gap-4 sm:w-4/5">
   <figure class="w-[calc(50%-0.5rem)]">
@@ -165,7 +165,7 @@ Demonstration of the full-scale platform capabilities to climb stairs and maneuv
     <source src="/videos/projects/flowheely/stairs.webm" type='video/webm; codecs="vp9"' />
   </video>
   <figcaption>
-    Close up
+    Close-up
   </figcaption>
 </figure>
 
@@ -257,7 +257,7 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
 
 ### Advanced Driver-Assistance System (ADAS)
 
-The platform can detect stairs, and assist with stair climbing and descending (vehicle remains square with the steps) and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception. Two cameras are used: a forward-facing (D435i) and a down-facing (D405) camera.
+The platform can detect stairs, assist with stair climbing and descending (the vehicle remains square with the steps), and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception. Two cameras are used: a forward-facing (D435i) and a down-facing (D405) camera.
 
 <figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
   <Image
@@ -291,11 +291,29 @@ The platform can detect stairs, and assist with stair climbing and descending (v
   </figcaption>
 </figure>
 
+<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+  <video
+    data-autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+    width="1440"
+    height="706"
+    data-figure-img
+  >
+    <source src="/videos/projects/flowheely/edges.webm" type='video/webm; codecs="vp9"' />
+  </video>
+  <figcaption>
+    Step detection on the front and down cameras. I exploit depth voids near each edge to identify potential steps, and filter them based on their height (to remove blobs) and their consistency across the width of the frame. This proved more robust and simpler than the established methods found in the literature (classical or ML-based vision).
+  </figcaption>
+</figure>
+
 ### Hardware upgrades
 
-I have proceeded with a number of hardware upgrades:
+I have made a number of hardware upgrades:
 - Wheels: the original wheels had uneven radial stiffness, which made for a bumpy ride and poor handling. The new wheels have proven to be a significant upgrade for higher speed driving and general smoothness.
-- Seat: the original seat was a quick proof of concept, meant to be replaced, which finally happened!
+- Seat: the original seat was a quick proof of concept meant to be replaced, which has finally happened!
 
 Considerations for future upgrades:
 - Linear actuator: the current solution with the rotary actuator has poor rigidity (largely from the gear train). I will be testing a linear actuator to allow for higher overall chair stiffness and a self-locking mechanism, for safety and power efficiency.
