@@ -48,3 +48,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # The site ships ~240 MB, nearly all video. Pages ingestion can sit in
+          # "updating_pages" well past the action's 10-minute default and abort a
+          # deployment that would otherwise have finished.
+          timeout: 1800000
