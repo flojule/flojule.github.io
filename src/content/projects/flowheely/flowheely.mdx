@@ -88,6 +88,60 @@ I built a subscale (1/4-scale) platform to validate the kinematics and the artic
 
 ## Full-scale platform
 
+### Architecture
+
+┌───────────────────────────────────────────────────────────────────────────────────────────────┐
+│ COMPUTE   Jetson Orin Nano                                                                    │
+└──┬──────────────────┬───────────────┬────────────────────┬─────────────┬───────────┬──────────┘
+   │                  │               │                    │             │           │
+  I2C                USB 3           USB serial           RC-PWM        BLE         WiFi
+   │                  │               │                    │             │           │
+   v                  v               v                    v             v           v
+┌────────────────┐ ┌─────────────┐ ┌──────────────────┐ ┌───────────┐ ┌─────────┐ ┌─────────────┐
+│ yaw encoder    │ │ front camera│ │ motor controller │ │ seat servo│ │ gamepad │ │ operator    │
+│ body IMU       │ │             │ │   front          │ │           │ │         │ │ console     │
+│ seat IMU       │ │ down camera │ │ motor controller │ │           │ │         │ │             │
+│ display        │ │             │ │   rear           │ │           │ │         │ │             │
+└────────────────┘ └─────────────┘ └────────┬─────────┘ └─────┬─────┘ └─────────┘ └─────────────┘
+                                            │                 │
+                              motor power + encoder       mechanical linkage
+                                            v                 v
+                                   ┌────────────────┐  ┌───────────────┐
+                                   │ 4x wheel motor │  │ seat          │
+                                   └────────────────┘  └───────────────┘
+
+Power:
+
+   ┌────────────────────────┐
+   │ battery, 19-25 V       │
+   └───────────┬────────────┘
+               │ DC
+               v
+   ┌────────────────────────┐
+   │ main fuse, 80 A        │
+   └───────────┬────────────┘
+               │
+               v
+   ┌──────────────────────────────────────────────────────────────────────────────────┐
+   │ fuse box                                                                         │
+   └─────┬────────────────────┬────────────────────┬────────────────────┬─────────────┘
+         │ 30 A               │ 30 A               │ 5 A                │ 10 A
+         v                    v                    v                    v
+   ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+   │ motor controller │ │ motor controller │ │ 19-25 V -> 12 V  │ │ seat servo       │
+   │   front          │ │   rear           │ │ converter        │ │                  │
+   └─────┬────────────┘ └─────┬────────────┘ └─────┬────────────┘ └──────────────────┘
+         │                    │                    │ 12 V
+         v                    v                    v
+     2x wheel motor       2x wheel motor     ┌───────────────┐
+                                             │ compute       │
+                                             └───────────────┘
+                                                   │ 3.3 V
+                                                   v
+                                             yaw encoder, IMUs, display
+
+   One bus bar for all grounds
+
 ### Mechanical, electrical, and software integration
 - kinematics and control systems
 - simulation in Gazebo to support development and testing
@@ -258,6 +312,32 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
 ### Advanced Driver-Assistance System (ADAS)
 
 The platform can detect stairs, assist with stair climbing and descending (the vehicle remains square with the steps), and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception. Two cameras are used: a forward-facing (D435i) and a down-facing (D405) camera.
+
+      D435i (front)                              D405 (down)
+      colour + depth                             depth
+        │                                          │
+        ▼                                          ▼
+┌──────────────────────────────────┐  ┌──────────────────────────────────┐
+│ perception_node   camera: front  │  │ perception_node   camera: down   │
+│ ──────────────────────────────── │  │ ──────────────────────────────── │
+│ semantic segmentation + clearance│  │                                  │ 
+│ step detection                   │  │ step detection                   │
+└──────┬───────────────────────────┘  └┬─────────────────────────────────┘
+       ├─► /adas/front/objects         │
+       │   person/vehicle/stairs       │
+       │                               │
+       ├─► /adas/front/clearance       │
+       │                               │
+       └─► /adas/front/step            └─► /adas/front/step
+                ▼                      ▼
+             ┌───────────────────────────┐
+             │ adas_node                 │
+             │ ──────────────────────────│
+             │ fuse_steps ─► err         │
+             │ wz = throttle * err * Kp  │
+             └──┬────────────────────────┘
+                │
+            /cmd_vel_adas 
 
 <figure class="mx-auto my-6 w-full max-w-full sm:w-3/5">
   <Image
