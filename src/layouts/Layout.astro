@@ -387,8 +387,15 @@ const imageUrl = new URL(image, Astro.url).href;
       const prefersReducedMotion = () =>
         window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 
+      const primaryIsPending = (video?: HTMLVideoElement) => {
+        const primary = document.querySelector("video[data-primary-video]");
+        return primary instanceof HTMLVideoElement &&
+          primary !== video && primary.dataset.primaryReady !== "1";
+      };
+
       const tryPlay = (video: HTMLVideoElement) => {
         if (prefersReducedMotion()) return;
+        if (primaryIsPending(video)) return;
         const p = video.play();
         if (p && typeof p.catch === "function") p.catch(() => {});
       };
@@ -396,6 +403,7 @@ const imageUrl = new URL(image, Astro.url).href;
       // Force a download even though the attribute hint is preload="none".
       const startBuffering = (video: HTMLVideoElement) => {
         if (prefersReducedMotion()) return;
+        if (primaryIsPending(video)) return;
         if (video.dataset.buffering === "1") return;
         video.dataset.buffering = "1";
         video.preload = "auto";
@@ -418,6 +426,7 @@ const imageUrl = new URL(image, Astro.url).href;
           (v) => v.dataset.buffering === "1" && v.dataset.buffered !== "1",
         ).length;
       const pumpPrefetch = () => {
+        if (primaryIsPending()) return;
         while (activeLoads() < MAX_PARALLEL) {
           const next = prefetchableVideos().find(
             (v) => v.dataset.buffering !== "1" && isApproaching(v),
@@ -445,6 +454,7 @@ const imageUrl = new URL(image, Astro.url).href;
         entries.forEach((entry) => {
           const video = entry.target;
           if (!(video instanceof HTMLVideoElement)) return;
+          video.dataset.inView = entry.isIntersecting ? "1" : "0";
           if (entry.isIntersecting) {
             // Only read-ahead videos get the forced full download; cards just play.
             if (!video.hasAttribute("data-no-prefetch")) startBuffering(video);
@@ -472,7 +482,20 @@ const imageUrl = new URL(image, Astro.url).href;
         figureObserver?.disconnect();
         cardObserver?.disconnect();
         const reducedMotion = prefersReducedMotion();
-        figureVideos().forEach((video) => {
+        const videos = figureVideos();
+        const primary = document.querySelector("video[data-primary-video]");
+        const primaryVideo = primary instanceof HTMLVideoElement ? primary : null;
+        const releasePrimary = () => {
+          if (!primaryVideo || primaryVideo.dataset.primaryReady === "1") return;
+          primaryVideo.dataset.primaryReady = "1";
+          videos.forEach((video) => {
+            if (video === primaryVideo || video.dataset.inView !== "1") return;
+            if (!video.hasAttribute("data-no-prefetch")) startBuffering(video);
+            tryPlay(video);
+          });
+          queuePump();
+        };
+        videos.forEach((video) => {
           video.muted = true; // Safari only honors muted autoplay via the property
           video.playsInline = true;
           if (reducedMotion) {
@@ -508,6 +531,7 @@ const imageUrl = new URL(image, Astro.url).href;
                 tryPlay(video);
                 return; // retrying: keep its slot; canplaythrough will pump next
               }
+              if (video === primaryVideo) releasePrimary();
               video.dataset.buffered = "1"; // gave up: free its slot, keep going
               pumpPrefetch();
             });
@@ -520,12 +544,23 @@ const imageUrl = new URL(image, Astro.url).href;
               { once: true },
             );
             video.addEventListener("loadeddata", () => tryPlay(video));
-            video.addEventListener("canplay", () => tryPlay(video));
+            video.addEventListener("canplay", () => {
+              if (video === primaryVideo) releasePrimary();
+              tryPlay(video);
+            });
           }
           const observer = observerFor(video);
           if (observer) observer.observe(video);
           else tryPlay(video); // no IntersectionObserver: play, but never force-load
         });
+        if (primaryVideo) {
+          if (primaryVideo.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+            releasePrimary();
+          } else {
+            // Start the featured banner before any other project video.
+            startBuffering(primaryVideo);
+          }
+        }
         pumpPrefetch(); // kick off the background prefetch chain
       };
 
