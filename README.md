@@ -1,6 +1,6 @@
 # flojule.github.io
 
-Personal portfolio of Florian Julé — engineer, M.S. Robotics @ Northwestern. Built with [Astro](https://astro.build), [Tailwind CSS](https://tailwindcss.com), and [DaisyUI](https://daisyui.com); deployed to GitHub Pages at <https://flojule.github.io>.
+Personal portfolio of Florian Julé. Built with [Astro](https://astro.build), [Tailwind CSS](https://tailwindcss.com), and [DaisyUI](https://daisyui.com); deployed to GitHub Pages at <https://flojule.github.io>.
 
 ## Development
 

@@ -14,10 +14,9 @@ export interface SiteConfig {
 }
 export const siteConfig: SiteConfig = {
   name: "Florian Julé",
-  title: "Product design and systems integration",
+  title: "Robotics & Mechatronics Engineer | Product Development",
   description: [
-    "Engineer with 8 years at Joby Aviation, where I led teams designing mechanisms and composite structures for the Joby S4 eVTOL — from first prototype to designs for FAA certification.",
-    "I am currently pursuing an M.S. in Robotics at Northwestern University, with a focus on designing robotic systems for human augmentation.",
+    "Mechanical and robotics engineer with 10 years of experience developing complex electromechanical systems from concept through production. Experienced in mechanical design, product development, systems integration, and robotics software using ROS 2.",
     "In my free time, I love \
     <a href='/gallery/flip.webp' data-photo-lightbox='hobbies'>BMXing</a>, \
     <a href='/gallery/utah.webp' data-photo-lightbox='hobbies'>mountain</a> \
@@ -37,5 +36,5 @@ export const siteConfig: SiteConfig = {
   },
   ogImage: "/images/flo_1_0.webp",
   aboutDescription:
-    "Florian Julé — engineer with 8 years at Joby Aviation and currently pursuing an M.S. in Robotics at Northwestern, focused on robotic systems for human augmentation.",
+    "Florian Julé",
 };
