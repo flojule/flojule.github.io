@@ -1,0 +1,8 @@
+flowchart TD
+  B["battery<br/>6S LiPo, 18-25.2 V"] --> F["main fuse 80 A"] --> SW["main switch 100 A"] --> FB["fuse block"]
+  FB -- "30 A" --> RCF["motor controller, front"] --> MF["motors front<br/>{left, right}"]
+  FB -- "30 A" --> RCR["motor controller, rear"] --> MR["motors rear<br/>{left, right}"]
+  FB -- "5 A" --> DC["DC-DC"] -- "12 V" --> J["Jetson"]
+  FB -- "7.5 A" --> SV["seat servo"]
+  J -- "3.3 V" --> L["yaw encoder, IMUs,<br/>status display"]
+  J -- "USB 5 V" --> CAM["cameras"]
