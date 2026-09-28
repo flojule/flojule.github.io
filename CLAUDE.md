@@ -70,10 +70,10 @@ Project pages may be `.md` (simple body) or `.mdx` (custom components, math, vid
 
 | Opener | Playlist |
 |---|---|
-| `<a href="<src>" data-photo-lightbox="<group>">` | every anchor sharing that group name, in document order |
+| `<a href="<src>" data-photo-lightbox="<group>">` | every visible anchor sharing that group name, in document order |
 | `<button data-photo-gallery-open>` | all of `public/gallery/`, reshuffled on each open |
 
-A one-photo playlist hides the prev/next arrows. Clicking anything that is not the photo or a control closes the viewer. The gallery list comes from [gallery.json.ts](src/pages/gallery.json.ts) (built from `public/gallery/` by [gallery.ts](src/lib/gallery.ts)) and is fetched on first open.
+A one-photo playlist hides the prev/next arrows. `data-photo-lightbox-natural` on the anchor shows the image at natural size, scrollable, on `bg-base-200` (used for diagrams). Clicking anything that is not the photo or a control closes the viewer. The gallery list comes from [gallery.json.ts](src/pages/gallery.json.ts) (built from `public/gallery/` by [gallery.ts](src/lib/gallery.ts)) and is fetched on first open.
 
 Both full-screen overlays (photo viewer, PDF viewer) share the show/hide helpers in [overlay.ts](src/lib/overlay.ts).
 
@@ -96,7 +96,7 @@ Both full-screen overlays (photo viewer, PDF viewer) share the show/hide helpers
 - Videos go to `public/videos/projects/<slug>/<name>.webm` (VP9; see [video.ts](src/lib/video.ts)).
 - Gallery photos are served straight from `public/gallery/*.webp` — pre-optimized to a max side of 1800 px at quality 75, EXIF rotation baked in, lowercase-kebab filenames. Add new ones already encoded that way; they are picked up automatically.
 - New skills in project frontmatter should match existing capitalization (e.g. "ROS 2", "C++", "Robotic Manipulation"). Check existing entries before adding.
-- Block diagrams: Mermaid source `src/content/projects/<slug>/diagrams/<name>.mmd`; run `tools/render_diagrams.sh` to write `<name>-light.svg` + `<name>-dark.svg`, then render both `<Image>`s in one figure with `data-theme-media="light"` / `"dark"` (see [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
+- Block diagrams: Mermaid source `src/content/projects/<slug>/diagrams/<name>.mmd`; run `tools/render_diagrams.sh` to write `<name>-light.svg` + `<name>-dark.svg`, then put both in one figure, each `<Image>` wrapped in an `<a data-photo-lightbox="diagram-<name>" data-photo-lightbox-natural data-theme-media="light|dark">` (see [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
 - When adding figures inside MDX, use the `<figure class="mx-auto my-6 w-fit max-w-full">` + `<Image>` + `<figcaption>` pattern from existing files (e.g. [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
 
 ## MCP tools for documentation
