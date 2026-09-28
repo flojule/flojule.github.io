@@ -3,7 +3,10 @@
 //
 // Openers, anywhere in the document:
 //   <a href="<src>" data-photo-lightbox="<group>">  — one entry per anchor;
-//       anchors sharing a group name are browsed together with prev/next.
+//       anchors sharing a group name are browsed together with prev/next;
+//       hidden anchors (e.g. the other theme's diagram) are skipped. Add
+//       `data-photo-lightbox-natural` to show it at natural size, scrollable,
+//       on the page background (for diagrams too dense to fit a phone).
 //   <button data-photo-gallery-open>                — the whole /gallery
 //       folder (see gallery.json.ts), reshuffled on every open.
 
@@ -64,7 +67,10 @@ const navButtonClass =
         <path d="m15 18-6-6 6-6"></path>
       </svg>
     </button>
-    <div class="flex w-full min-w-0 flex-1 items-center justify-center">
+    <div
+      class="flex w-full min-w-0 flex-1 items-center justify-center"
+      data-photo-lightbox-frame
+    >
       <img
         alt=""
         class="surface-radius max-h-[72vh] w-auto max-w-full object-contain shadow-2xl sm:max-h-[85vh]"
@@ -139,7 +145,7 @@ const navButtonClass =
 <script>
   import { closeOverlay, isOverlayOpen, openOverlay } from "../lib/overlay";
 
-  type Photo = { src: string; alt: string };
+  type Photo = { src: string; alt: string; natural?: boolean };
 
   // Every handler below is bound once at module scope and queries the DOM
   // lazily: view transitions swap the body, so any element captured at bind
@@ -173,14 +179,40 @@ const navButtonClass =
     return out;
   };
 
+  // Natural mode: the frame fills the viewer and scrolls; the image drops its
+  // fit-to-screen caps and gets the page background (diagrams are transparent).
+  const frameClasses = ["self-stretch", "min-h-0", "overflow-auto", "items-center-safe", "justify-center-safe"];
+  const imageClasses = ["max-w-none!", "max-h-none!", "bg-base-200", "p-4"];
+
   const render = () => {
     const root = overlay();
+    const frame = root?.querySelector("[data-photo-lightbox-frame]");
     const image = root?.querySelector("[data-photo-lightbox-image]");
     const photo = playlist[index];
-    if (!(image instanceof HTMLImageElement) || !photo) return;
+    if (!(image instanceof HTMLImageElement) || !frame || !photo) return;
+
+    const natural = Boolean(photo.natural);
+    frameClasses.forEach((c) => frame.classList.toggle(c, natural));
+    frame.classList.toggle("items-center", !natural);
+    frame.classList.toggle("justify-center", !natural);
+    imageClasses.forEach((c) => image.classList.toggle(c, natural));
+    // The close button overlaps a full-size diagram; a dark backing keeps it visible on light ones.
+    root?.querySelector("[data-photo-lightbox-close]")?.classList.toggle("bg-black/60!", natural);
+    frame.scrollTo(0, 0);
 
     image.src = photo.src;
     image.alt = photo.alt;
+
+    // Diagrams are centred trees: start at the horizontal middle, not the empty left edge.
+    if (natural) {
+      image
+        .decode()
+        .then(() => {
+          if (image.src.endsWith(photo.src)) frame.scrollLeft = (frame.scrollWidth - frame.clientWidth) / 2;
+        })
+        // Rejects only when the next photo replaced this one before it decoded.
+        .catch(() => {});
+    }
 
     // Warm the neighbours so prev/next paint immediately.
     for (const step of [1, -1]) {
@@ -244,11 +276,16 @@ const navButtonClass =
         event.preventDefault();
         const group = Array.from(
           document.querySelectorAll<HTMLAnchorElement>("a[data-photo-lightbox]"),
-        ).filter((a) => a.dataset.photoLightbox === link.dataset.photoLightbox);
+        ).filter(
+          (a) =>
+            a.dataset.photoLightbox === link.dataset.photoLightbox &&
+            a.getClientRects().length > 0,
+        );
         open(
           group.map((a) => ({
             src: a.getAttribute("href") || "",
             alt: a.textContent?.trim() || a.getAttribute("aria-label") || "Photo",
+            natural: a.hasAttribute("data-photo-lightbox-natural"),
           })),
           Math.max(group.indexOf(link), 0),
           link,
