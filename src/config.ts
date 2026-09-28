@@ -14,7 +14,7 @@ export interface SiteConfig {
 }
 export const siteConfig: SiteConfig = {
   name: "Florian Julé",
-  title: "Robotics & Mechatronics Engineer | Product Development",
+  title: "Mechanical & Robotics Engineer | Product Development",
   description: [
     "Mechanical and robotics engineer with 10 years of experience developing complex electromechanical systems from concept through production. Experienced in mechanical design, product development, systems integration, and robotics software using ROS 2.",
     "In my free time, I love \
