@@ -96,6 +96,7 @@ Both full-screen overlays (photo viewer, PDF viewer) share the show/hide helpers
 - Videos go to `public/videos/projects/<slug>/<name>.webm` (VP9; see [video.ts](src/lib/video.ts)).
 - Gallery photos are served straight from `public/gallery/*.webp` — pre-optimized to a max side of 1800 px at quality 75, EXIF rotation baked in, lowercase-kebab filenames. Add new ones already encoded that way; they are picked up automatically.
 - New skills in project frontmatter should match existing capitalization (e.g. "ROS 2", "C++", "Robotic Manipulation"). Check existing entries before adding.
+- Block diagrams: Mermaid source `src/content/projects/<slug>/diagrams/<name>.mmd`; run `tools/render_diagrams.sh` to write `<name>-light.svg` + `<name>-dark.svg`, then render both `<Image>`s in one figure with `data-theme-media="light"` / `"dark"` (see [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
 - When adding figures inside MDX, use the `<figure class="mx-auto my-6 w-fit max-w-full">` + `<Image>` + `<figcaption>` pattern from existing files (e.g. [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
 
 ## MCP tools for documentation

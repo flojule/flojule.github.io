@@ -20,9 +20,12 @@ import descentImg from "./descent.webp";
 import gamepadImg from "./gamepad.webp";
 import chairImg from "./chair.webp";
 import bobStairsImg from "./bob_stairs.webp";
-import architectureImg from "./architecture.png";
-import powerImg from "./power.png";
-import adasImg from "./adas.png";
+import architectureLight from "./diagrams/architecture-light.svg";
+import architectureDark from "./diagrams/architecture-dark.svg";
+import powerLight from "./diagrams/power-light.svg";
+import powerDark from "./diagrams/power-dark.svg";
+import adasLight from "./diagrams/adas-light.svg";
+import adasDark from "./diagrams/adas-dark.svg";
 
 ## Overview
 
@@ -93,28 +96,48 @@ I built a subscale (1/4-scale) platform to validate the kinematics and the artic
 
 ### Architecture
 
-<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+<figure class="mx-auto my-6 w-fit max-w-full">
   <Image
-    src={architectureImg}
+    src={architectureLight}
     alt="Physical architecture of the Flowheely stair-climbing platform"
-    class="w-full"
+    class="max-w-full"
     loading="lazy"
     decoding="async"
     data-figure-img
+    data-theme-media="light"
+  />
+  <Image
+    src={architectureDark}
+    alt="Physical architecture of the Flowheely stair-climbing platform"
+    class="max-w-full"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+    data-theme-media="dark"
   />
   <figcaption>
     Physical architecture overview
   </figcaption>
 </figure>
 
-<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+<figure class="mx-auto my-6 w-fit max-w-full">
   <Image
-    src={powerImg}
+    src={powerLight}
     alt="Power architecture of the Flowheely stair-climbing platform"
-    class="w-full"
+    class="max-w-full"
     loading="lazy"
     decoding="async"
     data-figure-img
+    data-theme-media="light"
+  />
+  <Image
+    src={powerDark}
+    alt="Power architecture of the Flowheely stair-climbing platform"
+    class="max-w-full"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+    data-theme-media="dark"
   />
   <figcaption>
     Power system architecture
@@ -292,14 +315,24 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
 
 The platform can detect stairs, assist with stair climbing and descending (the vehicle remains square with the steps), and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception. Two cameras are used: a forward-facing (D435i) and a down-facing (D405) camera.
 
-<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
+<figure class="mx-auto my-6 w-fit max-w-full">
   <Image
-    src={adasImg}
+    src={adasLight}
     alt="Advanced driver-assistance system architecture for the Flowheely platform"
-    class="w-full"
+    class="max-w-full"
     loading="lazy"
     decoding="async"
     data-figure-img
+    data-theme-media="light"
+  />
+  <Image
+    src={adasDark}
+    alt="Advanced driver-assistance system architecture for the Flowheely platform"
+    class="max-w-full"
+    loading="lazy"
+    decoding="async"
+    data-figure-img
+    data-theme-media="dark"
   />
   <figcaption>
     ADAS architecture and perception stack

@@ -1,0 +1,10 @@
+flowchart TD
+  J["Jetson Orin Nano<br/>ROS 2"]
+  J -- "I2C" --> S["yaw encoder<br/>IMUs {body, seat}<br/>status display"]
+  J -- "USB 3" --> CAM["cameras<br/>{front D435i, down D405}"]
+  J -- "USB" --> RC["motor controllers<br/>{front, rear}"]
+  J -- "PWM" --> SV["seat servo"]
+  J -- "Bluetooth" --> PAD["gamepad"]
+  J -- "WiFi" --> WEB["web console"]
+  RC -- "power + encoder" --> M["wheel motors<br/>{fl, fr, rl, rr}"]
+  SV -- "linkage" --> SEAT["seat"]
