@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
@@ -14,11 +15,13 @@ export default defineConfig({
   redirects: {
     "/projects": "/",
   },
-  // Declared at the top level so .md project pages get math too; the MDX
-  // integration inherits this config (extendMarkdownConfig defaults to true).
+  // Math renders as MathML, so no KaTeX CSS or fonts. Top level so .md pages get it too;
+  // the MDX integration inherits this config (extendMarkdownConfig defaults to true).
   markdown: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    processor: unified({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [[rehypeKatex, { output: "mathml" }]],
+    }),
   },
   integrations: [mdx()],
   vite: {
