@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const education = defineCollection({
@@ -8,7 +9,7 @@ const education = defineCollection({
     subtitle: z.string(),
     startDate: z.coerce.date(),
     endDate: z.coerce.date().optional(),
-    link: z.string().url().optional(),
+    link: z.url().optional(),
     graduationLabel: z.string().optional(),
   }),
 });
@@ -23,9 +24,9 @@ const projects = defineCollection({
     startDate: z.coerce.date(),
     endDate: z.coerce.date().optional(),
     skills: z.array(z.string()),
-    demoLink: z.string().url().optional(),
+    demoLink: z.url().optional(),
     demoLabel: z.string().optional(),
-    sourceLink: z.string().url().optional(),
+    sourceLink: z.url().optional(),
     video: z.string().optional(),
     // Card thumbnails render at ~350x200 CSS px, so they get their own
     // downscaled encode instead of pulling the full-size `video`.
