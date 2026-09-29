@@ -65,6 +65,28 @@
   display: inline-block;
 }
 
+/* Theme-specific media (e.g. light/dark diagram pairs), same three-case rule. */
+[data-theme-media="dark"] {
+  display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-theme-media="light"] {
+    display: none !important;
+  }
+  :root:not([data-theme="light"]) [data-theme-media="dark"] {
+    display: block !important;
+  }
+}
+
+[data-theme="dark"] [data-theme-media="light"] {
+  display: none !important;
+}
+
+[data-theme="dark"] [data-theme-media="dark"] {
+  display: block !important;
+}
+
 html,
 body {
   min-height: 100vh;

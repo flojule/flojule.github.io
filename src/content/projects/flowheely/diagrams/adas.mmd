@@ -1,0 +1,7 @@
+flowchart TD
+  FC["front camera<br/>D435i"] -- "color, depth" --> FP["front perception<br/>semantic, clearance, steps"]
+  DC["down camera<br/>D405"] -- "depth" --> DP["down perception<br/>steps"]
+  FP -- "clearance, step" --> A
+  DP -- "step" --> A
+  R["rider command"] --> A["adas_node<br/>Drive Assist: clear arc, speed cap<br/>Stair Assist: square to step"]
+  A -- "/cmd_vel_adas" --> MUX["twist_mux"] --> DRV["drive controller"]

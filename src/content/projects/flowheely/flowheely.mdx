@@ -20,9 +20,12 @@ import descentImg from "./descent.webp";
 import gamepadImg from "./gamepad.webp";
 import chairImg from "./chair.webp";
 import bobStairsImg from "./bob_stairs.webp";
-import architectureImg from "./architecture.png";
-import powerImg from "./power.png";
-import adasImg from "./adas.png";
+import architectureLight from "./diagrams/architecture-light.svg";
+import architectureDark from "./diagrams/architecture-dark.svg";
+import powerLight from "./diagrams/power-light.svg";
+import powerDark from "./diagrams/power-dark.svg";
+import adasLight from "./diagrams/adas-light.svg";
+import adasDark from "./diagrams/adas-dark.svg";
 
 ## Overview
 
@@ -93,29 +96,81 @@ I built a subscale (1/4-scale) platform to validate the kinematics and the artic
 
 ### Architecture
 
-<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
-  <Image
-    src={architectureImg}
-    alt="Physical architecture of the Flowheely stair-climbing platform"
-    class="w-full"
-    loading="lazy"
-    decoding="async"
-    data-figure-img
-  />
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <a
+    href={architectureLight.src}
+    data-photo-lightbox="diagram-architecture"
+    data-photo-lightbox-natural
+    data-theme-media="light"
+    aria-label="Physical architecture of the Flowheely stair-climbing platform"
+    class="block cursor-zoom-in"
+  >
+    <Image
+      src={architectureLight}
+      alt="Physical architecture of the Flowheely stair-climbing platform"
+      class="max-w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+  </a>
+  <a
+    href={architectureDark.src}
+    data-photo-lightbox="diagram-architecture"
+    data-photo-lightbox-natural
+    data-theme-media="dark"
+    aria-label="Physical architecture of the Flowheely stair-climbing platform"
+    class="block cursor-zoom-in"
+  >
+    <Image
+      src={architectureDark}
+      alt="Physical architecture of the Flowheely stair-climbing platform"
+      class="max-w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+  </a>
   <figcaption>
     Physical architecture overview
   </figcaption>
 </figure>
 
-<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
-  <Image
-    src={powerImg}
-    alt="Power architecture of the Flowheely stair-climbing platform"
-    class="w-full"
-    loading="lazy"
-    decoding="async"
-    data-figure-img
-  />
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <a
+    href={powerLight.src}
+    data-photo-lightbox="diagram-power"
+    data-photo-lightbox-natural
+    data-theme-media="light"
+    aria-label="Power architecture of the Flowheely stair-climbing platform"
+    class="block cursor-zoom-in"
+  >
+    <Image
+      src={powerLight}
+      alt="Power architecture of the Flowheely stair-climbing platform"
+      class="max-w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+  </a>
+  <a
+    href={powerDark.src}
+    data-photo-lightbox="diagram-power"
+    data-photo-lightbox-natural
+    data-theme-media="dark"
+    aria-label="Power architecture of the Flowheely stair-climbing platform"
+    class="block cursor-zoom-in"
+  >
+    <Image
+      src={powerDark}
+      alt="Power architecture of the Flowheely stair-climbing platform"
+      class="max-w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+  </a>
   <figcaption>
     Power system architecture
   </figcaption>
@@ -292,15 +347,41 @@ Demonstration of the wheelchair integration with the platform. The wheelchair is
 
 The platform can detect stairs, assist with stair climbing and descending (the vehicle remains square with the steps), and avoid collisions with obstacles. It uses a combination of classical computer vision and machine learning for perception. Two cameras are used: a forward-facing (D435i) and a down-facing (D405) camera.
 
-<figure class="mx-auto my-6 w-full max-w-full sm:w-4/5">
-  <Image
-    src={adasImg}
-    alt="Advanced driver-assistance system architecture for the Flowheely platform"
-    class="w-full"
-    loading="lazy"
-    decoding="async"
-    data-figure-img
-  />
+<figure class="mx-auto my-6 w-fit max-w-full">
+  <a
+    href={adasLight.src}
+    data-photo-lightbox="diagram-adas"
+    data-photo-lightbox-natural
+    data-theme-media="light"
+    aria-label="Advanced driver-assistance system architecture for the Flowheely platform"
+    class="block cursor-zoom-in"
+  >
+    <Image
+      src={adasLight}
+      alt="Advanced driver-assistance system architecture for the Flowheely platform"
+      class="max-w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+  </a>
+  <a
+    href={adasDark.src}
+    data-photo-lightbox="diagram-adas"
+    data-photo-lightbox-natural
+    data-theme-media="dark"
+    aria-label="Advanced driver-assistance system architecture for the Flowheely platform"
+    class="block cursor-zoom-in"
+  >
+    <Image
+      src={adasDark}
+      alt="Advanced driver-assistance system architecture for the Flowheely platform"
+      class="max-w-full"
+      loading="lazy"
+      decoding="async"
+      data-figure-img
+    />
+  </a>
   <figcaption>
     ADAS architecture and perception stack
   </figcaption>
