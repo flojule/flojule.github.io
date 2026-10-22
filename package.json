@@ -10,20 +10,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.3.1",
-    "@astrojs/mdx": "^8.0.2",
-    "@lucide/astro": "^1.49.0",
+    "@astrojs/markdown-remark": "^7.3.3",
+    "@astrojs/mdx": "^8.1.0",
+    "@lucide/astro": "^1.59.0",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.5",
-    "daisyui": "^5.7.46",
-    "katex": "^0.18.9",
+    "astro": "^7.4.1",
+    "daisyui": "^5.7.50",
+    "katex": "^0.19.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
-    "@types/node": "^24.19.0",
+    "@astrojs/check": "^0.9.11",
+    "@types/node": "^26.6.5",
     "typescript": "^6.0.3"
   },
   "overrides": {
