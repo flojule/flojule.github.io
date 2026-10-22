@@ -4,7 +4,7 @@
 Font, size, stroke, and margins scale with video height so the label looks
 identical across clips of different resolutions. Ratios are calibrated
 against the site's existing burnt-in label at 1920x1080
-(public/videos/projects/nu-495/real_slam_wide_10x.mp4).
+(public/videos/slam/real_slam_wide_10x.mp4).
 
 Requires ffmpeg/ffprobe on PATH and Pillow (pip install -r tools/requirements.txt).
 

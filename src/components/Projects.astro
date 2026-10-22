@@ -13,16 +13,12 @@ const sortedProjects = [...projectEntries].sort(
     a.data.title.localeCompare(b.data.title)
 );
 
-// Widest grid is 3 columns, so the first row is the only above-the-fold media.
-const EAGER_COUNT = 3;
+// Widest grid is 2 columns, so the first row is the only above-the-fold media.
+const EAGER_COUNT = 2;
 ---
 
-<section id="projects" class="pt-3 pb-16 px-4 bg-base-200">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-      {sortedProjects.map((project, index) => (
-        <ProjectCard project={project} eager={index < EAGER_COUNT} />
-      ))}
-    </div>
-  </div>
+<section id="projects" class="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
+  {sortedProjects.map((project, index) => (
+    <ProjectCard project={project} eager={index < EAGER_COUNT} />
+  ))}
 </section>

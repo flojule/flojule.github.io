@@ -10,10 +10,11 @@ import rehypeKatex from 'rehype-katex';
 // https://astro.build/config
 export default defineConfig({
   site: "https://flojule.github.io",
-  // The home page *is* the projects grid, so /projects is not a separate page.
-  // Kept as a redirect so older links and /projects/<slug> parents still resolve.
+  // Old URLs: projects moved from /projects/<slug> to /<slug>; /about is the home page's side column.
   redirects: {
     "/projects": "/",
+    "/projects/[slug]": "/[slug]",
+    "/about": "/#about",
   },
   // Math renders as MathML, so no KaTeX CSS or fonts. Top level so .md pages get it too;
   // the MDX integration inherits this config (extendMarkdownConfig defaults to true).
