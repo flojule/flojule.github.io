@@ -1,14 +1,27 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Projects from "../components/Projects.astro";
+import About from "../components/About.astro";
 import { siteConfig } from "../config";
+import portrait from "../assets/portrait.webp";
 ---
 
 <Layout
   title={`${siteConfig.name} - Home`}
   description={siteConfig.description[0]}
 >
-  <main>
-    <Projects />
+  {/* About follows the projects below `lg`; from `lg` up it is a sticky left column, widened at `xl` to fit the headline. */}
+  <main class="bg-base-200 px-4 pt-6 pb-16 sm:pt-8">
+    <div class="mx-auto grid max-w-6xl gap-5 md:gap-6 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[18rem_minmax(0,1fr)]">
+      <Projects />
+      <About
+        name={siteConfig.name}
+        headline={siteConfig.title}
+        location={siteConfig.location}
+        description={siteConfig.description}
+        photo={portrait}
+        education={siteConfig.education}
+      />
+    </div>
   </main>
 </Layout>

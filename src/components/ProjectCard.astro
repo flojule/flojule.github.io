@@ -1,6 +1,5 @@
 ---
 import { Image, getImage } from "astro:assets";
-import SkillBadge from "./SkillBadge.astro";
 import GithubIcon from "./icons/GithubIcon.astro";
 import { ExternalLink } from "@lucide/astro";
 import type { CollectionEntry } from "astro:content";
@@ -16,10 +15,13 @@ interface Props {
 const { project, eager = false } = Astro.props;
 // Prefer the card-sized encode; fall back to the full one when a project has none.
 const cardVideo = project.data.cardVideo ?? project.data.video;
-const hasDemoLink = Boolean(project.data.demoLink);
-const hasSourceLink = Boolean(project.data.sourceLink);
-const actionCount = Number(hasDemoLink) + Number(hasSourceLink);
-const href = `/projects/${project.id.split("/").pop()}`;
+// Cards list the first few skills; the project page shows them all.
+const MAX_CARD_SKILLS = 3;
+const cardSkills = project.data.skills.slice(0, MAX_CARD_SKILLS);
+const { team } = project.data;
+const teamLabel = team && (team === 1 ? "Individual" : `Team of ${team}`);
+const cardLink = "inline-flex items-center gap-1 text-base-content/70 transition-colors hover:text-primary";
+const href = `/${project.id}`;
 const cardImageSizes = "(min-width: 1024px) 22rem, (min-width: 768px) calc(50vw - 2rem), 100vw";
 // The poster must not be the full-size original; render a card-sized derivative.
 const poster = project.data.video
@@ -27,12 +29,12 @@ const poster = project.data.video
   : undefined;
 ---
 
-<article class="surface-card card overflow-hidden border border-base-300 shadow-lg transition-shadow hover:shadow-xl">
-  <!-- Same destination as the title link below, so it is hidden from the
+<article class="group surface-card flex flex-col border border-base-300 transition-colors hover:border-primary/40">
+  {/* Same destination as the title link below, so it is hidden from the
        a11y tree instead of announced twice (and, for video cards, announced
-       with no accessible name at all). -->
+       with no accessible name at all). */}
   <a href={href} tabindex="-1" aria-hidden="true">
-    <figure class="aspect-video">
+    <figure class="aspect-video overflow-hidden bg-base-300">
       {project.data.video ? (
         <video
           data-autoplay
@@ -42,7 +44,7 @@ const poster = project.data.video
           playsinline
           preload="none"
           poster={poster}
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none"
           style={project.data.imagePosition && `object-position: ${project.data.imagePosition}`}
           data-no-controls
         >
@@ -53,7 +55,7 @@ const poster = project.data.video
         <Image
           src={project.data.image}
           alt={project.data.title}
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none"
           style={project.data.imagePosition && `object-position: ${project.data.imagePosition}`}
           width={640}
           widths={[320, 640, 960]}
@@ -64,54 +66,36 @@ const poster = project.data.video
       )}
     </figure>
   </a>
-  <div class="card-body gap-3 p-5 sm:p-6">
-    <h3 class="card-title text-lg sm:text-xl hover:text-primary transition-colors">
-      <a href={href}>{project.data.title}</a>
+  <div class="flex flex-1 flex-col gap-1.5 p-4 sm:p-5">
+    <h3 class="text-base font-semibold leading-snug sm:text-lg">
+      <a href={href} class="transition-colors group-hover:text-primary">{project.data.title}</a>
     </h3>
-    <div class="flex items-center justify-between gap-3">
-      <time class="text-sm text-base-content/60">
-        {formatPeriod(project.data.startDate, project.data.endDate)}
-      </time>
-      {
-        actionCount > 0 && (
-          <div class="flex items-center gap-3 text-xs text-base-content/65">
-            {
-              project.data.demoLink && (
-                <a
-                  href={project.data.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open external link"
-                  title="Open external link"
-                  class="inline-flex items-center gap-1 rounded-md border border-base-content/10 bg-base-200/50 px-2 py-1 font-medium transition-colors hover:border-primary/20 hover:text-primary"
-                >
-                  <ExternalLink class="size-3.5" />
-                  <span>Link</span>
-                </a>
-              )
-            }
-            {
-              project.data.sourceLink && (
-                <a
-                  href={project.data.sourceLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open GitHub repository"
-                  title="Open GitHub repository"
-                  class="inline-flex items-center gap-1 rounded-md border border-base-content/10 bg-base-200/50 px-2 py-1 font-medium transition-colors hover:border-primary/20 hover:text-primary"
-                >
-                  <GithubIcon class="size-3.5" />
-                  <span>GitHub</span>
-                </a>
-              )
-            }
-          </div>
-        )
-      }
+    <p class="text-sm text-base-content/75">{project.data.description}</p>
+    <div class="mt-auto flex items-center justify-between gap-3 pt-0.5 font-mono text-xs text-base-content/55">
+      <span>
+        <time>{formatPeriod(project.data.startDate, project.data.endDate)}</time>
+        {teamLabel && <><span aria-hidden="true"> · </span><span>{teamLabel}</span></>}
+      </span>
+      <span class="flex items-center gap-3">
+        {
+          project.data.demoLink && (
+            <a href={project.data.demoLink} target="_blank" rel="noopener noreferrer" aria-label={`Link: ${project.data.title}`} title="Link" class={cardLink}>
+              <ExternalLink class="size-4" aria-hidden="true" />
+            </a>
+          )
+        }
+        {
+          project.data.sourceLink && (
+            <a href={project.data.sourceLink} target="_blank" rel="noopener noreferrer" aria-label={`GitHub: ${project.data.title}`} title="GitHub" class={cardLink}>
+              <GithubIcon class="size-4" />
+            </a>
+          )
+        }
+      </span>
     </div>
-    <p class="text-sm sm:text-base text-base-content/80">{project.data.description}</p>
-    <div class="flex flex-wrap gap-2 pt-1">
-      {project.data.skills.map((skill) => <SkillBadge skill={skill} />)}
-    </div>
+    {/* Wraps between skills, never inside one, so no skill is cut off. */}
+    <p class="flex flex-wrap gap-x-1.5 text-xs text-base-content/55">
+      {cardSkills.map((skill, i) => <span class="whitespace-nowrap">{i > 0 && <span aria-hidden="true">· </span>}{skill}</span>)}
+    </p>
   </div>
 </article>

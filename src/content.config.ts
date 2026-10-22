@@ -2,20 +2,9 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
-const education = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/education" }),
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    startDate: z.coerce.date(),
-    endDate: z.coerce.date().optional(),
-    link: z.url().optional(),
-    graduationLabel: z.string().optional(),
-  }),
-});
-
+// One folder per project: src/content/<slug>/index.md(x), served at /<slug>.
 const projects = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
+  loader: glob({ pattern: "*/index.{md,mdx}", base: "./src/content" }),
   schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
@@ -27,6 +16,8 @@ const projects = defineCollection({
     demoLink: z.url().optional(),
     demoLabel: z.string().optional(),
     sourceLink: z.url().optional(),
+    // Team size; 1 shows "Individual" on the card.
+    team: z.number().int().positive().optional(),
     video: z.string().optional(),
     // Card thumbnails render at ~350x200 CSS px, so they get their own
     // downscaled encode instead of pulling the full-size `video`.
@@ -36,6 +27,5 @@ const projects = defineCollection({
 });
 
 export const collections = {
-  education,
   projects,
 };

@@ -1,157 +1,68 @@
 ---
 import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
-
-interface EducationEntry {
-  title: string;
-  subtitle: string;
-  startDate: Date;
-  endDate?: Date;
-  link?: string;
-  graduationLabel?: string;
-}
+import type { EducationEntry } from "../config";
 
 interface Props {
   name: string;
   headline: string;
   location?: string;
   description: string[];
-  photo?: string | ImageMetadata;
+  photo: ImageMetadata;
   education: EducationEntry[];
 }
 
-const {
-  name,
-  headline,
-  location,
-  description,
-  photo,
-  education,
-} = Astro.props;
+const { name, headline, location, description, photo, education } = Astro.props;
 
-// The card shows a 160px thumbnail; the lightbox opens a larger derivative
+// The page shows a small thumbnail; the lightbox opens a larger derivative
 // rather than the multi-hundred-KB original.
-const photoSrc =
-  typeof photo === "string"
-    ? photo
-    : photo && (await getImage({ src: photo, width: 1200, format: "webp" })).src;
-
-function formatGraduation(entry: EducationEntry) {
-  if (entry.graduationLabel) {
-    return entry.graduationLabel;
-  }
-
-  // UTC getters: frontmatter dates are UTC midnight, local getters can shift them.
-  if (entry.endDate) {
-    return `${entry.endDate.getUTCFullYear()}`;
-  }
-
-  return `${entry.startDate.getUTCFullYear()}`;
-}
+const photoSrc = (await getImage({ src: photo, width: 1200, format: "webp" })).src;
 ---
 
-<section id="about" class="bg-base-200 px-4 pt-3 pb-16">
-  <div class="mx-auto max-w-6xl">
-    <div class="grid gap-5 md:gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,1fr)]">
-      <article class="surface-card order-2 lg:order-1 lg:row-span-2 card border border-base-300 shadow-lg">
-        <div class="card-body">
-          <div class="space-y-3">
-            <div class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-4">
-              <h2 class="text-2xl sm:text-3xl font-bold">Hi, I'm {name}</h2>
-              {location && (
-                <p class="text-sm uppercase tracking-[0.15em] text-base-content/60 md:text-right">
-                  {location}
-                </p>
-              )}
-            </div>
-            <p class="font-serif text-lg leading-snug text-base-content/85 sm:text-xl">
-              {headline}
-            </p>
-
-            <div class="space-y-3 text-base leading-relaxed text-base-content/80 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors hover:[&_a]:text-primary/80">
-              {description.map((line) => (
-                line.trim()
-                  ? <p set:html={line} />
-                  : <p>&nbsp;</p>
-              ))}
-            </div>
-          </div>
-        </div>
-      </article>
-
-      {
-        photo && photoSrc && (
-          <div class="surface-card order-1 lg:order-2 lg:col-start-2 card border border-base-300 shadow-lg">
-            <div class="card-body items-center">
-              <a
-                href={photoSrc}
-                data-photo-lightbox="portrait"
-                aria-label={`View photo of ${name}`}
-                class="w-40 overflow-hidden surface-radius block cursor-zoom-in"
-              >
-                {
-                  typeof photo === "string" ? (
-                    <img
-                      src={photoSrc}
-                      alt={name}
-                      loading="lazy"
-                      decoding="async"
-                      class="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <Image
-                      src={photo}
-                      alt={name}
-                      width={320}
-                      widths={[160, 320]}
-                      sizes="160px"
-                      class="h-full w-full object-cover"
-                    />
-                  )
-                }
-              </a>
-            </div>
-          </div>
-        )
-      }
-
-      <aside class="surface-card order-3 lg:order-3 lg:col-start-2 card border border-base-300 shadow-lg">
-        <div class="card-body">
-          <h3 class="card-title text-2xl">Education</h3>
-          <ul class="space-y-4">
-            {education.map((entry) => (
-              <li class="border-b border-base-300 pb-4 last:border-b-0 last:pb-0">
-                <div class="space-y-1">
-                  <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                    {
-                      entry.link ? (
-                        <a
-                          href={entry.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="font-semibold hover:text-primary transition-colors"
-                        >
-                          {entry.title}
-                        </a>
-                      ) : (
-                        <p class="font-semibold">{entry.title}</p>
-                      )
-                    }
-                    <p class="text-sm font-mono whitespace-nowrap text-base-content/60">
-                      {formatGraduation(entry)}
-                    </p>
-                  </div>
-                  <p class="text-sm text-secondary font-medium">
-                    {entry.subtitle}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </aside>
-
+{/* Sticky only when the viewport is tall enough to show the whole column. */}
+<section id="about" aria-labelledby="about-name" class="scroll-mt-20 space-y-5 lg:order-first lg:self-start lg:[@media(min-height:49rem)]:sticky lg:[@media(min-height:49rem)]:top-20">
+  {/* The photo stretches to the height of the name block. */}
+  <div class="flex gap-3">
+    <a
+      href={photoSrc}
+      data-photo-lightbox="portrait"
+      aria-label={`View photo of ${name}`}
+      class="w-16 shrink-0 overflow-hidden rounded-md cursor-zoom-in"
+    >
+      <Image src={photo} alt={name} width={128} widths={[64, 128, 192]} sizes="64px" loading="eager" class="size-full object-cover" />
+    </a>
+    <div class="min-w-0">
+      <h2 id="about-name" class="text-lg font-semibold leading-snug">{name}</h2>
+      {/* One line per " | " segment. */}
+      <p class="text-sm text-base-content/70">{headline.split(" | ").map((line) => <span class="block">{line}</span>)}</p>
+      {location && <p class="text-sm text-base-content/55">{location}</p>}
     </div>
   </div>
 
+  <div class="space-y-3 text-sm leading-relaxed text-base-content/80 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors hover:[&_a]:text-primary/80">
+    {description.map((line) => <p set:html={line} />)}
+  </div>
+
+  <div>
+    <h3 class="mb-1 text-sm font-semibold">Education</h3>
+    <ul>
+      {education.map((entry) => (
+        <li class="border-t border-base-300 py-2.5">
+          <div class="flex items-baseline justify-between gap-3">
+            {
+              entry.link ? (
+                <a href={entry.link} target="_blank" rel="noopener noreferrer" class="text-sm font-medium transition-colors hover:text-primary">
+                  {entry.school}
+                </a>
+              ) : (
+                <p class="text-sm font-medium">{entry.school}</p>
+              )
+            }
+            <p class="whitespace-nowrap font-mono text-xs text-base-content/55">{entry.year}</p>
+          </div>
+          <p class="text-xs text-base-content/60">{entry.degree}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
 </section>
