@@ -3,11 +3,11 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import { Image } from "astro:assets";
 // Aliased: `Image` is already the astro:assets component in this file.
-import { FileText, Image as GalleryIcon, Moon, Sun, User } from "@lucide/astro";
+import { FileText, Image as GalleryIcon } from "@lucide/astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import PhotoLightbox from "../components/PhotoLightbox.astro";
 import { siteConfig } from "../config";
-import footerRidge from "../assets/telluride_no_bg.webp";
+import footerRidge from "../assets/footer-ridge.webp";
 
 interface Props {
   title?: string;
@@ -40,50 +40,23 @@ const imageUrl = new URL(image, Astro.url).href;
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{title}</title>
 
-    <!-- Applies the stored theme before first paint so there is no flash of the
-         wrong scheme. No stored choice means no data-theme, which leaves the
-         daisyUI `--prefersdark` default following the OS. Re-applied after each
-         view transition, which restores <html> attributes from the new page. -->
-    <script is:inline>
-      (() => {
-        const applyTheme = () => {
-          // Blocked storage (private browsing, cookies disabled) throws on
-          // access; falling through to the OS preference is the right default.
-          let stored = null;
-          try {
-            stored = localStorage.getItem("theme");
-          } catch {}
-          if (stored === "light" || stored === "dark") {
-            document.documentElement.dataset.theme = stored;
-          } else {
-            delete document.documentElement.dataset.theme;
-          }
-        };
-        applyTheme();
-        if (!window.__themeSwapBound) {
-          window.__themeSwapBound = true;
-          document.addEventListener("astro:after-swap", applyTheme);
-        }
-      })();
-    </script>
-
-    <!-- View Transitions -->
+    {/* View Transitions */}
     <ClientRouter />
 
-    <!-- Open Graph / Social Media -->
+    {/* Open Graph / Social Media */}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={imageUrl} />
 
-    <!-- Twitter -->
+    {/* Twitter */}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
 
-    <!-- Privacy-friendly, cookieless visit analytics (GoatCounter). Versioned script pinned by SRI hash. -->
+    {/* Privacy-friendly, cookieless visit analytics (GoatCounter). Versioned script pinned by SRI hash. */}
     <script
       is:inline
       data-goatcounter="https://flojule.goatcounter.com/count"
@@ -94,26 +67,26 @@ const imageUrl = new URL(image, Astro.url).href;
     ></script>
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
-    <!-- Top Banner / Navbar -->
+    {/* Top Banner / Navbar */}
     <header class="safe-top-inset sticky top-0 z-50 w-full border-b border-base-content/10 bg-base-200/60 backdrop-blur">
-      <!-- Padding sits outside the max-width, matching the page sections below
+      {/* Padding sits outside the max-width, matching the page sections below
            (`px-4` on the section, `max-w-6xl` on its inner div). Putting it
            inside instead lines up until both containers hit 6xl, then insets
-           the bar 16px from the content grid. -->
+           the bar 16px from the content grid. */}
       <div class="px-3 min-[360px]:px-4">
         <div class="mx-auto flex min-h-12 max-w-6xl flex-wrap items-center justify-between gap-x-1 gap-y-1 py-1.5">
           <div class="flex shrink-0 items-center gap-2">
+            {/* From `lg` up, hidden while the About name is on screen (see initSiteName). */}
             <a
               href="/"
-              class="inline-flex items-center text-sm font-bold tracking-tight text-base-content transition-colors hover:text-primary min-[375px]:text-base"
+              data-site-name
+              class="inline-flex items-center transition-[color,opacity,visibility] lg:data-hidden:invisible lg:data-hidden:opacity-0 motion-reduce:transition-none text-sm font-bold tracking-tight text-base-content hover:text-primary min-[375px]:text-base"
             >
               {siteConfig.name}
             </a>
           </div>
-          <!-- Every control is an icon of the same size carrying the same brief
-               label, evenly spaced, no dividers. Only the gap changes across
-               breakpoints — the icons are one size everywhere — so nothing is
-               ever added, removed or resized as the viewport changes. -->
+          {/* Every control is a text label from `sm` up and an icon below it,
+               so the bar never mixes the two. */}
           <nav class="ml-auto -mr-1 flex shrink-0 flex-nowrap items-center justify-end gap-0 min-[360px]:gap-1 sm:gap-2">
             <button
               type="button"
@@ -123,32 +96,9 @@ const imageUrl = new URL(image, Astro.url).href;
               aria-haspopup="dialog"
               class="icon-btn"
             >
-              <GalleryIcon class="nav-icon" aria-hidden="true" />
+              <GalleryIcon class="nav-icon sm:hidden" aria-hidden="true" />
+              <span class="nav-label">Photos</span>
             </button>
-            {siteConfig.socialLinks.github && (
-              <a
-                href={siteConfig.socialLinks.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                title="GitHub"
-                class="icon-btn"
-              >
-                <GithubIcon class="nav-icon" />
-              </a>
-            )}
-            {siteConfig.socialLinks.linkedin && (
-              <a
-                href={siteConfig.socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                title="LinkedIn"
-                class="icon-btn"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="nav-icon" aria-hidden="true" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>
-              </a>
-            )}
             {siteConfig.socialLinks.resume && (
               <button
                 type="button"
@@ -160,22 +110,36 @@ const imageUrl = new URL(image, Astro.url).href;
                 aria-haspopup="dialog"
                 class="icon-btn"
               >
-                <FileText class="nav-icon" aria-hidden="true" />
+                <FileText class="nav-icon sm:hidden" aria-hidden="true" />
+                <span class="nav-label">Resume</span>
               </button>
             )}
-            <a href="/about" aria-label="About" title="About" class="icon-btn">
-              <User class="nav-icon" aria-hidden="true" />
-            </a>
-            <button
-              type="button"
-              data-theme-toggle
-              aria-label="Theme"
-              title="Theme"
-              class="icon-btn"
-            >
-              <Moon class="nav-icon" data-theme-icon="moon" aria-hidden="true" />
-              <Sun class="nav-icon" data-theme-icon="sun" aria-hidden="true" />
-            </button>
+            {siteConfig.socialLinks.github && (
+              <a
+                href={siteConfig.socialLinks.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                title="GitHub"
+                class="icon-btn"
+              >
+                <GithubIcon class="nav-icon sm:hidden" />
+                <span class="nav-label">GitHub</span>
+              </a>
+            )}
+            {siteConfig.socialLinks.linkedin && (
+              <a
+                href={siteConfig.socialLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+                class="icon-btn"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="nav-icon sm:hidden" aria-hidden="true" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>
+                <span class="nav-label">LinkedIn</span>
+              </a>
+            )}
           </nav>
         </div>
       </div>
@@ -241,7 +205,7 @@ const imageUrl = new URL(image, Astro.url).href;
       </div>
     </div>
 
-    <!-- Smooth Scroll -->
+    {/* Smooth Scroll */}
     <script>
       import { closeOverlay, isOverlayOpen, openOverlay } from "../lib/overlay";
 
@@ -565,28 +529,6 @@ const imageUrl = new URL(image, Astro.url).href;
         });
       };
 
-      // Toggles against the *effective* scheme, so the first click from the
-      // OS-follows default always lands on the opposite of what is on screen.
-      const initThemeToggle = () => {
-        const button = document.querySelector("[data-theme-toggle]");
-        if (!(button instanceof HTMLElement)) return;
-        if (button.dataset.themeToggleReady === "true") return;
-        button.dataset.themeToggleReady = "true";
-
-        button.addEventListener("click", () => {
-          const root = document.documentElement;
-          const isDark = root.dataset.theme
-            ? root.dataset.theme === "dark"
-            : window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const next = isDark ? "light" : "dark";
-          root.dataset.theme = next;
-          // The toggle still works for this session if the write is refused.
-          try {
-            localStorage.setItem("theme", next);
-          } catch {}
-        });
-      };
-
       // Shared by the 404 and 500 pages. A visitor who landed directly on an
       // error URL has no history entry to return to, so fall back to home
       // rather than leaving the button inert.
@@ -602,52 +544,54 @@ const imageUrl = new URL(image, Astro.url).href;
         });
       };
 
+      // Marks the top-bar name while the About name is visible; CSS hides it from `lg` up.
+      let siteNameObserver: IntersectionObserver | undefined;
+      const initSiteName = () => {
+        siteNameObserver?.disconnect();
+        const link = document.querySelector("[data-site-name]");
+        const aboutName = document.getElementById("about-name");
+        if (!(link instanceof HTMLElement)) return;
+        link.toggleAttribute("data-hidden", false);
+        if (!aboutName || !("IntersectionObserver" in window)) return;
+        const header = link.closest("header");
+        siteNameObserver = new IntersectionObserver(
+          ([entry]) => link.toggleAttribute("data-hidden", entry.isIntersecting),
+          { rootMargin: `-${header?.offsetHeight ?? 0}px 0px 0px 0px` }
+        );
+        siteNameObserver.observe(aboutName);
+      };
+
       initPdfOverlay();
       initExternalLinks();
-      initThemeToggle();
       initGoBack();
       document.addEventListener("astro:page-load", initGoBack);
-      document.addEventListener("astro:page-load", initThemeToggle);
       document.addEventListener("astro:page-load", initPdfOverlay);
       document.addEventListener("astro:after-swap", initVideos);
       document.addEventListener("astro:page-load", initVideos);
       document.addEventListener("astro:page-load", initExternalLinks);
+      document.addEventListener("astro:page-load", initSiteName);
     </script>
     <style is:global>
-      /* Initial Page Load Blur-Fade Animation */
-      @keyframes pageLoadBlurFade {
-        0% {
-          opacity: 0;
-          filter: blur(8px);
-        }
-        100% {
-          opacity: 1;
-          filter: blur(0px);
-        }
-      }
-
       html {
         scroll-behavior: smooth;
         scrollbar-gutter: stable;
-        animation: pageLoadBlurFade 0.3s ease-in-out both;
       }
 
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
-          animation: none;
         }
       }
 
-      /* Blur Fade View Transitions (for page-to-page navigation). Plain CSS on the
+      /* Fade View Transitions (for page-to-page navigation). Plain CSS on the
          root transition: `transition:animate` emits a per-page inline <style>
          that the CSP's build-time hashes do not cover. */
       ::view-transition-old(root) {
-        animation: blurFadeOut 0.3s ease-in-out forwards;
+        animation: fadeOut 0.2s ease-in-out forwards;
       }
 
       ::view-transition-new(root) {
-        animation: blurFadeIn 0.3s ease-in-out backwards;
+        animation: fadeIn 0.2s ease-in-out backwards;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -657,25 +601,15 @@ const imageUrl = new URL(image, Astro.url).href;
         }
       }
 
-      @keyframes blurFadeIn {
-        0% {
+      @keyframes fadeIn {
+        from {
           opacity: 0;
-          filter: blur(10px);
-        }
-        100% {
-          opacity: 1;
-          filter: blur(0px);
         }
       }
 
-      @keyframes blurFadeOut {
-        0% {
-          opacity: 1;
-          filter: blur(0px);
-        }
-        100% {
+      @keyframes fadeOut {
+        to {
           opacity: 0;
-          filter: blur(10px);
         }
       }
 

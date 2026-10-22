@@ -21,7 +21,8 @@
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Same hue (~13deg), lifted in lightness: 5.6:1 / 6.9:1 / 6.9:1 on base-100. */
+/* Same hue (~13deg), lifted in lightness: 5.6:1 / 6.9:1 / 6.9:1 on base-100.
+   `:not([data-theme="light"])` matches the specificity of daisyUI's dark rule. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --color-primary: #e37a87;
@@ -33,39 +34,7 @@
   }
 }
 
-[data-theme="dark"] {
-  --color-primary: #e37a87;
-  --color-primary-content: #2a0a13;
-  --color-secondary: #ea939c;
-  --color-secondary-content: #2a0a13;
-  --color-accent: #f48d99;
-  --color-accent-content: #2a0a13;
-}
-
-/* The toggle shows the scheme it switches *to*, so it tracks the effective
-   scheme using the same three-case rule as the palette above. */
-[data-theme-icon="sun"] {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) [data-theme-icon="moon"] {
-    display: none;
-  }
-  :root:not([data-theme="light"]) [data-theme-icon="sun"] {
-    display: inline-block;
-  }
-}
-
-[data-theme="dark"] [data-theme-icon="moon"] {
-  display: none;
-}
-
-[data-theme="dark"] [data-theme-icon="sun"] {
-  display: inline-block;
-}
-
-/* Theme-specific media (e.g. light/dark diagram pairs), same three-case rule. */
+/* Theme-specific media (e.g. light/dark diagram pairs) follows the OS scheme. */
 [data-theme-media="dark"] {
   display: none !important;
 }
@@ -77,14 +46,6 @@
   :root:not([data-theme="light"]) [data-theme-media="dark"] {
     display: block !important;
   }
-}
-
-[data-theme="dark"] [data-theme-media="light"] {
-  display: none !important;
-}
-
-[data-theme="dark"] [data-theme-media="dark"] {
-  display: block !important;
 }
 
 html,
@@ -118,6 +79,11 @@ body {
 
 .nav-icon {
   @apply size-6;
+}
+
+/* Text label for page controls; replaces the icon from `sm` up. */
+.nav-label {
+  @apply hidden text-sm font-medium sm:inline sm:px-1;
 }
 
 .surface-card {

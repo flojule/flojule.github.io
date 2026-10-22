@@ -13,12 +13,12 @@ npm run check    # astro check (type check)
 ## Content
 
 - Schemas: [src/content.config.ts](src/content.config.ts). Drafts are excluded via `getCollection("projects", ({ data }) => !data.draft)`.
-- Projects are `.md` or `.mdx` in `src/content/projects/<slug>/`. Import co-located images via Astro's image pipeline, not `/public/...`.
+- Projects: `src/content/<slug>/index.md(x)`, served at `/<slug>`. Import co-located images via Astro's image pipeline, not `/public/...`.
 - Skills in frontmatter: reuse existing capitalization ("ROS 2", "C++", "Robotic Manipulation"); check existing entries first.
-- Videos: `public/videos/projects/<slug>/<name>.webm` (VP9, see [video.ts](src/lib/video.ts)).
-- Gallery photos: `public/gallery/*.webp`, max side 1800 px, quality 75, EXIF rotation baked in, lowercase-kebab names. Picked up automatically.
-- Figures in MDX: `<figure class="mx-auto my-6 w-fit max-w-full">` + `<Image>` + `<figcaption>` (see [flowheely.mdx](src/content/projects/flowheely/flowheely.mdx)).
-- Block diagrams: write `src/content/projects/<slug>/diagrams/<name>.mmd`, run `tools/render_diagrams.sh` (outputs `<name>-light.svg` + `<name>-dark.svg`). Include both in one figure, each `<Image>` wrapped in `<a data-photo-lightbox="diagram-<name>" data-photo-lightbox-natural data-theme-media="light|dark">`.
+- Videos: `public/videos/<slug>/<name>.webm` (VP9, see [video.ts](src/lib/video.ts)).
+- PDFs: `public/docs/`. Gallery photos: `public/gallery/*.webp`, max side 1800 px, quality 75, EXIF rotation baked in, lowercase-kebab names. Picked up automatically.
+- Figures in MDX: `<figure class="mx-auto my-6 w-fit max-w-full">` + `<Image>` + `<figcaption>` (see [flowheely](src/content/flowheely/index.mdx)).
+- Block diagrams: write `src/content/<slug>/diagrams/<name>.mmd`, run `tools/render_diagrams.sh` (outputs `<name>-light.svg` + `<name>-dark.svg`). Include both in one figure, each `<Image>` wrapped in `<a data-photo-lightbox="diagram-<name>" data-photo-lightbox-natural data-theme-media="light|dark">`.
 
 ## Styling
 
