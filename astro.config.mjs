@@ -23,6 +23,31 @@ export default defineConfig({
       rehypePlugins: [[rehypeKatex, { output: "mathml" }]],
     }),
   },
+  // Emitted as a <meta> CSP (GitHub Pages cannot set headers); Astro hashes its own inline scripts/styles.
+  security: {
+    csp: {
+      algorithm: "SHA-384",
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data: https://flojule.goatcounter.com",
+        "media-src 'self'",
+        "connect-src 'self' https://flojule.goatcounter.com",
+        // 'self': Chromium checks the PDF <object> against frame-src.
+        "frame-src 'self' https://www.youtube-nocookie.com",
+        "object-src 'self'",
+        "base-uri 'self'",
+        "form-action 'none'",
+        "upgrade-insecure-requests",
+      ],
+      scriptDirective: {
+        resources: ["'self'", "https://gc.zgo.at"],
+      },
+      styleDirective: {
+        // Card/banner images set `object-position` through a style attribute.
+        resources: ["'self'", { resource: "'unsafe-inline'", kind: "attribute" }],
+      },
+    },
+  },
   integrations: [mdx()],
   vite: {
     plugins: [tailwindcss()]

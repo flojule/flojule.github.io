@@ -33,7 +33,8 @@ if (!videoId) {
   throw new Error('YouTube component requires either an "id" or "url" prop');
 }
 
-const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+// Privacy-enhanced mode: no tracking cookies until playback.
+const embedUrl = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`;
 ---
 
 <div class="youtube-embed my-6 rounded-xl overflow-hidden aspect-video">
@@ -41,8 +42,10 @@ const embedUrl = `https://www.youtube.com/embed/${videoId}`;
     src={embedUrl}
     width="100%"
     height="100%"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    title="YouTube video"
+    allow="encrypted-media; picture-in-picture"
     allowfullscreen
+    referrerpolicy="strict-origin-when-cross-origin"
     loading="lazy"
     class="w-full h-full border-0"
   ></iframe>
