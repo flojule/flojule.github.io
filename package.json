@@ -25,5 +25,8 @@
     "@astrojs/check": "^0.9.10",
     "@types/node": "^24.19.0",
     "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "katex": "$katex"
   }
 }
