@@ -30,8 +30,8 @@ export const siteConfig: SiteConfig = {
     <a href='/gallery/tailwhip.webp' data-photo-lightbox='hobbies'>biking</a> \
     and \
     <a href='/gallery/cham.webp' data-photo-lightbox='hobbies'>ski</a> \
-    <a href='/gallery/sierra.webp' data-photo-lightbox='hobbies'>mountaineering</a> \
-    — I also share some of it on <a href='https://www.youtube.com/@flojule' target='_blank' rel='noopener noreferrer'>YouTube</a>.",
+    <a href='/gallery/sierra.webp' data-photo-lightbox='hobbies'>mountaineering</a>. \
+    I share some of it on <a href='https://www.youtube.com/@flojule' target='_blank' rel='noopener noreferrer'>YouTube</a>.",
     "Feel free to <a href='https://linkedin.com/in/flojule' target='_blank' rel='noopener noreferrer'>connect</a> and reach out!",
   ],
   location: "Oakland, California",
