@@ -23,34 +23,13 @@ const {
   contentClass = "",
 } = Astro.props;
 
-// Custom blur-fade animation configuration
-const blurFadeAnimation = {
-  old: {
-    name: "blurFadeOut",
-    duration: "0.3s",
-    easing: "ease-in-out",
-    fillMode: "forwards",
-  },
-  new: {
-    name: "blurFadeIn",
-    duration: "0.3s",
-    easing: "ease-in-out",
-    fillMode: "backwards",
-  },
-};
-
-const pageTransition = {
-  forwards: blurFadeAnimation,
-  backwards: blurFadeAnimation,
-};
-
 const pageUrl = Astro.url.href;
 // Resolves both site-relative paths and absolute remote image URLs.
 const imageUrl = new URL(image, Astro.url).href;
 ---
 
 <!doctype html>
-<html lang="en" class="bg-base-100" transition:animate={pageTransition}>
+<html lang="en" class="bg-base-100">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -58,6 +37,7 @@ const imageUrl = new URL(image, Astro.url).href;
     <link rel="icon" type="image/svg+xml" href="/kiwi.svg" />
     <link rel="canonical" href={pageUrl} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{title}</title>
 
     <!-- Applies the stored theme before first paint so there is no flash of the
@@ -103,8 +83,14 @@ const imageUrl = new URL(image, Astro.url).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
 
-    <!-- Privacy-friendly, cookieless visit analytics (GoatCounter). -->
-    <script is:inline data-goatcounter="https://flojule.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+    <!-- Privacy-friendly, cookieless visit analytics (GoatCounter). Versioned script pinned by SRI hash. -->
+    <script
+      is:inline
+      data-goatcounter="https://flojule.goatcounter.com/count"
+      async
+      src="https://gc.zgo.at/count.v4.js"
+      crossorigin="anonymous"
+      integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"
     ></script>
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
@@ -653,7 +639,24 @@ const imageUrl = new URL(image, Astro.url).href;
         }
       }
 
-      /* Blur Fade View Transitions (for page-to-page navigation) */
+      /* Blur Fade View Transitions (for page-to-page navigation). Plain CSS on the
+         root transition: `transition:animate` emits a per-page inline <style>
+         that the CSP's build-time hashes do not cover. */
+      ::view-transition-old(root) {
+        animation: blurFadeOut 0.3s ease-in-out forwards;
+      }
+
+      ::view-transition-new(root) {
+        animation: blurFadeIn 0.3s ease-in-out backwards;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+          animation: none;
+        }
+      }
+
       @keyframes blurFadeIn {
         0% {
           opacity: 0;
